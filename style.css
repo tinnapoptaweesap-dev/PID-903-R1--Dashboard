@@ -1,0 +1,388 @@
+/* =========================================================
+   รทป.186 Progress Dashboard
+   Design: "Engineering Blueprint" — deep navy + steel-blue
+   line-work, amber/green status system, IBM Plex Sans Thai
+   for content, IBM Plex Mono for all figures & dates.
+   ========================================================= */
+
+:root{
+  /* ===== MWA Corporate Identity palette (คู่มือเอกลักษณ์ กปน.) =====
+     Deep Blue #065BAA · Vivid Blue #00C2F3 · Clear Blue #ABE1FA
+     สีองค์กรใช้กับ: หัวข้อ, โครงสร้างหลัก, เส้นแผนงาน (~70% ตามคู่มือ)
+     สีสถานะ (ส้ม/เขียว/แดง) แยกออกจากโทนฟ้า เพื่อให้แยกสถานะได้ชัดบนพื้นสีเดียวกัน (~30% ตามคู่มือ) */
+  --navy-deep:   #044A85;
+  --navy:        #065BAA;
+  --navy-mid:    #065BAA;
+  --steel:       #0F72BE;
+  --steel-soft:  #ABE1FA;
+  --paper:       #F3F6F9;
+  --paper-line:  #DCE7F0;
+  --card:        #FFFFFF;
+  --border:      #D2E0EB;
+  --ink:         #0C2338;   /* เข้มขึ้นเพื่อ contrast ที่ดีขึ้น */
+  --ink-soft:    #3D5468;
+  --ink-faint:   #71859A;
+
+  /* สถานะ "กำลังดำเนินการ" — ส้ม แยกจากโทนฟ้าโดยเจตนา เพื่อความชัดเจนของสถานะ */
+  --amber:       #E07A1F;
+  --amber-bg:    #FBEBD9;
+  --vivid:       #00C2F3;   /* MWA Vivid Blue — ใช้เป็นจุดเน้นรอง/เส้นแผนงานพิเศษ */
+  --green:       #1F7A54;
+  --green-bg:    #E1F1EA;
+  --grey:        #93A4B4;
+  --grey-bg:     #EBF0F4;
+  --red:         #B3452C;
+  --red-bg:      #F8E7E1;
+  --scp:         #D23B2A;   /* ท่อ SCP (Steel Cylinder Pipe) — แดง แยกจากท่อ RCP ตามแบบสัญญา */
+  --testpit:     #FFEB3B;   /* Test Pit / อุปสรรคใต้ดิน — เหลืองแท้ล้วน ไม่ผสมส้ม/ทอง แยกชัดจากสีส้ม(กำลังดำเนินการ) */
+  --testpit-bg:  #FFF9C4;   /* พื้นหลัง badge เหลืองอ่อน คู่กับตัวอักษรสีเข้ม (ink) */
+
+  --radius: 3px;
+  --font-thai: 'IBM Plex Sans Thai', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'IBM Plex Sans Thai', monospace;
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+
+body{
+  margin:0;
+  font-family: var(--font-thai);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.mono{ font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* faint engineering grid behind everything */
+.grid-overlay{
+  position: fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: .35;
+  mask-image: linear-gradient(to bottom, black, transparent 900px);
+}
+
+/* ---------------- Topbar ---------------- */
+.topbar{
+  position: sticky; top:0; z-index:50;
+  background: var(--navy-deep);
+  border-bottom: 3px solid var(--steel);
+}
+.topbar-inner{
+  max-width: 1240px; margin:0 auto; padding: 14px 28px;
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+  flex-wrap: wrap;
+}
+.brand{ display:flex; flex-direction:row; align-items:center; gap:14px; color:#fff; }
+.brand-logo{ height:36px; width:auto; display:block; flex-shrink:0; background:#fff; padding:5px 8px; border-radius:5px; box-shadow:0 1px 3px rgba(0,0,0,.18); }
+.brand-text{ display:flex; flex-direction:column; gap:2px; }
+.brand-divider{ width:1px; align-self:stretch; background:rgba(255,255,255,.22); margin:2px 0; }
+.brand-mark{
+  font-family: var(--font-mono); font-weight:600; font-size: 1.15rem; letter-spacing: .02em;
+  color:#fff;
+}
+.brand-dot{ color: var(--amber); }
+.brand-sub{ font-size: .74rem; color: var(--steel-soft); letter-spacing:.01em; }
+
+.tabs{ display:flex; gap:4px; }
+.tab-btn{
+  font-family: var(--font-thai); font-size: .88rem; font-weight:500;
+  background: transparent; border:1px solid transparent; color: var(--steel-soft);
+  padding: 8px 16px; cursor:pointer; border-radius: var(--radius);
+  transition: all .15s ease;
+}
+.tab-btn:hover{ color:#fff; border-color: rgba(255,255,255,.15); }
+.tab-btn.active{ color: var(--navy-deep); background: #fff; }
+
+/* ---------------- Layout ---------------- */
+main{ max-width: 1240px; margin: 0 auto; padding: 0 28px 80px; position:relative; z-index:1; }
+.tab-panel{ display:none; }
+.tab-panel.active{ display:block; animation: fadeIn .25s ease; }
+@keyframes fadeIn{ from{opacity:0; transform: translateY(4px);} to{opacity:1; transform:none;} }
+
+/* ---------------- Hero ---------------- */
+.hero{
+  background: var(--navy-deep);
+  color: #fff;
+  margin: 0 -28px 0;
+  padding: 56px 28px 48px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  position: relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image: repeating-linear-gradient(115deg, rgba(76,126,168,.08) 0 1px, transparent 1px 64px);
+}
+.hero-text{ max-width: 880px; position:relative; }
+.eyebrow{
+  font-family: var(--font-mono); font-size: .78rem; letter-spacing:.06em;
+  color: var(--steel-soft); text-transform:uppercase; margin:0 0 14px;
+}
+.hero h1{
+  font-size: clamp(1.7rem, 3.2vw, 2.5rem); font-weight:600; line-height:1.25;
+  margin: 0 0 16px; letter-spacing: -.01em;
+}
+.hero-desc{ font-size: .98rem; color: #C9D3DE; margin: 0 0 28px; }
+.hero-desc strong{ color:#fff; }
+.hero-meta{ display:flex; gap:36px; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,.15); padding-top:20px; }
+.hero-meta-item{ display:flex; flex-direction:column; gap:4px; }
+.hero-meta-item .label{ font-size:.72rem; color: var(--steel-soft); letter-spacing:.03em; }
+.hero-meta-item .value{ font-size:1.05rem; font-weight:600; color:#fff; }
+
+/* ---------------- Section blocks ---------------- */
+.section-block{ padding: 48px 0 8px; border-bottom: 1px solid var(--border); }
+.section-block:last-child{ border-bottom:none; }
+.section-title{
+  display:flex; align-items:baseline; gap:12px;
+  font-size: 1.2rem; font-weight:600; margin: 0 0 8px; color: var(--navy);
+}
+.section-num{
+  font-family: var(--font-mono); font-size: .78rem; color: var(--steel);
+  border: 1px solid var(--steel-soft); border-radius: var(--radius);
+  padding: 2px 7px;
+}
+.section-caption{ color: var(--ink-soft); font-size: .88rem; margin: 0 0 24px; max-width: 760px; }
+
+/* ---------------- Alignment strip (signature element) ---------------- */
+.alignment-wrap{
+  background: var(--card); border:1px solid var(--border); border-radius: var(--radius);
+  padding: 8px 12px 0; margin-bottom: 16px; overflow-x:auto;
+}
+.alignment-svg{ width:100%; min-width: 1040px; height:auto; display:block; }
+.legend{ display:flex; gap:22px; flex-wrap:wrap; font-size:.82rem; color: var(--ink-soft); margin-bottom: 8px;}
+.legend-item{ display:flex; align-items:center; gap:7px; }
+.dot{ width:10px; height:10px; border-radius:50%; display:inline-block; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+.dot-complete{ background: var(--green); }
+.dot-progress{ background: var(--amber); }
+.dot-early{ background: var(--steel-soft); }
+.dot-testpit{ background: var(--testpit); }
+.dot-none{ background: var(--grey); }
+/* legend groups + shape/line swatches (แนวท่อ: ชนิดบ่อ + ชนิดท่อ/วิธี) */
+.legend-group{ width:100%; font-weight:600; color: var(--navy); font-size:.76rem; margin-top:6px; }
+.lg-sq{ width:12px; height:12px; border-radius:2px; display:inline-block; flex-shrink:0; }
+.lg-csl{ background:#fff; border:2.4px solid var(--navy-deep); }
+.lg-sp{ background:#fff; border:1.6px dashed var(--ink-faint); }
+.lg-sub{ background:#FBEE9C; border:1.4px solid #C9B04A; }
+.lg-line{ width:26px; height:0; display:inline-block; flex-shrink:0; }
+.lg-rcp{ border-top:3px solid var(--ink-soft); }
+.lg-scp{ border-top:3px solid var(--scp); }
+.lg-open{ border-top:3px dotted var(--ink-soft); }
+
+/* ---------------- KPI ---------------- */
+.kpi-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; }
+.kpi-card{
+  background: var(--card); border:1px solid var(--border); border-left: 3px solid var(--steel);
+  border-radius: var(--radius); padding: 20px; display:flex; flex-direction:column; gap:6px;
+}
+/* สีเน้นแยกตามความหมายของแต่ละตัวชี้วัด — ให้แยกแยะง่ายและเชื่อมโยงกับสีที่ใช้ในกราฟ */
+.kpi-card--plan{   border-left-color: var(--navy); }               /* แผน = น้ำเงิน MWA Deep Blue เหมือนเส้นแผนใน S-curve */
+.kpi-card--actual{ border-left-color: var(--amber); }              /* จริง = ส้ม เหมือนเส้นผลงานจริงใน S-curve */
+.kpi-card--actual .kpi-value{ color: var(--amber); }
+.kpi-card--days{   border-left-color: var(--vivid); }              /* วันบันทึก = ฟ้าสดใส MWA Vivid Blue */
+.kpi-card--days .kpi-value{ color: var(--vivid); }
+.kpi-card--wells{  border-left-color: var(--green); }              /* บ่อแล้วเสร็จ = เขียว เหมือนสถานะแล้วเสร็จ */
+.kpi-card--wells .kpi-value{ color: var(--green); }
+.kpi-label{ font-size:.8rem; color: var(--ink-soft); }
+.kpi-value{ font-size: 1.7rem; font-weight:600; color: var(--navy); }
+.kpi-sub{ font-size: .76rem; color: var(--ink-faint); }
+
+/* ---------------- S-Curve ---------------- */
+.scurve-wrap{
+  background: var(--card); border:1px solid var(--border); border-radius: var(--radius);
+  padding: 20px 12px; overflow-x:auto;
+}
+.scurve-svg{ width:100%; min-width: 900px; height:auto; display:block; }
+
+/* ---------------- Recent list ---------------- */
+.recent-list{ display:flex; flex-direction:column; }
+.recent-item{
+  display:grid; grid-template-columns: 130px 110px 1fr; gap:16px; align-items:start;
+  padding: 13px 4px; border-bottom: 1px solid var(--border); font-size:.88rem;
+}
+.recent-item:last-child{ border-bottom:none; }
+.recent-date{ font-family: var(--font-mono); color: var(--navy-mid); font-weight:600; }
+.recent-wells{ display:flex; flex-wrap:wrap; gap:4px; }
+.recent-text{ color: var(--ink-soft); }
+
+/* ---------------- Tags / chips ---------------- */
+.tag{
+  font-family: var(--font-mono); font-size:.72rem; font-weight:600;
+  padding: 1px 7px; border-radius: 20px; display:inline-block; white-space:nowrap;
+  background: var(--grey-bg); color: var(--ink-soft); border:1px solid var(--border);
+}
+.tag-well{ cursor:pointer; background:#fff; border:1px solid var(--steel-soft); color: var(--navy-mid); }
+.tag-well:hover{ background: var(--steel); color:#fff; }
+
+.badge{ font-size:.72rem; font-weight:600; padding: 3px 10px; border-radius: 20px; display:inline-block; }
+.badge-complete{ background: var(--green-bg); color: var(--green); }
+.badge-progress{ background: var(--amber-bg); color: var(--amber); }
+.badge-early{ background: var(--grey-bg); color: var(--ink-soft); }
+.badge-testpit{ background: var(--testpit-bg); color: var(--ink); font-weight:700; }
+.badge-pending{ background: var(--red-bg); color: var(--red); }
+.badge-caisson{ background: #E5EEF5; color: var(--steel); }
+.badge-none{ background: var(--grey-bg); color: var(--grey); }
+
+/* ---------------- Panel head (Daily / Wells tabs) ---------------- */
+.panel-head{ padding-top: 44px; }
+.panel-title{ font-size: 1.5rem; font-weight:600; color: var(--navy); margin:0 0 6px; }
+.panel-caption{ color: var(--ink-soft); font-size:.9rem; margin: 0 0 24px; }
+
+/* ---------------- Filter bar ---------------- */
+.filter-bar{
+  display:flex; gap:16px; align-items:end; flex-wrap:wrap;
+  background: var(--card); border:1px solid var(--border); border-radius: var(--radius);
+  padding: 16px; margin-bottom: 12px;
+}
+.filter-item{ display:flex; flex-direction:column; gap:5px; }
+.filter-item label{ font-size:.74rem; color: var(--ink-soft); }
+.filter-item select, .filter-item input{
+  font-family: var(--font-thai); font-size:.88rem; padding: 8px 10px;
+  border: 1px solid var(--border); border-radius: var(--radius); background:#fff; color: var(--ink);
+  min-width: 160px;
+}
+.filter-search input{ min-width: 240px; }
+.btn-ghost{
+  font-family: var(--font-thai); font-size:.82rem; color: var(--steel); background:transparent;
+  border:1px solid var(--steel-soft); border-radius: var(--radius); padding: 8px 14px; cursor:pointer;
+  height: fit-content;
+}
+.btn-ghost:hover{ background: var(--steel); color:#fff; }
+
+.table-meta{ font-size:.8rem; color: var(--ink-faint); margin-bottom:8px; }
+
+/* ---------------- Data table ---------------- */
+.table-wrap{ background: var(--card); border:1px solid var(--border); border-radius: var(--radius); overflow:hidden; }
+.data-table{ width:100%; border-collapse:collapse; font-size:.88rem; }
+.data-table thead th{
+  text-align:left; background: var(--navy-mid); color:#fff; font-weight:600; font-size:.78rem;
+  padding: 11px 14px; letter-spacing:.02em;
+}
+.data-table tbody td{ padding: 11px 14px; border-bottom:1px solid var(--border); vertical-align:top; }
+.data-table tbody tr:last-child td{ border-bottom:none; }
+.data-table tbody tr:hover{ background: #FAFBFA; }
+.data-table tbody tr.is-holiday{ background: var(--red-bg); }
+.data-table tbody tr.is-unconfirmed td{ font-style: italic; color: var(--ink-faint); }
+.col-date{ width: 150px; }
+.col-wells{ width: 160px; }
+.cell-date{ font-family: var(--font-mono); font-weight:600; color: var(--navy-mid); white-space:nowrap; }
+.cell-wells{ display:flex; flex-wrap:wrap; gap:4px; }
+.empty-row td{ text-align:center; color: var(--ink-faint); padding: 40px 0; }
+.report-link{
+  display:inline-block; margin-inline-start:8px; white-space:nowrap;
+  font-family: var(--font-mono); font-size:.72rem; font-weight:600;
+  color: var(--steel); text-decoration:none;
+  border:1px solid var(--steel-soft); border-radius: 20px; padding: 1px 9px;
+  transition: all .12s ease;
+}
+.report-link:hover{ background: var(--steel); color:#fff; border-color: var(--steel); }
+
+/* ---------------- Wells tab ---------------- */
+.well-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 28px; }
+.well-chip{
+  font-family: var(--font-mono); font-size:.85rem; font-weight:600;
+  padding: 8px 16px; border-radius: 20px; border:1px solid var(--border); background:#fff;
+  color: var(--ink-soft); cursor:pointer; transition: all .12s ease; position:relative;
+}
+.well-chip .chip-dot{ width:7px; height:7px; border-radius:50%; display:inline-block; margin-inline-end:6px; }
+.well-chip:hover{ border-color: var(--steel); }
+.well-chip.active{ background: var(--navy-mid); border-color: var(--navy-mid); color:#fff; }
+
+.well-detail{ background: var(--card); border:1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+.well-detail-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:6px; flex-wrap:wrap; }
+.well-detail-title{ font-family: var(--font-mono); font-size:1.4rem; font-weight:600; color: var(--navy); }
+.well-detail-sub{ color: var(--ink-soft); font-size:.9rem; margin: 6px 0 20px; max-width: 680px; }
+
+.timeline{ display:flex; flex-direction:column; }
+.timeline-item{
+  display:grid; grid-template-columns: 150px 1fr 150px; gap:16px; align-items:start;
+  padding: 14px 0; border-bottom:1px solid var(--border);
+}
+.timeline-item:last-child{ border-bottom:none; }
+.timeline-date{ font-family: var(--font-mono); font-weight:600; color: var(--navy-mid); font-size:.86rem; }
+.timeline-text{ font-size:.9rem; color: var(--ink); }
+.timeline-stage{ text-align:right; }
+
+/* ---------------- Footer ---------------- */
+.site-footer{
+  border-top:1px solid var(--border); padding: 24px 28px 0; text-align:center;
+  color: var(--ink-faint); font-size:.78rem; position:relative; z-index:1; background: var(--paper);
+}
+.footer-slogan{
+  font-family: var(--font-thai); font-weight:600; font-size:.9rem;
+  color: var(--navy); margin: 0 0 14px; letter-spacing:.01em;
+}
+/* ลวดลายคลื่นน้ำ 3 สาย (สีองค์กร กปน.) วางด้านล่างตามคู่มือเอกลักษณ์ */
+.mwa-wave{ display:block; width:100%; height:auto; margin-top:8px; }
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 860px){
+  .kpi-grid{ grid-template-columns: repeat(2,1fr); }
+  .hero-meta{ gap:20px; }
+  .timeline-item{ grid-template-columns: 1fr; gap:6px; }
+  .timeline-stage{ text-align:left; }
+  .recent-item{ grid-template-columns: 1fr; gap:6px; }
+}
+@media (max-width: 560px){
+  .kpi-grid{ grid-template-columns: 1fr; }
+  .topbar-inner{ padding: 12px 16px; }
+  main{ padding: 0 16px 60px; }
+  .hero{ margin: 0 -16px; padding: 40px 16px 36px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  .tab-panel.active{ animation:none; }
+}
+
+/* focus visibility */
+a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible{
+  outline: 2px solid var(--amber); outline-offset:2px;
+}
+
+/* =========================================================
+   PID-903(R1) — ส่วนเพิ่มเติม (chainage strip / verify banner / pipe schedule)
+   ========================================================= */
+
+/* ---- แบนเนอร์ "ตรวจสอบก่อนใช้" ---- */
+.verify-banner{
+  max-width:1240px; margin:0 auto 26px; padding:14px 18px;
+  background:#FFF9E6; border:1px solid #E7C86B; border-left:4px solid #E0A81F;
+  border-radius:var(--radius); color:#5C4A12;
+}
+.vb-head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:.92rem; }
+.vb-icon{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px;
+  background:#E0A81F; color:#fff; border-radius:50%; font-weight:700; font-size:.8rem; flex-shrink:0; }
+.vb-ok{ font-size:.78rem; color:#1F7A54; background:#E1F1EA; padding:2px 10px; border-radius:20px; }
+.vb-list{ margin:8px 0 0; padding-left:30px; font-size:.82rem; line-height:1.7; color:#6A5A24; }
+
+/* ---- ตัวอย่างสีช่วง (legend swatch) ---- */
+.lg-band{ display:inline-block; width:22px; height:12px; border-radius:2px; margin-right:2px; vertical-align:middle; border:1px solid rgba(0,0,0,.15); }
+.lg-canal{    background:#DCEEFB; border-color:#065BAA; }
+.lg-crossing{ background:#FBDCE8; border-color:#C2185B; }
+.lg-shoulder{ background:#FBEBD9; border-color:#E07A1F; }
+.lg-road{     background:#E7EDF2; border-color:#93A4B4; }
+
+/* ---- บัญชีท่อ (pipe schedule bars) ---- */
+.pipe-wrap{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; }
+.pipe-list{ display:flex; flex-direction:column; gap:10px; }
+.pipe-row{ display:grid; grid-template-columns:190px 1fr 90px; align-items:center; gap:14px; }
+.pipe-label{ font-size:.82rem; color:var(--ink); }
+.pipe-bar-wrap{ background:var(--grey-bg); border-radius:2px; height:16px; overflow:hidden; }
+.pipe-bar{ display:block; height:100%; border-radius:2px; }
+.pipe-len{ text-align:right; font-size:.82rem; color:var(--ink-soft); }
+.pipe-total{ margin-top:14px; padding-top:12px; border-top:1px dashed var(--border); font-size:.86rem; color:var(--ink); }
+.pipe-flag{ color:var(--red); font-size:.78rem; }
+.pipe-note{ margin:8px 0 0; font-size:.78rem; color:var(--amber); }
+
+@media (max-width:640px){
+  .pipe-row{ grid-template-columns:130px 1fr 70px; gap:8px; }
+  .pipe-label{ font-size:.74rem; }
+}

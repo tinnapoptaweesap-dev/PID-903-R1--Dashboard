@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PID-903(R1) — รายงานความก้าวหน้าโครงการ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid-overlay" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <img class="brand-logo" src="th-full.png" alt="ตราสัญลักษณ์การประปานครหลวง" onerror="this.style.display='none'">
+      <span class="brand-divider" aria-hidden="true"></span>
+      <div class="brand-text">
+        <span class="brand-mark">PID<span class="brand-dot">-</span>903(R1)</span>
+        <span class="brand-sub">การประปานครหลวง · รายงานความก้าวหน้าโครงการ สำหรับคณะกรรมการตรวจรับพัสดุ</span>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="overview" role="tab" aria-selected="true">ภาพรวม</button>
+      <button class="tab-btn" data-tab="daily" role="tab" aria-selected="false">รายงานรายวัน</button>
+      <button class="tab-btn" data-tab="segments" role="tab" aria-selected="false">รายช่วงงาน</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ OVERVIEW ============ -->
+  <section id="tab-overview" class="tab-panel active">
+
+    <div class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">งานวางท่อจ่ายน้ำและงานที่เกี่ยวข้อง · ถนนปานวิถี · จังหวัดสมุทรปราการ</p>
+        <h1>จากคลองท้องคุ้ง ถึง ซอยเก้าแสน (หมู่บ้านอุ่น บางนา กม.26)</h1>
+        <p class="hero-desc">สัญญา <strong>PID-903(R1)</strong> · การประปานครหลวง (กปน.) · ผู้รับจ้าง บริษัท ไทคูนวณิชย์ จำกัด · แนวสายยาว <span class="mono">3,665</span> ม. · ระยะเวลาก่อสร้าง <span class="mono">210</span> วัน</p>
+        <div class="hero-meta">
+          <div class="hero-meta-item"><span class="label">แจ้งเริ่มงาน (NTP)</span><span class="value mono">27 ก.ค. 2569</span></div>
+          <div class="hero-meta-item"><span class="label">สิ้นสุดตามสัญญา</span><span class="value mono">22 ก.พ. 2570</span></div>
+          <div class="hero-meta-item"><span class="label">ข้อมูลยืนยันล่าสุด</span><span class="value mono" id="lastConfirmed">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- แบนเนอร์ "ตรวจสอบก่อนใช้" -->
+    <div id="verifyBanner" class="verify-banner"></div>
+
+    <div class="section-block">
+      <h2 class="section-title"><span class="section-num">01</span> แนวสายและช่วงวิธีก่อสร้าง (Chainage 0+000 – 3+665)</h2>
+      <p class="section-caption">แถบแนวสายเรียงตามระยะทาง (chainage) จากต้นโครงการถึงปลายโครงการ — <strong>สีของช่วง</strong> บอกวิธี/ตำแหน่งก่อสร้าง (ในคูน้ำ / ข้ามคลอง / ไหล่ทาง) · <strong>แถบล่าง</strong> คือระยะที่วางท่อแล้ว (Progress) · จุดตัดช่วง (breakpoint) ยังอยู่ระหว่างรอยืนยันแบบความละเอียดสูง คลิกที่ช่วงเพื่อดูรายละเอียด</p>
+      <div class="alignment-wrap">
+        <svg id="alignmentSvg" class="alignment-svg" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+      <div class="legend">
+        <span class="legend-group">วิธี/ตำแหน่งก่อสร้าง (สีช่วง)</span>
+        <span class="legend-item"><i class="lg-band lg-canal"></i>วางท่อในคูน้ำ</span>
+        <span class="legend-item"><i class="lg-band lg-crossing"></i>ท่อลอด/ข้ามคลอง (Critical Path)</span>
+        <span class="legend-item"><i class="lg-band lg-shoulder"></i>ไหล่ทาง ถนนปานวิถี</span>
+        <span class="legend-item"><i class="lg-band lg-road"></i>ต้น/ปลายแนว</span>
+        <span class="legend-group">สถานะการวางท่อ (แถบล่าง)</span>
+        <span class="legend-item"><i class="dot dot-complete"></i>วางท่อแล้วเสร็จ</span>
+        <span class="legend-item"><i class="dot dot-progress"></i>อยู่ระหว่างวางท่อ</span>
+        <span class="legend-item"><i class="dot dot-none"></i>ยังไม่เริ่ม</span>
+      </div>
+    </div>
+
+    <div class="section-block kpi-block">
+      <h2 class="section-title"><span class="section-num">02</span> ตัวชี้วัดหลัก</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-card--plan">
+          <span class="kpi-label">ความก้าวหน้าสะสม (แผน)</span>
+          <span class="kpi-value mono" id="kpiPlan">—</span>
+          <span class="kpi-sub" id="kpiPlanSub">—</span>
+        </div>
+        <div class="kpi-card kpi-card--actual">
+          <span class="kpi-label">ความก้าวหน้าสะสม (จริง)</span>
+          <span class="kpi-value mono" id="kpiActual">—</span>
+          <span class="kpi-sub" id="kpiDelta">—</span>
+          <span class="kpi-sub" id="kpiActualAsOf">—</span>
+        </div>
+        <div class="kpi-card kpi-card--days">
+          <span class="kpi-label">วันตามสัญญาที่ล่วงไปแล้ว</span>
+          <span class="kpi-value mono" id="kpiDays">—</span>
+          <span class="kpi-sub" id="kpiDaysSub">—</span>
+        </div>
+        <div class="kpi-card kpi-card--wells">
+          <span class="kpi-label">ระยะท่อที่วางแล้ว / แนวสายทั้งหมด</span>
+          <span class="kpi-value mono" id="kpiMeters">—</span>
+          <span class="kpi-sub" id="kpiMetersSub">ประมวลผลจากรายงานหน้างาน</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <h2 class="section-title"><span class="section-num">03</span> เส้นความก้าวหน้าสะสม (S-Curve)</h2>
+      <p class="section-caption">เปรียบเทียบแผนงานหลัก (Master Schedule) กับผลงานจริงสะสม หน่วยเป็นร้อยละของมูลค่างานทั้งสัญญา · ช่วง ก.ค. 2569 – ก.พ. 2570</p>
+      <div class="scurve-wrap">
+        <svg id="scurveSvg" class="scurve-svg" viewBox="0 0 1200 460" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <h2 class="section-title"><span class="section-num">04</span> บัญชีท่อตามสัญญา (Pipe Schedule)</h2>
+      <p class="section-caption">ปริมาณท่อรายชนิดตาม BOQ (ยอดรวมทั้งสัญญา) — <em>รอยืนยันกับ BOQ ต้นฉบับ</em></p>
+      <div id="pipeSchedule" class="pipe-wrap"></div>
+    </div>
+
+    <div class="section-block">
+      <h2 class="section-title"><span class="section-num">05</span> เหตุการณ์ล่าสุด</h2>
+      <div id="recentList" class="recent-list"></div>
+    </div>
+
+  </section>
+
+  <!-- ============ DAILY ============ -->
+  <section id="tab-daily" class="tab-panel">
+    <div class="panel-head">
+      <h2 class="panel-title">รายงานผลการปฏิบัติงานรายวัน</h2>
+      <p class="panel-caption">เรียบเรียงจากใบแจ้งขอปฏิบัติงานและรายงานผลงานรายวัน สัญญา PID-903(R1)</p>
+    </div>
+    <div class="filter-bar">
+      <div class="filter-item">
+        <label for="filterMonth">เดือน</label>
+        <select id="filterMonth"></select>
+      </div>
+      <div class="filter-item">
+        <label for="filterSeg">ช่วงงาน</label>
+        <select id="filterSeg"></select>
+      </div>
+      <div class="filter-item filter-search">
+        <label for="filterSearch">ค้นหาข้อความ</label>
+        <input type="text" id="filterSearch" placeholder="เช่น วางท่อ AC, ข้ามคลอง, ทดสอบแรงดัน">
+      </div>
+      <button id="clearFilters" class="btn-ghost">ล้างตัวกรอง</button>
+    </div>
+    <div class="table-meta"><span id="dailyCount">—</span></div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th class="col-date">วันที่</th><th class="col-wells">ช่วงงาน</th><th>ผลงาน / กิจกรรมที่ดำเนินการ</th></tr>
+        </thead>
+        <tbody id="dailyTbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ SEGMENTS ============ -->
+  <section id="tab-segments" class="tab-panel">
+    <div class="panel-head">
+      <h2 class="panel-title">รายละเอียดขั้นตอนแยกรายช่วงงาน</h2>
+      <p class="panel-caption">เลือกช่วงงานเพื่อดูลำดับขั้นตอนการก่อสร้างและสถานะล่าสุด</p>
+    </div>
+    <div id="segChips" class="well-chips"></div>
+    <div id="segDetail" class="well-detail"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-slogan">การประปานครหลวง · ประปาเพื่อประชาชน</p>
+  <span>จัดทำเพื่อการนำเสนอต่อคณะกรรมการตรวจรับพัสดุ · ข้อมูลเรียบเรียงจากใบแจ้งขอปฏิบัติงานและรายงานผลงานรายวัน สัญญา PID-903(R1)</span>
+  <svg class="mwa-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,40 C240,90 480,0 720,35 C960,70 1200,15 1440,45 L1440,90 L0,90 Z" fill="#ABE1FA"/>
+    <path d="M0,55 C240,100 480,20 720,52 C960,84 1200,32 1440,60 L1440,90 L0,90 Z" fill="#00C2F3" opacity="0.85"/>
+    <path d="M0,70 C240,105 480,45 720,68 C960,92 1200,52 1440,74 L1440,90 L0,90 Z" fill="#065BAA"/>
+  </svg>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
