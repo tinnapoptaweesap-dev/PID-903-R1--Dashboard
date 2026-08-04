@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PID-903(R1) — ความก้าวหน้ารายชนิดท่อ</title>
+<title>PID-903(R1) — ความก้าวหน้ารายชนิดท่อ (v2 · ราคาจาก BOQ จริง)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
     --ink:#0C2338; --ink-soft:#3D5468; --ink-faint:#71859A;
     --amber:#E07A1F; --amber-bg:#FBEBD9; --vivid:#00C2F3;
     --green:#1F7A54; --green-bg:#E1F1EA; --grey:#93A4B4; --grey-bg:#EBF0F4;
-    --pvc:#0F72BE; --ac:#065BAA; --st:#00A0C8;
+    --pvc:#0F72BE; --ac:#065BAA; --st:#00A0C8; --prep:#1F7A54;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--paper);color:var(--ink);
@@ -96,6 +96,39 @@
 
   .foot{margin-top:26px;padding-top:14px;border-top:1px solid var(--border);
     font-size:11px;color:var(--ink-faint);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+  /* hero KPI */
+  .hero{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:14px;margin:20px 0 8px}
+  @media(max-width:720px){.hero{grid-template-columns:1fr}}
+  .hcard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+  .hcard .hk{font-size:11px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+  .hcard .hv{font-size:30px;font-weight:700;color:var(--navy)}
+  .hcard .hv small{font-size:14px;font-weight:500;color:var(--ink-faint)}
+  .hcard.main{background:linear-gradient(135deg,var(--navy-deep),var(--navy));color:#fff}
+  .hcard.main .hk{color:var(--steel-soft)}
+  .hcard.main .hv{color:#fff}
+  .hcard.main .hv small{color:var(--steel-soft)}
+  .hcard .sub2{font-size:11px;color:var(--ink-faint);margin-top:4px}
+  .hcard.main .sub2{color:var(--steel-soft)}
+
+  .moneyrow{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px dotted var(--border)}
+  .moneyrow .k{color:var(--ink-soft)}
+  .moneyrow .v{font-weight:600}
+  .moneybox{margin-top:12px;background:var(--grey-bg);border-radius:6px;padding:9px 12px;
+    display:flex;justify-content:space-between;align-items:baseline}
+  .moneybox .k{font-size:12px;color:var(--ink-soft)}
+  .moneybox .v{font-size:19px;font-weight:700;color:var(--navy)}
+  .price-note{font-size:10.5px;color:var(--ink-faint);margin-top:8px;line-height:1.5}
+
+  .done-badge{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;
+    color:#fff;background:var(--prep);border-radius:20px;padding:2px 9px;letter-spacing:.02em}
+  .prep-card{border-left:4px solid var(--prep)}
+  .summary-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 6px}
+  @media(max-width:820px){.summary-strip{grid-template-columns:repeat(2,1fr)}}
+  .sitem{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:11px 13px}
+  .sitem .sn{font-size:11px;color:var(--ink-faint);display:flex;align-items:center;gap:6px;margin-bottom:5px}
+  .sitem .sv{font-size:18px;font-weight:700}
+  .sitem .sm{font-size:10.5px;color:var(--ink-faint);margin-top:2px}
 </style>
 </head>
 <body>
@@ -111,56 +144,172 @@
   </div>
 
   <div class="verify">
-    <b>ตรวจสอบก่อนใช้ (Verify Before Use):</b> ตัวเลขความยาว/ร้อยละทั้งหมดมาจากใบรายงานประจำวันของผู้รับจ้าง (28–31 ก.ค. 2569) ยังไม่ยืนยันกับต้นฉบับ · ปริมาณตั้งต้นแนว (targetLen) อ้าง BOQ ที่รอ cross-check · <b>การจับคู่ขั้นตอน↔งวดเบิกจ่าย และร้อยละมูลค่าที่เบิกได้เป็น "ประมาณการ"</b> ต้องยืนยันกับตารางแบ่งงวดงาน/BOQ ก่อนใช้เบิกจริง
+    <b>ตรวจสอบก่อนใช้ (Verify Before Use):</b> ความยาวรายวัน (890/300/480 ม.) ยังมาจากใบรายงานประจำวัน ยังไม่ยืนยันกับต้นฉบับ · <b style="color:var(--green)">✓ ปริมาณแนว (targetLen) และราคาต่อหน่วย ยืนยันแล้วจากผนวก 3 (ใบแจ้งปริมาณงานและราคา) คู่ฉบับสัญญา</b> · น้ำหนักขั้นตอน (20/15/35/10/10/10 และ 70/10/10/10) เป็นเกณฑ์ประเมินผลงานภายในที่ผู้ใช้กำหนด <b>ไม่ใช่รายการเบิกจ่ายแยกใน BOQ</b> — ใช้เพื่อประมาณความคืบหน้าเชิงมูลค่า ไม่ใช่ตัวเลขเบิกงวดที่ผูกพันตามสัญญา
   </div>
 
+  <!-- ===== HERO KPI ===== -->
+  <div class="hero" id="hero"></div>
+  <div class="summary-strip" id="summaryStrip"></div>
+
   <!-- ===== PHYSICAL ===== -->
-  <div class="sec-title"><span class="n">1</span> ความก้าวหน้าเชิงกายภาพ (เมตร &amp; ร้อยละของแนวสาย)</div>
+  <div class="sec-title"><span class="n">1</span> ความก้าวหน้าเชิงกายภาพ — เตรียมการ / AC / PVC / ST</div>
+  <div id="prepCard"></div>
   <div id="physical"></div>
 
   <!-- ===== PAYMENT ===== -->
-  <div class="sec-title"><span class="n">2</span> ประมาณการมูลค่างานที่เบิกได้ ตามสัดส่วนการแบ่งจ่าย <span style="text-transform:none;letter-spacing:0;color:var(--amber);font-weight:600">· ประมาณการ รอยืนยัน</span></div>
+  <div class="sec-title"><span class="n">2</span> ผลงานคิดเป็นมูลค่า ตามราคาต่อหน่วยจริงใน BOQ (ผนวก 3) <span style="text-transform:none;letter-spacing:0;color:var(--amber);font-weight:600">· น้ำหนักขั้นตอน = ประมาณการภายใน รอยืนยัน</span></div>
+  <div id="prepPay"></div>
   <div class="paygrid" id="payment"></div>
 
   <div class="assume">
-    <h4>สมมติฐานการจับคู่ขั้นตอน ↔ งวดเบิกจ่าย (ต้องยืนยัน)</h4>
+    <h4>วิธีคำนวณ (ยืนยันร่วมกับผู้ใช้ในแชทนี้)</h4>
     <ul>
-      <li><b>PVC 70/30:</b> งวด 70% = <code>วางท่อ</code> · งวด 30% = <code>ทดสอบ+ล้างฆ่าเชื้อ + ตัดบรรจบ</code></li>
-      <li><b>AC 30/35/35:</b> งวด 30% = <code>กดเข็ม + ติดตั้ง support</code> · งวด 35% = <code>วางท่อ AC</code> · งวด 35% = <code>ทดสอบ + ตัดบรรจบ</code></li>
-      <li>ความคืบภายในงวดที่มีหลายขั้นตอน คิดแบบ <b>ถัวเฉลี่ยตามความยาว</b> (แต่ละขั้นตอนเทียบ targetLen เดียวกัน)</li>
-      <li>ร้อยละที่เบิกได้ = Σ (ความเสร็จของงวด × น้ำหนักงวด) — เป็น % ของมูลค่างาน<b>เฉพาะชนิดท่อนั้น</b> · การรวมเป็น % ทั้งสัญญาต้องใช้สัดส่วนมูลค่าต่อชนิดท่อจาก BOQ (ยังไม่มี)</li>
-      <li><b>ST:</b> งานวางหลายรูปแบบ ยังแสดงเพียงความยาวขั้นตอนเดียว ยังไม่คำนวณ % มูลค่า</li>
+      <li><b>งานเตรียมการ:</b> BOQ item 1.1 แบ่งจ่าย <b>70/30</b> ตามเอกสารแนบท้าย "ข" ข้อ 4.1 (ปกสีชมพู ชุดที่ 3/4) — งวด 70% (432,922 บาท) จ่ายเมื่อส่งมอบสำนักงานสนาม+ป้ายจราจรครบถ้วน (✓ ยืนยันแล้ว) · งวด 30% (185,538 บาท) จ่ายตาม <b>%ผลงาน = (มูลค่างาน AC+PVC+ST) ÷ 19,420,000</b> (สูตรยืนยันโดยผู้ใช้)</li>
+      <li><b>ราคาต่อเมตร:</b> มูลค่าเป้าหมายรวม (target value) ของทั้งสองชนิดท่อใช้ราคาเฉลี่ยถ่วงน้ำหนักจาก BOQ จริง (AC 2,843.03 / PVC 2,556.99 บ./ม.) แต่ <b>มูลค่างานที่ทำได้จริงใช้ราคาตามรูปแบบที่หน้างานทำจริง</b> ตามที่ผู้ใช้ยืนยัน — AC: เสาเข็ม 6 ม. = 2,860.32 บ./ม. · PVC: ใต้ไหล่ทาง = 2,647.68 บ./ม.</li>
+      <li><b>AC น้ำหนักขั้นตอน (แก้ไขแล้ว รวม 100%):</b> กดเข็ม 20 / support 15 / <b>วางท่อ 35</b> / ทดสอบท่อ 10 / ล้างท่อฆ่าเชื้อ 10 / ตัดบรรจบท่อ 10</li>
+      <li><b>PVC น้ำหนักขั้นตอน (รวม 100%):</b> วางท่อ 70 / ทดสอบท่อ 10 / ล้างท่อฆ่าเชื้อ 10 / ตัดบรรจบท่อ 10</li>
+      <li>ผลงาน % ของแต่ละชนิดท่อ = Σ (ความยาวที่ทำ ÷ targetLen × น้ำหนักขั้นตอน) · กดเข็ม/support แปลงจาก จำนวน × 2.5 ม./ต้น(หัว)</li>
+      <li>มูลค่าที่ทำได้ = ราคาต่อเมตร × targetLen × ผลงาน % · <b>ฐานคำนวณ % รวมทั้งสัญญา = 19,420,000 บาท</b> (ยืนยัน 2 ทางตรงกัน: ผลรวม BOQ 25 หมวด กับ หลักประกันสัญญา 971,000÷5%)</li>
+      <li><b>สำคัญ:</b> BOQ ไม่มีรายการราคาแยกสำหรับ "กดเข็ม"/"ติดตั้ง support" — ราคาต่อเมตรใน BOQ คือราคาของ "ท่อที่วางเสร็จ" ทั้งก้อน น้ำหนักขั้นตอนข้างต้นเป็นการแบ่งย่อยเชิงบริหารงานภายใน ไม่ใช่รายการที่เบิกแยกได้จริงตามสัญญา — ใช้เพื่อประเมินความคืบหน้าเท่านั้น</li>
+      <li><b>ST:</b> เป้าหมาย 543 ม. ยืนยันตรงกับ BOQ แล้ว แต่งานวางหลายรูปแบบ (10 แบบ ราคาต่างกันมาก 4,598–8,993 บ./ม.) จึงยังแสดงเฉพาะความยาว ไม่คำนวณ % มูลค่า ตามที่สั่ง</li>
     </ul>
   </div>
 
   <div class="foot">
-    <span>จัดทำเพื่อนำเสนอคณะกรรมการตรวจรับพัสดุ · เรียบเรียงจากใบรายงานประจำวัน สัญญา PID-903(R1)</span>
+    <span>จัดทำเพื่อนำเสนอคณะกรรมการตรวจรับพัสดุ · เรียบเรียงจากใบรายงานประจำวันและผนวก 3 คู่ฉบับสัญญา PID-903(R1) · ฐานคำนวณ % 19,420,000 บาท (ยืนยัน 2 ทาง)</span>
     <span>การประปานครหลวง · ประปาเพื่อประชาชน</span>
   </div>
 </div>
 
 <script>
+const CONTRACT_BASE = 19420000.00; // ยืนยัน 2 ทาง: ผลรวม BOQ 25 หมวด + หลักประกันสัญญา 971,000/5%
+
+const PREP = { name:"งานเตรียมการ", boqItem:"BOQ item 1.1 ค่าสำนักงานสนามและเครื่องใช้",
+  value:618460.00 };
+PREP.pct70 = 70; PREP.pct30 = 30;
+PREP.earned70 = PREP.value * 0.70;   // คงที่ — ส่งมอบสำนักงานสนาม+ป้ายจราจรครบแล้ว
+PREP.pool30 = PREP.value * 0.30;     // จ่ายงวดเดือนตาม % ผลงาน
+PREP.basis70 = "ผู้รับจ้างส่งมอบสำนักงานสนามและเครื่องใช้ และจัดทำป้ายสัญญาณจราจรครบถ้วนแล้ว (ยืนยันโดยผู้ใช้)";
+PREP.source = 'เอกสารประกวดราคา ชุดที่ 3/4 ใบแจ้งปริมาณงานและราคาฯ (ปกสีชมพู) เอกสารแนบท้าย "ข" ข้อ 4.1';
+
 const DATA = {
   colors:{PVC:"var(--pvc)",AC:"var(--ac)",ST:"var(--st)"},
   order:["AC","PVC","ST"],
   pipes:{
-    PVC:{full:"ท่อ PVC ϕ300",target:925,steps:[
-      {name:"วางท่อ PVC",len:480},{name:"ทดสอบ+ล้างฆ่าเชื้อ",len:0},{name:"ตัดบรรจบท่อ",len:0}]},
-    AC:{full:"ท่อ AC ϕ300 (ในคูน้ำ)",target:2233,steps:[
-      {name:"กดเสาเข็ม",len:890},{name:"ติดตั้ง Support",len:300},{name:"วางท่อประปา (AC)",len:0},
-      {name:"ทดสอบ+ล้างฆ่าเชื้อ",len:0},{name:"ตัดบรรจบท่อ",len:0}]},
-    ST:{full:"ท่อ ST ϕ300",target:543,steps:[
+    PVC:{full:"ท่อ PVC ϕ300",target:925,avgPrice:2556.9903,value:2365216.05,
+      actualPrice:2647.68,actualPriceNote:"ใต้ไหล่ทาง — รูปแบบที่ใช้จริงหน้างานทั้งหมด (BOQ item 3.1.1(2))",
+      steps:[
+      {name:"วางท่อ PVC",len:480,weight:70},
+      {name:"ทดสอบท่อ",len:0,weight:10},
+      {name:"ล้างท่อฆ่าเชื้อโรค",len:0,weight:10},
+      {name:"ตัดบรรจบท่อ",len:0,weight:10}]},
+    AC:{full:"ท่อ AC ϕ300 (ในคูน้ำ)",target:2233,avgPrice:2843.0311,value:6348488.36,
+        actualPrice:2860.32,actualPriceNote:"เสาเข็มยาว 6 ม. — รูปแบบที่ใช้จริงหน้างานทั้งหมดขณะนี้",
+        steps:[
+      {name:"กดเสาเข็ม",len:890,weight:20,unit:"356 ต้น × 2.5 ม."},
+      {name:"ติดตั้ง Support",len:300,weight:15,unit:"120 หัว × 2.5 ม."},
+      {name:"วางท่อประปา (AC)",len:0,weight:35},
+      {name:"ทดสอบท่อ",len:0,weight:10},
+      {name:"ล้างท่อฆ่าเชื้อโรค",len:0,weight:10},
+      {name:"ตัดบรรจบท่อ",len:0,weight:10}]},
+    ST:{full:"ท่อ ST ϕ300",target:543,avgPrice:5668.6680,value:3078086.71,noMoney:true,steps:[
       {name:"วางท่อ ST (ขั้นตอนเดียวก่อน)",len:0}]}
-  },
-  pay:{
-    PVC:{split:"70/30",weights:[70,30],labels:["วางท่อ","ทดสอบ+ตัดบรรจบ"],compl:[480/925,0],claim:36.3},
-    AC:{split:"30/35/35",weights:[30,35,35],labels:["กดเข็ม+support","วางท่อ","ทดสอบ+ตัดบรรจบ"],
-        compl:[(890+300)/(2*2233),0,0],claim:8.0}
   }
 };
 
+// compute weighted completion % and money per type
+// money uses actualPrice (site-confirmed unit price) when available, otherwise falls back to avgPrice
+function computeType(p){
+  const pct = p.steps.reduce((s,st)=> s + (st.weight? (st.len/p.target)*st.weight : 0), 0);
+  const effLen = p.target * pct/100;              // ความยาวเทียบเท่าที่ทำได้ (ถ่วงน้ำหนักขั้นตอน)
+  const priceUsed = p.actualPrice || p.avgPrice;
+  const money = effLen * priceUsed;
+  return {pct, money, effLen, priceUsed};
+}
+DATA.pipes.PVC.calc = computeType(DATA.pipes.PVC);
+DATA.pipes.AC.calc  = computeType(DATA.pipes.AC);
+const stEarned = 0; // ST ยังไม่มีผลงาน — จะรวมในสูตรนี้เมื่อมีข้อมูล
+const pipeEarned = DATA.pipes.PVC.calc.money + DATA.pipes.AC.calc.money + stEarned;
+const pipePctOfContract = pipeEarned/CONTRACT_BASE*100; // ยืนยันโดยผู้ใช้: (AC+PVC+ST)/19,420,000
+PREP.earned30 = PREP.pool30 * pipePctOfContract/100;
+PREP.earned = PREP.earned70 + PREP.earned30;
+PREP.pctOfOwn = PREP.earned/PREP.value*100;
+const totalMoney = PREP.earned + pipeEarned;
+const totalPct = totalMoney/CONTRACT_BASE*100;
+
 function fmt(n){return n.toLocaleString('en-US')}
 function pct(l,t){return t? (l/t*100):0}
+
+// hero KPI
+document.getElementById("hero").innerHTML = `
+  <div class="hcard main">
+    <div class="hk">ความก้าวหน้ารวมทั้งสัญญา (คิดเป็นมูลค่า)</div>
+    <div class="hv">${totalPct.toFixed(2)}<small>%</small></div>
+    <div class="sub2 mono">${fmt(Math.round(totalMoney))} / ${fmt(CONTRACT_BASE)} บาท</div>
+  </div>
+  <div class="hcard">
+    <div class="hk">มูลค่างานที่ทำได้ — AC</div>
+    <div class="hv" style="color:var(--ac)">${DATA.pipes.AC.calc.pct.toFixed(2)}<small>%</small></div>
+    <div class="sub2 mono">${fmt(Math.round(DATA.pipes.AC.calc.money))} บาท</div>
+  </div>
+  <div class="hcard">
+    <div class="hk">มูลค่างานที่ทำได้ — PVC</div>
+    <div class="hv" style="color:var(--pvc)">${DATA.pipes.PVC.calc.pct.toFixed(2)}<small>%</small></div>
+    <div class="sub2 mono">${fmt(Math.round(DATA.pipes.PVC.calc.money))} บาท</div>
+  </div>`;
+
+// summary strip — เรียงตามลำดับที่กำหนด: เตรียมการ / AC / PVC / ST
+const summaryItems = [
+  { label:"1. งานเตรียมการ", color:"var(--prep)", pct:PREP.pctOfOwn, earned:PREP.earned, target:PREP.value, tag:"ส่งมอบครบถ้วน" },
+  { label:"2. งานวางท่อ AC", color:"var(--ac)", pct:DATA.pipes.AC.calc.pct, earned:DATA.pipes.AC.calc.money, target:DATA.pipes.AC.value },
+  { label:"3. งานวางท่อ PVC", color:"var(--pvc)", pct:DATA.pipes.PVC.calc.pct, earned:DATA.pipes.PVC.calc.money, target:DATA.pipes.PVC.value },
+  { label:"4. งานวางท่อ ST", color:"var(--st)", pct:0, earned:0, target:DATA.pipes.ST.value },
+];
+document.getElementById("summaryStrip").innerHTML = summaryItems.map(s=>`
+  <div class="sitem" style="border-left:4px solid ${s.color}">
+    <div class="sn">${s.label}${s.tag?`<span class="done-badge">✓ ${s.tag}</span>`:''}</div>
+    <div class="sv mono" style="color:${s.color}">${s.pct.toFixed(2)}%</div>
+    <div class="sm mono">${fmt(Math.round(s.earned))} / ${fmt(Math.round(s.target))} บาท</div>
+  </div>`).join("");
+
+// prep card (physical section)
+document.getElementById("prepCard").innerHTML = `
+  <div class="card prep-card">
+    <div class="card-head">
+      <div class="ptag"><span class="chip" style="background:var(--prep)"></span>งานเตรียมการ
+        <span class="dim">· ${PREP.boqItem} (เหมาจ่าย) · แบ่งจ่าย 70/30</span></div>
+      <div class="head-kpi"><div class="big mono" style="color:var(--prep)">${PREP.pctOfOwn.toFixed(2)}%<span class="done-badge" style="margin-left:8px">✓ ส่งมอบครบถ้วน</span></div>
+        <div class="lbl">${fmt(Math.round(PREP.earned))} / ${fmt(PREP.value)} บาท</div></div>
+    </div>
+    <div class="bar">
+      <div class="seg" style="width:70%"><div class="fill" style="--f:100%;background:var(--prep);opacity:.9"></div>
+        <div class="lab">งวด 70% — ส่งมอบสำนักงานสนาม+ป้ายจราจร</div></div>
+      <div class="seg" style="width:30%"><div class="fill" style="--f:${(PREP.earned30/PREP.pool30*100).toFixed(1)}%;background:var(--prep);opacity:.55"></div>
+        <div class="lab">งวด 30% — ตามผลงานรายเดือน</div></div>
+    </div>
+    <div class="steplist">
+      <div class="stp"><span class="nm">งวด 70% (คงที่) — ${PREP.basis70}</span>
+        <span class="vl"><b class="mono">${fmt(Math.round(PREP.earned70))}</b> บาท <span class="mono">(100%)</span></span></div>
+      <div class="stp"><span class="nm">งวด 30% — ตาม %ผลงาน = (AC+PVC+ST) ÷ 19,420,000 = ${pipePctOfContract.toFixed(2)}%</span>
+        <span class="vl"><b class="mono">${fmt(Math.round(PREP.earned30))}</b> บาท <span class="mono">(${(PREP.earned30/PREP.pool30*100).toFixed(2)}%)</span></span></div>
+    </div>
+    <div class="price-note">ที่มา: ${PREP.source} — "จ่ายร้อยละ 70 เมื่อส่งมอบสำนักงานสนามและเครื่องใช้ต่างๆ และจัดทำป้ายสัญญาณจราจรครบถ้วน ส่วนที่เหลือร้อยละ 30 จ่ายเป็นงวดเดือนตามร้อยละของผลงานที่ทำได้" — สูตรงวด 30% ยืนยันโดยผู้ใช้: (มูลค่างาน AC + PVC + ST) ÷ 19,420,000 (ขณะนี้ ST=0 จึงยังไม่มีผลต่อตัวเลข)</div>
+  </div>`;
+
+// prep payment card
+document.getElementById("prepPay").innerHTML = `
+  <div class="card prep-card" style="margin-bottom:16px">
+    <div class="card-head">
+      <div class="ptag"><span class="chip" style="background:var(--prep)"></span>งานเตรียมการ
+        <span class="dim">· มูลค่าตามสัญญา ${fmt(PREP.value)} บาท (เหมาจ่าย แบ่งจ่าย 70/30)</span></div>
+    </div>
+    <div class="moneyrow"><span class="k">งวด 70% — ส่งมอบสำนักงานสนาม+ป้ายจราจรครบ</span>
+      <span class="v mono">${fmt(Math.round(PREP.earned70))}</span></div>
+    <div class="moneyrow"><span class="k">งวด 30% — ตาม %ผลงาน (AC+PVC+ST)/19,420,000 = ${(PREP.earned30/PREP.pool30*100).toFixed(2)}% ของ ${fmt(PREP.pool30)}</span>
+      <span class="v mono">${fmt(Math.round(PREP.earned30))}</span></div>
+    <div class="claim"><span class="k">มูลค่างานที่ทำได้จริง (บาท)</span>
+      <span class="v mono">${fmt(Math.round(PREP.earned))}</span></div>
+  </div>`;
 
 // physical cards
 const phys=DATA.order.map(k=>{
@@ -176,15 +325,17 @@ const phys=DATA.order.map(k=>{
   }).join("");
   const rows=p.steps.map(s=>{
     const z=s.len>0?"":"zero";
-    return `<div class="stp ${z}"><span class="nm">${s.name}</span>
+    const wt = s.weight!==undefined? ` <span style="color:var(--ink-faint)">(น้ำหนัก ${s.weight}%)</span>`:"";
+    return `<div class="stp ${z}"><span class="nm">${s.name}${wt}</span>
       <span class="vl"><b class="mono">${fmt(s.len)}</b> ม. <span class="mono">(${pct(s.len,p.target).toFixed(1)}%)</span></span></div>`;
   }).join("");
+  const kpi = p.calc? `${p.calc.pct.toFixed(1)}%` : `${first.toFixed(1)}%`;
   return `<div class="card">
     <div class="card-head">
       <div class="ptag"><span class="chip" style="background:${col}"></span>${p.full}
-        <span class="dim">· แนว ${fmt(p.target)} ม.</span></div>
-      <div class="head-kpi"><div class="big mono">${first.toFixed(1)}%</div>
-        <div class="lbl">${k==="AC"?"กดเข็มนำ":"วางท่อ"} ${fmt(laid)} / ${fmt(p.target)} ม.</div></div>
+        <span class="dim">· แนว ${fmt(p.target)} ม. · ${p.calc? p.calc.priceUsed.toFixed(2):p.avgPrice.toFixed(2)} บ./ม. ${p.actualPrice?'(ราคาจริงหน้างาน)':'(เฉลี่ยถ่วงน้ำหนัก)'}</span></div>
+      <div class="head-kpi"><div class="big mono">${kpi}</div>
+        <div class="lbl">${p.calc? 'ผลงานถ่วงน้ำหนักขั้นตอน':(k==="AC"?"กดเข็มนำ":"วางท่อ")+` ${fmt(laid)}/${fmt(p.target)} ม.`}</div></div>
     </div>
     <div class="bar">${segs}</div>
     <div class="steplist">${rows}</div>
@@ -192,28 +343,33 @@ const phys=DATA.order.map(k=>{
 }).join("");
 document.getElementById("physical").innerHTML=phys;
 
-// payment cards
+// payment cards (real BOQ money)
 const pay=["AC","PVC"].map(k=>{
-  const v=DATA.pay[k], col=DATA.colors[k];
-  const bar=v.weights.map((w,i)=>{
-    const f=Math.min(v.compl[i]*100,100);
-    return `<div class="pm" style="width:${w}%"><div class="pf" style="--f:${f}%;background:${col}"></div>
-      <span class="pt ${f>18?'on':''}">${w}%</span></div>`;
+  const p=DATA.pipes[k], col=DATA.colors[k];
+  const bar=p.steps.map(s=>{
+    const f=Math.min(pct(s.len,p.target),100);
+    return `<div class="pm" style="width:${s.weight}%"><div class="pf" style="--f:${f}%;background:${col}"></div>
+      <span class="pt ${f>50?'on':''}">${s.weight}%</span></div>`;
   }).join("");
-  const rows=v.weights.map((w,i)=>
-    `<div class="r"><span class="m">งวด ${w}% · ${v.labels[i]}</span>
-     <span class="mono">เสร็จ ${(v.compl[i]*100).toFixed(1)}% → เบิก ${(v.compl[i]*w).toFixed(1)}%</span></div>`
-  ).join("");
+  const rows=p.steps.map(s=>{
+    const c = pct(s.len,p.target);
+    return `<div class="moneyrow"><span class="k">งวด ${s.weight}% · ${s.name}${s.unit?` (${s.unit})`:''}</span>
+     <span class="v mono">เสร็จ ${c.toFixed(1)}% → ${(c*s.weight/100).toFixed(2)}%</span></div>`;
+  }).join("");
   return `<div class="card pay">
     <div class="card-head">
-      <div class="ptag"><span class="chip" style="background:${col}"></span>${DATA.pipes[k].full}
-        <span class="dim">· แบ่งจ่าย ${v.split}</span></div>
+      <div class="ptag"><span class="chip" style="background:${col}"></span>${p.full}
+        <span class="dim">· มูลค่าเป้าหมายตามสัญญา ${fmt(Math.round(p.value))} บาท</span></div>
     </div>
     <div class="pbar">${bar}</div>
     <div class="payrows">${rows}
-      <div class="claim"><span class="k">มูลค่าที่เบิกได้ (ประมาณการ) เทียบมูลค่างาน ${k}</span>
-        <span class="v mono">${v.claim.toFixed(1)}%</span></div>
+      <div class="moneybox"><span class="k">ความยาวเทียบเท่าที่ทำได้ ${p.calc.effLen.toFixed(1)} ม. × ราคา ${p.calc.priceUsed.toFixed(2)} บ./ม.${p.actualPrice? ' (ราคาจริงหน้างาน)':' (ราคาเฉลี่ยถ่วงน้ำหนัก)'}</span></div>
+      <div class="claim"><span class="k">มูลค่างานที่ทำได้จริง (บาท)</span>
+        <span class="v mono">${fmt(Math.round(p.calc.money))}</span></div>
     </div>
+    <div class="price-note">${p.actualPrice
+        ? `✓ ใช้ราคาจริงหน้างาน ${p.actualPrice.toFixed(2)} บ./ม. — ${p.actualPriceNote} (ราคาเฉลี่ย ${p.avgPrice.toFixed(2)} บ./ม. ใช้เป็นฐานมูลค่าเป้าหมายรวมเท่านั้น)`
+        : `ราคา ${p.avgPrice.toFixed(2)} บ./ม. เป็นค่าเฉลี่ยถ่วงน้ำหนักจากรูปแบบวางท่อใน BOQ — ยังไม่ยืนยันว่างานจริงอยู่รูปแบบใด (ไหล่ทาง/ถนน/ทางเท้า) รอ STA. จริง`}</div>
   </div>`;
 }).join("");
 document.getElementById("payment").innerHTML=pay;
