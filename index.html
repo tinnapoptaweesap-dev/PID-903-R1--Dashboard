@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --navy-deep:#044A85; --navy:#065BAA; --steel:#0F72BE;
@@ -77,8 +78,6 @@
     text-decoration:none;background:#E7F0FA;border-radius:6px;padding:6px 10px;white-space:nowrap}
   .view-btn:hover{background:var(--steel);color:#fff}
   .view-btn svg{width:12px;height:12px}
-  .drive-note{margin-top:14px;background:var(--amber-bg);border:1px solid #EACfA9;border-left:4px solid var(--amber);
-    border-radius:6px;padding:10px 14px;font-size:12px;color:#7A4A12}
 
   /* ---------- pipe-progress tab ---------- */
   .hero{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}
@@ -136,6 +135,34 @@
 
   .foot{margin-top:30px;padding-top:14px;border-top:1px solid var(--border);
     font-size:11px;color:var(--ink-faint);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+  /* ============================================================
+     สไตล์เฉพาะแท็บ "สรุปสาระสำคัญสัญญา" (จากไฟล์ v10 เดิม) — scope ด้วย #tab-summary ทั้งหมด
+     ============================================================ */
+  #tab-summary{ font-family:'Sarabun',sans-serif; }
+  #tab-summary .cs-wrap { max-width:920px; margin:0 auto; padding:32px 20px; }
+  #tab-summary .cs-hero { background:linear-gradient(135deg,#0a3d62,#1976d2); color:#fff; border-radius:16px; padding:32px; margin-bottom:20px; }
+  #tab-summary .cs-eyebrow { font-size:13px; letter-spacing:1px; opacity:.85; font-weight:600; margin-bottom:10px; }
+  #tab-summary .cs-hero h1 { font-size:26px; font-weight:700; line-height:1.35; margin-bottom:10px; }
+  #tab-summary .cs-hero .cs-sub { font-size:14px; opacity:.9; margin-bottom:16px; }
+  #tab-summary .cs-pills { display:flex; gap:10px; flex-wrap:wrap; }
+  #tab-summary .cs-pill { background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:6px 14px; font-size:13px; }
+  #tab-summary .cs-card { background:#fff; border:1px solid #e3e8ee; border-radius:14px; padding:22px 24px; margin-bottom:18px; }
+  #tab-summary .cs-card h2 { font-size:17px; color:#0a3d62; font-weight:700; display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  #tab-summary .cs-num { background:#0a3d62; color:#fff; width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:13px; }
+  #tab-summary table { width:100%; border-collapse:collapse; font-size:14px; margin:10px 0; }
+  #tab-summary th { background:#eef3f8; text-align:left; padding:9px 10px; font-weight:600; color:#0a3d62; border-bottom:2px solid #dbe4ee; }
+  #tab-summary td { padding:9px 10px; border-bottom:1px solid #edf1f5; }
+  #tab-summary tr.cs-total td { font-weight:700; background:#f7fafc; }
+  #tab-summary .cs-fixnote { background:#fff4e5; border-left:4px solid #e8912d; border-radius:8px; padding:14px 16px; margin:12px 0; font-size:13.5px; }
+  #tab-summary .cs-fixnote b { color:#a15c00; }
+  #tab-summary .cs-oldval { text-decoration:line-through; color:#b23b3b; opacity:.75; }
+  #tab-summary .cs-newval { color:#1a7a3c; font-weight:700; }
+  #tab-summary .cs-verify { background:#eaf2ff; border-left:4px solid #1976d2; border-radius:8px; padding:12px 14px; margin-top:8px; font-size:13px; color:#26507a; }
+  #tab-summary .cs-badge-fixed { display:inline-block; background:#1a7a3c; color:#fff; font-size:11px; font-weight:700; padding:3px 10px; border-radius:999px; margin-left:8px; vertical-align:middle; }
+  #tab-summary .cs-footer { text-align:center; font-size:12px; color:#8a97a5; margin-top:26px; }
+  #tab-summary .cs-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media(max-width:600px){ #tab-summary .cs-grid2{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
@@ -147,14 +174,176 @@
       <span class="brand-sub">การประปานครหลวง · รายงานความก้าวหน้าโครงการ สำหรับคณะกรรมการตรวจรับพัสดุ</span>
     </div>
     <nav class="tabs" role="tablist">
-      <button class="tab-btn active" data-tab="progress" role="tab" aria-selected="true">ภาพรวมความก้าวหน้า</button>
+      <button class="tab-btn active" data-tab="summary" role="tab" aria-selected="true">สรุปสาระสำคัญสัญญา</button>
+      <button class="tab-btn" data-tab="progress" role="tab" aria-selected="false">ภาพรวมความก้าวหน้า</button>
       <button class="tab-btn" data-tab="daily" role="tab" aria-selected="false">รายงานรายวัน</button>
     </nav>
   </div>
 </div>
 
-<!-- ============ TAB 1: ภาพรวมความก้าวหน้า ============ -->
-<section id="tab-progress" class="tab-panel active">
+<!-- ============ TAB 1: สรุปสาระสำคัญสัญญา (จากไฟล์ v10 เดิม) ============ -->
+<section id="tab-summary" class="tab-panel active">
+  <div class="cs-wrap">
+
+    <div class="cs-hero">
+      <div class="cs-eyebrow">สรุปสาระสำคัญสัญญา · PRE-CONSTRUCTION BRIEFING · v10 (แก้ไข)</div>
+      <h1>งานก่อสร้างวางท่อประปาและงานที่เกี่ยวข้อง — สัญญาเลขที่ PID-903(R1)</h1>
+      <div class="cs-sub">ถนนปานวิถี ช่วงคลองท้องคุ้ง–ซอยเก้าแสน (หมู่บ้านอุ่น บางนา กม.26) · อำเภอบางบ่อ จ.สมุทรปราการ</div>
+      <div class="cs-pills">
+        <div class="cs-pill">ลักษณะสัญญา: ราคาต่อหน่วย (Unit Price) — จ่ายตามเนื้องานจริง</div>
+        <div class="cs-pill">ประชุมชี้แจงก่อนเริ่มงานก่อสร้าง · 7 สิงหาคม 2569</div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <div class="cs-grid2">
+        <div>
+          <div style="font-size:13px;color:#6b7a89;">มูลค่าสัญญา (รวม VAT)</div>
+          <div style="font-size:26px;font-weight:700;color:#0a3d62;">19,420,000 บาท</div>
+          <div style="font-size:12px;color:#8a97a5;">สิบเก้าล้านสี่แสนสองหมื่นบาทถ้วน · ลงนาม 10 เม.ย. 69</div>
+        </div>
+        <div>
+          <div style="font-size:13px;color:#6b7a89;">ระยะเวลาดำเนินการ</div>
+          <div style="font-size:26px;font-weight:700;color:#0a3d62;">210 วัน</div>
+          <div style="font-size:12px;color:#8a97a5;">นับถัดจากวันแจ้งเริ่มงาน (NTP)</div>
+        </div>
+        <div>
+          <div style="font-size:13px;color:#6b7a89;">วันแจ้งเริ่มงาน (NTP)</div>
+          <div style="font-size:26px;font-weight:700;color:#0a3d62;">27 ก.ค. 69</div>
+          <div style="font-size:12px;color:#8a97a5;">เริ่มนับเวลาสัญญาวันที่ 28 ก.ค. 69</div>
+        </div>
+        <div>
+          <div style="font-size:13px;color:#6b7a89;">ครบกำหนดส่งมอบงาน</div>
+          <div style="font-size:26px;font-weight:700;color:#0a3d62;">22 ก.พ. 70</div>
+          <div style="font-size:12px;color:#8a97a5;">= NTP + 210 วัน (ตรวจสอบแล้ว)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-card">
+      <h2><span class="cs-num">1</span> ข้อมูลโครงการและคู่สัญญา</h2>
+      <p><b>ผู้ว่าจ้าง:</b> การประปานครหลวง (กปน.) — เจ้าของสัญญาแต่เพียงผู้เดียว (คู่สัญญาเดียว)</p>
+      <p><b>ผู้รับจ้าง:</b> บจก. ไทคูนวณิชย์ — ผู้ดำเนินงานก่อสร้าง</p>
+      <p><b>วัสดุ:</b> ผู้รับจ้างจัดหาเองทั้งหมด ไม่มีท่อ/อุปกรณ์ที่ กปน. จัดให้</p>
+      <p style="margin-top:8px;color:#6b7a89;font-size:13px;">บทบาทหน่วยงานภายนอก (มิใช่คู่สัญญา): กรมชลประทาน / อบต.คลองด่าน / แขวงทางหลวงสมุทรปราการ
+      เป็นเจ้าของพื้นที่และผู้ออกใบอนุญาต ที่ กปน. ต้องขออนุญาตเข้าก่อสร้างเท่านั้น — ไม่มีความสัมพันธ์ทางสัญญากับผู้รับจ้าง</p>
+    </div>
+
+    <div class="cs-card">
+      <h2><span class="cs-num">2</span> ขอบเขตงานและแนวท่อ (Scope &amp; Alignment)</h2>
+      <table>
+        <tr><th>ชนิดท่อ</th><th>วิธีการวางหลัก</th><th>ความยาว (ม.)</th></tr>
+        <tr><td>AC ϕ300</td><td>ในคูน้ำ (เสาเข็มเดี่ยว)</td><td>2,233</td></tr>
+        <tr><td>PVC ϕ300</td><td>ใต้ไหล่ทาง/ผิวจราจร/ทางเท้า</td><td>925</td></tr>
+        <tr><td>ST ϕ300</td><td>ข้ามคลอง/ใต้ไหล่ทาง/คูน้ำ/ลอดถนน ฯลฯ</td><td>543</td></tr>
+        <tr><td>PVC ϕ150</td><td>ใต้ไหล่ทาง</td><td>12</td></tr>
+        <tr class="cs-total"><td colspan="2">รวมปริมาณท่อประปาจริง (Real asset)</td><td>3,713</td></tr>
+      </table>
+      <p style="font-size:13px;color:#6b7a89;">ท่อชั่วคราว HDPE ϕ315 (353 ม.) — วางแล้วรื้อถอนหลังงานเสร็จ ไม่เป็นทรัพย์สินท่อถาวร ·
+      ท่อปลอก ST ϕ600 (80 ม.) — ปลอกหุ้มป้องกันท่อ ST ϕ300 ตำแหน่งเดียวกับรายการ 10.5 ไม่ใช่ท่อเพิ่มเติม</p>
+      <p style="font-size:13px;margin-top:10px;">✓ กระทบยอด: ปริมาณท่อประปาจริงตามแบบรวม 3,713 ม. ใกล้เคียงความยาวแนวสาย 3,665 ม. มาก (ต่างเพียง 48 ม.)
+      หลังตัดท่อชั่วคราวและท่อปลอกออกจากยอดรวม</p>
+      <p style="font-size:13px;color:#8a97a5;">✱ Chainage 0+000 → 3+665 (จุดเริ่ม: คลองท้องคุ้ง → จุดสิ้นสุด: ซอยเก้าแสน) — ค่าจุดแบ่งช่วง
+      สกัดจากแบบแปลนรวมความละเอียดต่ำ (~112 DPI) ต้องยืนยันด้วยการสำรวจสนามก่อนใช้อ้างอิงเชิงตำแหน่ง</p>
+    </div>
+
+    <div class="cs-card">
+      <h2><span class="cs-num">3</span> กรอบเวลาและการรับประกันผลงาน</h2>
+      <p>ลงนามสัญญา 10 เม.ย. 69 → แจ้งเริ่มงาน (NTP) 27 ก.ค. 69 → ประชุมก่อนเริ่มงาน 7 ส.ค. 69 → ครบ 210 วัน
+      ส่งมอบงาน 22 ก.พ. 70 → รับประกันผลงาน +2 ปี</p>
+      <div class="cs-verify">ข้อสังเกตเชิงบริหารเวลา: เวลาสัญญาเริ่มเดินตั้งแต่ 28 ก.ค. 69 — ณ วันประชุม 7 ส.ค. 69
+      ใช้เวลาสัญญาไปแล้วประมาณ 10–11 วัน จึงควรเร่งรัดการส่งเอกสารขออนุมัติ/แผนงานให้ทันโดยไม่รบกวน Critical Path</div>
+      <p style="font-size:13px;margin-top:10px;">แผนงานสะสม (S-Curve): 3% → 13% → 33% → 58% → 80% → 95% → 100% (ก.พ. 70)
+      — เดือน ต.ค.–พ.ย. เป็นช่วงเนื้องานเข้มข้นที่สุด (รวม 47% ของสัญญา) ตรงกับช่วงหลังงานข้ามคลอง Critical Path</p>
+    </div>
+
+    <div class="cs-card">
+      <h2><span class="cs-num">4</span> เส้นทางวิกฤต (Critical Path) และใบอนุญาตเข้าพื้นที่</h2>
+      <p><b>จุดข้ามคลองกันยา (กม. 2+912–2+950):</b> ท่อเหล็กเหนียว ST ϕ300 ยาว ~46 ม. วางบนโครง truss
+      (ปรับจากโครงสร้าง A-frame เดิม เนื่องจากขยาย span เพื่อเปิดช่องเดินเรือ)</p>
+      <p style="font-size:13px;margin-top:8px;">✓ ใบอนุญาตทั้งสองฉบับ (อบต.คลองด่าน เลขที่ 2/2569, แขวงทางหลวงสมุทรปราการ
+      คค 2735/... ) ได้มาก่อน NTP แล้ว จึงไม่มีความเสี่ยงด้านเอกสารเข้าพื้นที่คงค้าง</p>
+      <p style="font-size:13px;margin-top:8px;color:#6b7a89;">สาเหตุที่เป็น Critical Path: การเปลี่ยนรูปแบบโครงสร้างรับท่อ (A-frame → truss)
+      ทำให้เกิดรอบแก้ไขแบบ/ขออนุมัติเพิ่มเติม และงานยกติดตั้งด้วย mobile crane ที่ต้องวางแผนละเอียด — ควรเร่งรัดการอนุมัติแบบ
+      truss และวางแผนงานเครนล่วงหน้า</p>
+    </div>
+
+    <div class="cs-card">
+      <h2><span class="cs-num">5</span> เงื่อนไขทางการเงินและหลักประกัน</h2>
+      <table>
+        <tr><th>รายการ</th><th>อัตรา</th><th>จำนวน</th></tr>
+        <tr><td>หลักประกันสัญญา</td><td>5%</td><td>971,000 บาท</td></tr>
+        <tr><td>เงินจ้างล่วงหน้า</td><td>15%</td><td>2,913,000 บาท (หักคืน 20%/งวด)</td></tr>
+        <tr><td>เงินประกันผลงาน (Retention)</td><td>10%</td><td>หักทุกงวด</td></tr>
+        <tr><td>ค่าปรับงานล่าช้า</td><td>0.25%</td><td>ของค่าจ้างตามสัญญาต่อวัน</td></tr>
+        <tr><td>ปรับการจ้างช่วงผิดเงื่อนไข</td><td>10%</td><td>ของวงเงินจ้างช่วงที่ไม่ได้รับอนุญาต</td></tr>
+      </table>
+      <p style="font-size:13px;">✓ ตรวจสอบแล้ว: หลักประกันสัญญา 5% ของ 19,420,000 บาท = 971,000 บาท ตรงกับที่ระบุในเอกสารพอดี</p>
+    </div>
+
+    <div class="cs-card">
+      <h2><span class="cs-num">6</span> เงื่อนไขการเบิกจ่ายตามงวดงาน (Payment Milestones) <span class="cs-badge-fixed">แก้ไขแล้ว</span></h2>
+      <table>
+        <tr><th>รายการ</th><th>งวดเบิกจ่าย</th></tr>
+        <tr><td>ค่าสำนักงานสนาม</td><td>70% ส่งมอบสำนักงาน+ป้ายครบ / 30% เฉลี่ยรายเดือนตามผลงาน</td></tr>
+        <tr><td>งานวางท่อทั่วไป</td><td>100% ครั้งเดียว — เมื่อวางท่อแล้วเสร็จ</td></tr>
+        <tr><td>งานวางท่อในคูน้ำ (เสาเข็มเดี่ยว)</td><td>35% เสาเข็ม+โครงสร้าง / 35% วางท่อ+อุปกรณ์ / 30% ทดสอบ+ล้าง+บรรจบ</td></tr>
+        <tr><td>งานติดตั้งประตูน้ำ</td><td>70% ติดตั้ง+กลบดิน / 30% หีบกุญแจ+หลอดกันดิน+ทดสอบ+บรรจบ</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:10px;color:#6b7a89;">การเบิกเงินท่อระยะยาว: เส้นทางวางท่อที่ยาวเกิน 1,000 เมตร
+      ต้องขอเบิกค่างานเป็นช่วง ๆ ความยาวไม่น้อยกว่า 500 เมตร ต่อครั้ง</p>
+    </div>
+
+    <div class="cs-card">
+      <h2><span class="cs-num">7</span> มาตรฐานวัสดุและข้อกำหนดทางวิศวกรรม</h2>
+      <table>
+        <tr><th>ชนิดท่อ</th><th>ขนาด/การใช้งาน</th></tr>
+        <tr><td>PVC 8.5</td><td>ท่อจ่ายน้ำ ชั้นคุณภาพ 8.5 เฉดสีฟ้า มอก.272</td></tr>
+        <tr><td>AC ประเภท ข.</td><td>ท่อในคูน้ำ/คลอง (ทนซัลเฟตสูง)</td></tr>
+        <tr><td>ST เหล็กเหนียว</td><td>ท่อข้ามคลอง (หน้าจานประกอบโรงงาน)</td></tr>
+        <tr><td>HDPE</td><td>ยึดด้วยเหล็กสมอ (ANC) และอุปกรณ์ยึด (STR)</td></tr>
+      </table>
+      <p style="font-size:13px;color:#6b7a89;">เสาเข็มคอนกรีตอัดแรง — มาตรฐาน CP-1(R) ปรับตาม Correction ฉบับที่ 1/2567:
+      เหล็กปลอกเกลียว (spiral) ขนาด 0.18×0.18 ม. เปลี่ยนจาก ป-ϕ6 มม.@0.15 เป็น ป-ϕ4 มม.@0.15 (Structural grade)
+      — จุดตรวจโรงงานสำคัญก่อนอนุมัติหล่อ</p>
+    </div>
+
+    <div class="cs-card">
+      <h2><span class="cs-num">8</span> บุคลากร การควบคุมงาน และสำนักงานสนาม</h2>
+      <p><b>วิศวกรผู้รับจ้าง:</b> นายสุพจน์ วิมลวรโชติ (บว.1184) &nbsp; | &nbsp; <b>ผู้จัดการสนาม:</b> นายสมเกียรติ หวังวณิชพันธุ์</p>
+      <p style="font-size:13px;color:#6b7a89;margin-top:6px;">สำนักงานสนามแบบ C (30 ตร.ม.) · ≥10% ช่างผ่านมาตรฐานฝีมือแต่ละสาขา ·
+      ต้องมีช่างประกอบท่อ ≥ 1 คน</p>
+    </div>
+
+    <div class="cs-card">
+      <h2><span class="cs-num">9</span> สถานะการเตรียมความพร้อมและเอกสารขออนุมัติ</h2>
+      <p style="font-size:13px;">เอกสารขออนุมัติในสารบบ: ท่อ PVC ϕ300 (163 ท่อน) · ท่อ AC ϕ300 (447 ชุด) ·
+      ท่อเหล็กเหนียว ST ϕ300 + อุปกรณ์ (งานข้ามคลอง) · ข้อต่อขยาย (4 ตัว) · อุปกรณ์ประกอบระบบ (ประตูน้ำ/สามทาง/AV/หัวดับเพลิง)</p>
+      <p style="font-size:13px;color:#8a97a5;margin-top:8px;">✱ รอยืนยัน: ปริมาณและสถานะการอนุมัติสกัดจากชื่อไฟล์และการอ่านแบบ — ต้องตรวจกับบันทึกการอนุมัติจริงของ กปน. ก่อนสรุปในที่ประชุม</p>
+    </div>
+
+    <div class="cs-card">
+      <h2><span class="cs-num">10</span> Variation Drawing No.1 — การแก้ไขแบบแปลนงานก่อสร้าง <span style="color:#1a7a3c;font-size:12px;">อนุมัติแล้ว</span></h2>
+      <p style="font-size:13px;">ท่อประปาเดิม ϕ300 AC อายุ ~29 ปี ช่วง กม.0-102 ถึง กม.0+115 วางอยู่ในคูระบายน้ำเสีย
+      เสี่ยงปนเปื้อน — แก้ไขโดยเพิ่มท่อ AC ϕ300 (102 ม.) และท่อ PVC ϕ150 (15 ม.) รวม ≈117 ม. (นอกเหนือ BOQ เดิม
+      อยู่ก่อนจุดเริ่มต้นสัญญา กม.0+000)</p>
+      <p style="font-size:13px;color:#6b7a89;margin-top:8px;">ขั้นตอนถัดไป: แบบได้รับอนุมัติทางวิศวกรรมแล้ว แต่ยังต้องดำเนินการแก้ไขสัญญาอย่างเป็นทางการ
+      เพื่อบรรจุปริมาณงานเพิ่ม ~117 ม. เข้าสู่ BOQ และมูลค่าสัญญา</p>
+    </div>
+
+    <div class="cs-footer">
+      ที่มา: สรุปสาระสำคัญสัญญา PID-903(R1) จาก Knowledge Base ของโครงการ · ผู้ว่าจ้าง: การประปานครหลวง ·
+      ผู้รับจ้าง: บจก. ไทคูนวณิชย์ · ✱ = ค่าจาก OCR/อ่านแบบ/ชื่อไฟล์ ต้องไขว้ต้นฉบับก่อนใช้เป็นมติทางการ ·
+      จัดทำเพื่อประชุมก่อนเริ่มงาน 7 ส.ค. 2569<br>
+      <b>Version 10.0</b> — แก้ไขตารางงวดเบิกจ่ายหัวข้อ 6 "งานวางท่อทั่วไป" จาก 70/30 เป็น 100% ครั้งเดียว (ยืนยันแล้ว) ·
+      แก้ไขตำแหน่งบุคลากรหัวข้อ 8 นายสมเกียรติ หวังวณิชพันธุ์ เป็น "ผู้จัดการสนาม" (เดิมระบุผิดเป็นผู้ควบคุมงาน)
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ TAB 2: ภาพรวมความก้าวหน้า ============ -->
+<section id="tab-progress" class="tab-panel">
   <div class="wrap">
     <div class="top">
       <div>
@@ -183,7 +372,7 @@
   </div>
 </section>
 
-<!-- ============ TAB 2: รายงานรายวัน ============ -->
+<!-- ============ TAB 3: รายงานรายวัน ============ -->
 <section id="tab-daily" class="tab-panel">
   <div class="wrap">
     <div class="top">
@@ -220,13 +409,6 @@
         </thead>
         <tbody id="dailyTbody"></tbody>
       </table>
-    </div>
-
-    <div class="drive-note">
-      <b>หมายเหตุ:</b> ตั้งค่าแชร์เป็น "Anyone with the link" แล้ว — แต่ตอนที่ตรวจสอบล่าสุดลิงก์ยังขึ้น
-      private (401) อยู่ อาจเป็นเพราะตั้งค่าที่ระดับโฟลเดอร์แต่ไฟล์ยังไม่ inherit สิทธิ์ หรือกำลังรอระบบอัปเดต
-      — รบกวนลองเปิดลิงก์ "ดูไฟล์" ด้านล่างจากเบราว์เซอร์ที่ไม่ได้ล็อกอินบัญชี Google ของท่าน (หรือ Incognito)
-      เพื่อยืนยันว่าคนอื่นเปิดได้จริงก่อนส่งให้กรรมการ
     </div>
 
     <div class="foot">
