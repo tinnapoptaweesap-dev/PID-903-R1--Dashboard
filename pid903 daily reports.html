@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PID-903(R1) — รายงานประจำวัน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#044A85; --navy:#065BAA; --steel:#0F72BE;
+    --paper:#F3F6F9; --card:#FFFFFF; --border:#D8E3EC;
+    --ink:#0C2338; --ink-soft:#4A5E70; --ink-faint:#8195A6;
+    --track:#EEF2F6; --amber:#E07A1F; --amber-bg:#FBEBD9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--paper);color:var(--ink);
+    line-height:1.5;padding:32px 20px;-webkit-font-smoothing:antialiased}
+  .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+  .wrap{max-width:1080px;margin:0 auto}
+
+  .top{border-bottom:3px solid var(--navy);padding-bottom:16px;margin-bottom:20px;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+  .top .ey{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);font-weight:600}
+  .top h1{font-size:22px;font-weight:700;color:var(--ink);margin-top:4px}
+  .top .sub{font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .asof{text-align:right;font-size:12px;color:var(--ink-faint)}
+  .asof b{display:block;font-size:15px;color:var(--navy);font-weight:600}
+
+  .nav{display:flex;gap:8px;margin-bottom:24px}
+  .nav a{font-size:12.5px;padding:7px 14px;border-radius:20px;border:1px solid var(--border);
+    color:var(--ink-soft);text-decoration:none;background:var(--card)}
+  .nav a.active{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:600}
+
+  .filter-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px}
+  .filter-item{display:flex;flex-direction:column;gap:4px}
+  .filter-item label{font-size:11px;color:var(--ink-faint)}
+  .filter-item select,.filter-item input{font-family:inherit;font-size:12.5px;padding:7px 10px;
+    border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--ink)}
+  .filter-search{flex:1;min-width:200px}
+  .filter-search input{width:100%}
+  .btn-ghost{font-size:12px;color:var(--ink-faint);background:none;border:1px solid var(--border);
+    border-radius:6px;padding:7px 12px;cursor:pointer}
+  .btn-ghost:hover{color:var(--ink-soft);border-color:var(--ink-faint)}
+
+  .table-meta{font-size:11.5px;color:var(--ink-faint);margin-bottom:8px}
+
+  .table-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  table{width:100%;border-collapse:collapse}
+  thead th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;
+    color:var(--ink-faint);background:var(--track);padding:10px 14px;font-weight:600}
+  tbody td{padding:12px 14px;font-size:12.5px;color:var(--ink-soft);border-top:1px solid var(--border);
+    vertical-align:top}
+  tbody tr:hover{background:#FAFCFE}
+  .col-date{white-space:nowrap;font-weight:600;color:var(--ink)}
+  .col-segs{white-space:nowrap}
+  .seg-chip{display:inline-block;font-size:10.5px;font-weight:600;color:var(--navy);
+    background:#E7F0FA;border-radius:4px;padding:2px 7px}
+  .col-meters{white-space:nowrap;text-align:right;font-weight:600;color:var(--ink)}
+  .unconfirmed-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;
+    color:var(--amber);background:var(--amber-bg);border-radius:20px;padding:2px 8px;margin-left:8px}
+  .report-link{font-size:11px;color:var(--steel);text-decoration:none;margin-left:8px}
+  .report-link:hover{text-decoration:underline}
+
+  .foot{margin-top:24px;padding-top:14px;border-top:1px solid var(--border);
+    font-size:11px;color:var(--ink-faint);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div>
+      <div class="ey">การประปานครหลวง (กปน.) · สัญญา PID-903(R1)</div>
+      <h1>รายงานผลการปฏิบัติงานรายวัน</h1>
+      <div class="sub">เรียบเรียงจากใบแจ้งขอปฏิบัติงานและรายงานผลงานรายวันของผู้รับจ้าง</div>
+    </div>
+    <div class="asof">ข้อมูลถึงวันที่<b>31 ก.ค. 2569</b></div>
+  </div>
+
+  <div class="nav">
+    <a href="pid903_daily_reports.html" class="active">รายงานรายวัน</a>
+    <a href="pid903_progress_v8.html">ผลงานแยกตามประเภทท่อ</a>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-item">
+      <label for="filterMonth">เดือน</label>
+      <select id="filterMonth"><option value="">ทั้งหมด</option></select>
+    </div>
+    <div class="filter-item">
+      <label for="filterSeg">ช่วงงาน</label>
+      <select id="filterSeg"><option value="">ทั้งหมด</option></select>
+    </div>
+    <div class="filter-item filter-search">
+      <label for="filterSearch">ค้นหาข้อความ</label>
+      <input type="text" id="filterSearch" placeholder="เช่น วางท่อ AC, กดเสาเข็ม, ข้ามคลอง">
+    </div>
+    <button id="clearFilters" class="btn-ghost">ล้างตัวกรอง</button>
+  </div>
+
+  <div class="table-meta" id="tableMeta"></div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th class="col-date">วันที่</th><th class="col-segs">ช่วงงาน</th><th>ผลงาน / กิจกรรมที่ดำเนินการ</th><th class="col-meters">เมตร</th></tr>
+      </thead>
+      <tbody id="dailyTbody"></tbody>
+    </table>
+  </div>
+
+  <div class="foot">
+    <span>จัดทำเพื่อนำเสนอคณะกรรมการตรวจรับพัสดุ · สัญญา PID-903(R1)</span>
+    <span>การประปานครหลวง · ประปาเพื่อประชาชน</span>
+  </div>
+</div>
+
+<script>
+const TH_MON = {1:"ม.ค.",2:"ก.พ.",3:"มี.ค.",4:"เม.ย.",5:"พ.ค.",6:"มิ.ย.",7:"ก.ค.",8:"ส.ค.",9:"ก.ย.",10:"ต.ค.",11:"พ.ย.",12:"ธ.ค."};
+
+const DAILY = [
+  { iso:"2569-07-28", date:"28 ก.ค. 2569", month:7,
+    text:"1. วางท่อ PVC ϕ300 มม. 18 ท่อน (~108 ม.) 2. กดเสาเข็มสี่เหลี่ยม 0.22×0.22×6.00 ม. 80 ต้น 3. หล่อหัว Support รับท่อ AC 30 หัว — บริเวณ STA.1+600–3+500 (โดยประมาณ)",
+    segs:["S2"], meters:108, unconfirmed:true,
+    reportUrl:"https://drive.google.com/file/d/1wGTxO67wDUcodj6zt8BF6Q7Bllf7wzdg/view" },
+  { iso:"2569-07-29", date:"29 ก.ค. 2569", month:7,
+    text:"1. วางท่อ PVC ϕ300 มม. 18 ท่อน (~108 ม.) 2. กดเสาเข็มสี่เหลี่ยม 0.22×0.22×6.00 ม. 80 ต้น 3. หล่อหัว Support รับท่อ AC 30 หัว, ติดตั้ง Support 30 หัว — บริเวณ STA.2+150–3+300 (โดยประมาณ)",
+    segs:["S2"], meters:108, unconfirmed:true,
+    reportUrl:"https://drive.google.com/file/d/1dfeysGIbr5DdXbq4mKNbd_QYGQj7K9nA/view" },
+  { iso:"2569-07-30", date:"30 ก.ค. 2569", month:7,
+    text:"1. วางท่อ PVC ϕ300 มม. 13 ท่อน (~78 ม.) 2. กดเสาเข็มสี่เหลี่ยม 0.22×0.22×6.00 ม. 80 ต้น 3. หล่อหัว Support รับท่อ AC 30 หัว, ติดตั้ง Support 30 หัว — บริเวณ STA.1+300–3+200 (โดยประมาณ) — หมายเหตุ: ยอดสะสมในรายงานฉบับนี้กระโดดผิดปกติเทียบวันก่อนหน้า ต้องตรวจสอบกับต้นฉบับ",
+    segs:["S2"], meters:78, unconfirmed:true,
+    reportUrl:"https://drive.google.com/file/d/1bqTb98_2-g6LOP7bwzabEWWjP90RF_ql/view" },
+  { iso:"2569-07-31", date:"31 ก.ค. 2569", month:7,
+    text:"1. วางท่อ PVC ϕ300 มม. 13 ท่อน (~78 ม.) 2. กดเสาเข็มสี่เหลี่ยม 0.22×0.22×6.00 ม. 36 ต้น 3. หล่อหัว Support รับท่อ AC 30 หัว, ติดตั้ง Support 30 หัว — บริเวณ STA.1+100–3+100 (โดยประมาณ)",
+    segs:["S2"], meters:78, unconfirmed:true,
+    reportUrl:"https://drive.google.com/file/d/1pvu4xpB-aybkZzV7UcaagAIpzxMTOWAq/view" },
+];
+
+// populate month filter
+const months = [...new Set(DAILY.map(d=>d.month))].sort((a,b)=>a-b);
+const monthSel = document.getElementById("filterMonth");
+months.forEach(m=>{
+  const o = document.createElement("option"); o.value=m; o.textContent=TH_MON[m]+" 2569"; monthSel.appendChild(o);
+});
+
+// populate segment filter
+const segs = [...new Set(DAILY.flatMap(d=>d.segs))].sort();
+const segSel = document.getElementById("filterSeg");
+segs.forEach(s=>{
+  const o = document.createElement("option"); o.value=s; o.textContent=s; segSel.appendChild(o);
+});
+
+function render(){
+  const m = monthSel.value, s = segSel.value, q = document.getElementById("filterSearch").value.trim().toLowerCase();
+  const rows = DAILY.filter(d=>{
+    if(m && String(d.month)!==m) return false;
+    if(s && !d.segs.includes(s)) return false;
+    if(q && !d.text.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  document.getElementById("tableMeta").textContent = `แสดง ${rows.length} จาก ${DAILY.length} รายการ`;
+  document.getElementById("dailyTbody").innerHTML = rows.map(d=>`
+    <tr>
+      <td class="col-date mono">${d.date}${d.unconfirmed?'<span class="unconfirmed-badge">รอยืนยัน</span>':''}</td>
+      <td class="col-segs">${d.segs.map(s=>`<span class="seg-chip">${s}</span>`).join(' ')}</td>
+      <td>${d.text}${d.reportUrl?`<a class="report-link" href="${d.reportUrl}" target="_blank">ดูรายงานต้นฉบับ →</a>`:''}</td>
+      <td class="col-meters mono">${d.meters} ม.</td>
+    </tr>`).join("") || `<tr><td colspan="4" style="text-align:center;color:var(--ink-faint);padding:24px">ไม่พบรายการ</td></tr>`;
+}
+monthSel.addEventListener("change", render);
+segSel.addEventListener("change", render);
+document.getElementById("filterSearch").addEventListener("input", render);
+document.getElementById("clearFilters").addEventListener("click", ()=>{
+  monthSel.value=""; segSel.value=""; document.getElementById("filterSearch").value=""; render();
+});
+render();
+</script>
+</body>
+</html>

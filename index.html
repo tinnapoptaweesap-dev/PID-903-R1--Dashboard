@@ -3,292 +3,192 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PID-903(R1) — ความก้าวหน้าโครงการ</title>
+<title>PID-903(R1) — รายงานความก้าวหน้าโครงการ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-  :root{
-    --navy-deep:#044A85; --navy:#065BAA; --steel:#0F72BE; --steel-soft:#ABE1FA;
-    --paper:#F3F6F9; --card:#FFFFFF; --border:#D8E3EC;
-    --ink:#0C2338; --ink-soft:#4A5E70; --ink-faint:#8195A6;
-    --track:#EEF2F6;
-    --pvc:#0F72BE; --ac:#065BAA; --st:#00A0C8; --prep:#1F7A54;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'IBM Plex Sans Thai',sans-serif;background:var(--paper);color:var(--ink);
-    line-height:1.5;padding:32px 20px;-webkit-font-smoothing:antialiased}
-  .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
-  .wrap{max-width:1080px;margin:0 auto}
-
-  .top{border-bottom:3px solid var(--navy);padding-bottom:16px;margin-bottom:24px;
-    display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
-  .top .ey{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);font-weight:600}
-  .top h1{font-size:22px;font-weight:700;color:var(--ink);margin-top:4px}
-  .top .sub{font-size:13px;color:var(--ink-soft);margin-top:3px}
-  .asof{text-align:right;font-size:12px;color:var(--ink-faint)}
-  .asof b{display:block;font-size:15px;color:var(--navy);font-weight:600}
-
-  .hero{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}
-  @media(max-width:720px){.hero{grid-template-columns:1fr}}
-  .hcard{border-radius:10px;padding:18px 20px}
-  .hcard.a{background:linear-gradient(135deg,var(--navy-deep),var(--navy));color:#fff}
-  .hcard.b{background:linear-gradient(135deg,#0F72BE,#00A0C8);color:#fff}
-  .hcard .hk{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;opacity:.85;margin-bottom:6px}
-  .hcard .hv{font-size:32px;font-weight:700}
-  .hcard .hv small{font-size:15px;font-weight:500;opacity:.85}
-  .hcard .sub2{font-size:11.5px;opacity:.85;margin-top:4px}
-
-  .summary-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
-  @media(max-width:820px){.summary-strip{grid-template-columns:repeat(2,1fr)}}
-  .sitem{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:11px 13px}
-  .sitem .sn{font-size:11px;color:var(--ink-faint);display:flex;align-items:center;gap:6px;margin-bottom:5px}
-  .sitem .sv{font-size:18px;font-weight:700}
-  .sitem .sm{font-size:10.5px;color:var(--ink-faint);margin-top:2px}
-  .done-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;
-    color:#fff;background:var(--prep);border-radius:20px;padding:2px 8px}
-
-  .sec-title{font-size:12.5px;letter-spacing:.06em;color:var(--ink-soft);
-    font-weight:600;margin:32px 0 14px;display:flex;align-items:center;gap:10px}
-  .sec-title .n{background:var(--navy);color:#fff;width:20px;height:20px;border-radius:4px;
-    display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
-
-  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;
-    padding:18px 20px;margin-bottom:14px}
-  .card-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:12px}
-  .ptag{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:16px}
-  .chip{width:12px;height:12px;border-radius:3px;display:inline-block}
-  .ptag .dim{font-weight:400;font-size:12.5px;color:var(--ink-faint)}
-  .head-kpi{text-align:right}
-  .head-kpi .big{font-size:22px;font-weight:700;color:var(--navy)}
-  .head-kpi .lbl{font-size:11px;color:var(--ink-faint)}
-
-  .bar{display:flex;height:8px;border-radius:5px;overflow:hidden;background:var(--track)}
-  .seg{height:100%;position:relative;border-right:2px solid #fff}
-  .seg:last-child{border-right:none}
-  .seg .fill{position:absolute;inset:0;border-radius:0}
-
-  .steplist{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px 18px}
-  .stp{font-size:12px;display:flex;flex-direction:column;gap:2px;padding-top:8px;border-top:2px solid var(--track)}
-  .stp .nm{color:var(--ink-soft);font-size:11px}
-  .stp .vl{white-space:nowrap}
-  .stp .vl b{color:var(--ink);font-size:13px}
-  .stp .vl span{color:var(--ink-faint);font-size:11px}
-  .stp.zero .nm,.stp.zero .vl b{color:var(--ink-faint)}
-
-  .paygrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:720px){.paygrid{grid-template-columns:1fr}.top h1{font-size:18px}}
-  .payrows{margin-top:12px;font-size:12px}
-  .payrows .r{display:flex;justify-content:space-between;padding:6px 0;border-top:2px solid var(--track)}
-  .payrows .r .m{color:var(--ink-soft)}
-  .payrows .r .v{color:var(--ink);font-weight:500}
-  .claim{margin-top:10px;display:flex;justify-content:space-between;align-items:baseline;
-    background:var(--track);border-radius:6px;padding:9px 13px}
-  .claim .k{font-size:12px;color:var(--ink-soft)}
-  .claim .v{font-size:20px;font-weight:700;color:var(--navy)}
-  .prep-card{border-left:4px solid var(--prep)}
-
-  .foot{margin-top:30px;padding-top:14px;border-top:1px solid var(--border);
-    font-size:11px;color:var(--ink-faint);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  /* เพิ่มเฉพาะส่วนนี้ — nav ระดับเว็บไซต์ เชื่อมไปหน้ารายงานรายวัน / ผลงานแยกตามประเภทท่อ
+     ไม่แก้ไข/ลบ CSS หรือ markup เดิมส่วนอื่นใดทั้งสิ้น */
+  .pagenav{display:flex;gap:8px;padding:10px 24px 12px}
+  .pagenav-link{font-size:12.5px;padding:6px 13px;border-radius:20px;border:1px solid #D8E3EC;
+    color:#4A5E70;text-decoration:none;background:#fff;font-family:'IBM Plex Sans Thai',sans-serif}
+  .pagenav-link.active{background:#065BAA;color:#fff;border-color:#065BAA;font-weight:600}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div class="top">
-    <div>
-      <div class="ey">การประปานครหลวง (กปน.) · สัญญา PID-903(R1)</div>
-      <h1>ความก้าวหน้างานวางท่อ — แยกตามชนิดท่อและขั้นตอน</h1>
-      <div class="sub">งานวางท่อจ่ายน้ำ ถนนปานวิถี จ.สมุทรปราการ · แนวสาย กม.0+000–3+665</div>
+<div class="grid-overlay" aria-hidden="true"></div>
+
+<!-- เพิ่มใหม่: nav ระดับเว็บไซต์ -->
+<nav class="pagenav">
+  <a href="index.html" class="pagenav-link active">ภาพรวม</a>
+  <a href="pid903_daily_reports.html" class="pagenav-link">รายงานรายวัน</a>
+  <a href="pid903_progress_v8.html" class="pagenav-link">ผลงานแยกตามประเภทท่อ</a>
+</nav>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <img class="brand-logo" src="th-full.png" alt="ตราสัญลักษณ์การประปานครหลวง" onerror="this.style.display='none'">
+      <span class="brand-divider" aria-hidden="true"></span>
+      <div class="brand-text">
+        <span class="brand-mark">PID<span class="brand-dot">-</span>903(R1)</span>
+        <span class="brand-sub">การประปานครหลวง · รายงานความก้าวหน้าโครงการ สำหรับคณะกรรมการตรวจรับพัสดุ</span>
+      </div>
     </div>
-    <div class="asof">ข้อมูลถึงวันที่<b>31 ก.ค. 2569</b></div>
+    <nav class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="overview" role="tab" aria-selected="true">ภาพรวม</button>
+      <button class="tab-btn" data-tab="daily" role="tab" aria-selected="false">รายงานรายวัน</button>
+      <button class="tab-btn" data-tab="segments" role="tab" aria-selected="false">รายช่วงงาน</button>
+    </nav>
   </div>
+</header>
 
-  <div class="hero" id="hero"></div>
-  <div class="summary-strip" id="summaryStrip"></div>
+<main>
 
-  <div class="sec-title"><span class="n">1</span> ความก้าวหน้าเชิงกายภาพ — เตรียมการ / AC / PVC / ST</div>
-  <div id="prepCard"></div>
-  <div id="physical"></div>
+  <!-- ============ OVERVIEW ============ -->
+  <section id="tab-overview" class="tab-panel active">
 
-  <div class="sec-title"><span class="n">2</span> ผลงานคิดเป็นมูลค่า ตามราคาต่อหน่วยจริงใน BOQ</div>
-  <div id="prepPay"></div>
-  <div class="paygrid" id="payment"></div>
-
-  <div class="foot">
-    <span>จัดทำเพื่อนำเสนอคณะกรรมการตรวจรับพัสดุ · สัญญา PID-903(R1)</span>
-    <span>การประปานครหลวง · ประปาเพื่อประชาชน</span>
-  </div>
-</div>
-
-<script>
-const CONTRACT_BASE = 19420000.00;
-
-const PREP = { name:"งานเตรียมการ", boqItem:"BOQ item 1.1 ค่าสำนักงานสนามและเครื่องใช้", value:618460.00 };
-PREP.earned70 = PREP.value * 0.70;
-PREP.pool30 = PREP.value * 0.30;
-PREP.basis70 = "ส่งมอบสำนักงานสนามและเครื่องใช้ และจัดทำป้ายสัญญาณจราจรครบถ้วนแล้ว";
-
-const DATA = {
-  colors:{PVC:"var(--pvc)",AC:"var(--ac)",ST:"var(--st)"},
-  order:["AC","PVC","ST"],
-  pipes:{
-    PVC:{full:"ท่อ PVC ϕ300",target:925,avgPrice:2556.9903,value:2365216.05,
-      actualPrice:2647.68,
-      steps:[
-      {name:"วางท่อ PVC",len:480,weight:70},
-      {name:"ทดสอบท่อ",len:0,weight:10},
-      {name:"ล้างท่อฆ่าเชื้อโรค",len:0,weight:10},
-      {name:"ตัดบรรจบท่อ",len:0,weight:10}]},
-    AC:{full:"ท่อ AC ϕ300 (ในคูน้ำ)",target:2233,avgPrice:2843.0311,value:6348488.36,
-        actualPrice:2860.32,
-        steps:[
-      {name:"กดเสาเข็ม",len:890,weight:20,unit:"356 ต้น × 2.5 ม."},
-      {name:"ติดตั้ง Support",len:300,weight:15,unit:"120 หัว × 2.5 ม."},
-      {name:"วางท่อประปา (AC)",len:0,weight:35},
-      {name:"ทดสอบท่อ",len:0,weight:10},
-      {name:"ล้างท่อฆ่าเชื้อโรค",len:0,weight:10},
-      {name:"ตัดบรรจบท่อ",len:0,weight:10}]},
-    ST:{full:"ท่อ ST ϕ300",target:543,avgPrice:5668.6680,value:3078086.71,noMoney:true,
-      steps:[{name:"วางท่อ ST (ขั้นตอนเดียวก่อน)",len:0}]}
-  }
-};
-
-function fmt(n){return Math.round(n).toLocaleString('en-US')}
-function pct(l,t){return t? (l/t*100):0}
-
-function computeType(p){
-  const pct = p.steps.reduce((s,st)=> s + (st.weight? (st.len/p.target)*st.weight : 0), 0);
-  const effLen = p.target * pct/100;
-  const priceUsed = p.actualPrice || p.avgPrice;
-  const money = effLen * priceUsed;
-  return {pct, money, effLen, priceUsed};
-}
-DATA.pipes.PVC.calc = computeType(DATA.pipes.PVC);
-DATA.pipes.AC.calc  = computeType(DATA.pipes.AC);
-const stEarned = 0;
-const pipeEarned = DATA.pipes.PVC.calc.money + DATA.pipes.AC.calc.money + stEarned;
-const pipePctOfContract = pipeEarned/CONTRACT_BASE*100;
-PREP.earned30 = PREP.pool30 * pipePctOfContract/100;
-PREP.earned = PREP.earned70 + PREP.earned30;
-PREP.pctOfOwn = PREP.earned/PREP.value*100;
-const totalMoney = PREP.earned + pipeEarned;
-const totalPct = totalMoney/CONTRACT_BASE*100;
-
-const pipeTargetSum = DATA.pipes.AC.value + DATA.pipes.PVC.value + DATA.pipes.ST.value;
-const pipeOnlyPct = pipeEarned / pipeTargetSum * 100;
-
-document.getElementById("hero").innerHTML = `
-  <div class="hcard a">
-    <div class="hk">ความก้าวหน้ารวมทั้งสัญญา (คิดเป็นมูลค่า)</div>
-    <div class="hv">${totalPct.toFixed(2)}<small>%</small></div>
-    <div class="sub2 mono">${fmt(totalMoney)} / ${fmt(CONTRACT_BASE)} บาท</div>
-  </div>
-  <div class="hcard b">
-    <div class="hk">ความก้าวหน้าเฉพาะงานวางท่อ (ถ่วงน้ำหนัก ไม่รวมงานเตรียมการ)</div>
-    <div class="hv">${pipeOnlyPct.toFixed(2)}<small>%</small></div>
-    <div class="sub2 mono">${fmt(pipeEarned)} / ${fmt(pipeTargetSum)} บาท</div>
-  </div>`;
-
-const summaryItems = [
-  { label:"1. งานเตรียมการ", color:"var(--prep)", pct:PREP.pctOfOwn, earned:PREP.earned, target:PREP.value, tag:"ส่งมอบครบถ้วน" },
-  { label:"2. งานวางท่อ AC", color:"var(--ac)", pct:DATA.pipes.AC.calc.pct, earned:DATA.pipes.AC.calc.money, target:DATA.pipes.AC.value },
-  { label:"3. งานวางท่อ PVC", color:"var(--pvc)", pct:DATA.pipes.PVC.calc.pct, earned:DATA.pipes.PVC.calc.money, target:DATA.pipes.PVC.value },
-  { label:"4. งานวางท่อ ST", color:"var(--st)", pct:0, earned:0, target:DATA.pipes.ST.value },
-];
-document.getElementById("summaryStrip").innerHTML = summaryItems.map(s=>`
-  <div class="sitem" style="border-left:4px solid ${s.color}">
-    <div class="sn">${s.label}${s.tag?`<span class="done-badge">✓ ${s.tag}</span>`:''}</div>
-    <div class="sv mono" style="color:${s.color}">${s.pct.toFixed(2)}%</div>
-    <div class="sm mono">${fmt(s.earned)} / ${fmt(s.target)} บาท</div>
-  </div>`).join("");
-
-const prep30pct = PREP.earned30/PREP.pool30*100;
-document.getElementById("prepCard").innerHTML = `
-  <div class="card prep-card">
-    <div class="card-head">
-      <div class="ptag"><span class="chip" style="background:var(--prep)"></span>งานเตรียมการ
-        <span class="dim">· ${PREP.boqItem}</span></div>
-      <div class="head-kpi"><div class="big mono" style="color:var(--prep)">${PREP.pctOfOwn.toFixed(2)}%</div>
-        <div class="lbl">${fmt(PREP.earned)} / ${fmt(PREP.value)} บาท</div></div>
+    <div class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">งานวางท่อจ่ายน้ำและงานที่เกี่ยวข้อง · ถนนปานวิถี · จังหวัดสมุทรปราการ</p>
+        <h1>จากคลองท้องคุ้ง ถึง ซอยเก้าแสน (หมู่บ้านอุ่น บางนา กม.26)</h1>
+        <p class="hero-desc">สัญญา <strong>PID-903(R1)</strong> · การประปานครหลวง (กปน.) · ผู้รับจ้าง บริษัท ไทคูนวณิชย์ จำกัด · แนวสายยาว <span class="mono">3,665</span> ม. · ระยะเวลาก่อสร้าง <span class="mono">210</span> วัน</p>
+        <div class="hero-meta">
+          <div class="hero-meta-item"><span class="label">แจ้งเริ่มงาน (NTP)</span><span class="value mono">27 ก.ค. 2569</span></div>
+          <div class="hero-meta-item"><span class="label">สิ้นสุดตามสัญญา</span><span class="value mono">22 ก.พ. 2570</span></div>
+          <div class="hero-meta-item"><span class="label">ข้อมูลยืนยันล่าสุด</span><span class="value mono" id="lastConfirmed">—</span></div>
+        </div>
+      </div>
     </div>
-    <div class="bar">
-      <div class="seg" style="width:70%"><div class="fill" style="background:var(--prep)"></div></div>
-      <div class="seg" style="width:30%"><div class="fill" style="background:var(--prep);opacity:${prep30pct/100}"></div></div>
-    </div>
-    <div class="steplist">
-      <div class="stp"><span class="nm">งวด 70% — ${PREP.basis70}</span>
-        <span class="vl"><b class="mono">${fmt(PREP.earned70)}</b> <span class="mono">บาท (100%)</span></span></div>
-      <div class="stp"><span class="nm">งวด 30% — ตามผลงานวางท่อ (AC+PVC+ST) ${pipePctOfContract.toFixed(2)}%</span>
-        <span class="vl"><b class="mono">${fmt(PREP.earned30)}</b> <span class="mono">บาท (${prep30pct.toFixed(1)}%)</span></span></div>
-    </div>
-  </div>`;
 
-const phys=DATA.order.map(k=>{
-  const p=DATA.pipes[k], col=DATA.colors[k];
-  const laid=p.steps[0].len, first=pct(laid,p.target);
-  const segs=p.steps.map(s=>{
-    const w=100/p.steps.length;
-    const f=Math.min(pct(s.len,p.target),100);
-    return `<div class="seg" style="width:${w}%">
-      <div class="fill" style="width:${f}%;background:${col}"></div></div>`;
-  }).join("");
-  const rows=p.steps.map(s=>{
-    const z=s.len>0?"":"zero";
-    const wt = s.weight!==undefined? ` · น้ำหนัก ${s.weight}%`:"";
-    return `<div class="stp ${z}"><span class="nm">${s.name}${wt}</span>
-      <span class="vl"><b class="mono">${fmt(s.len)}</b> <span class="mono">ม. (${pct(s.len,p.target).toFixed(1)}%)</span></span></div>`;
-  }).join("");
-  const kpi = p.calc? `${p.calc.pct.toFixed(1)}%` : `${first.toFixed(1)}%`;
-  return `<div class="card">
-    <div class="card-head">
-      <div class="ptag"><span class="chip" style="background:${col}"></span>${p.full}
-        <span class="dim">· แนว ${fmt(p.target)} ม. · ${(p.calc? p.calc.priceUsed:p.avgPrice).toFixed(2)} บ./ม.</span></div>
-      <div class="head-kpi"><div class="big mono">${kpi}</div>
-        <div class="lbl">${p.calc? 'ผลงานถ่วงน้ำหนักขั้นตอน':(k==="AC"?"กดเข็มนำ":"วางท่อ")+` ${fmt(laid)}/${fmt(p.target)} ม.`}</div></div>
-    </div>
-    <div class="bar">${segs}</div>
-    <div class="steplist">${rows}</div>
-  </div>`;
-}).join("");
-document.getElementById("physical").innerHTML=phys;
+    <!-- แบนเนอร์ "ตรวจสอบก่อนใช้" -->
+    <div id="verifyBanner" class="verify-banner"></div>
 
-document.getElementById("prepPay").innerHTML = `
-  <div class="card prep-card" style="margin-bottom:16px">
-    <div class="card-head">
-      <div class="ptag"><span class="chip" style="background:var(--prep)"></span>งานเตรียมการ
-        <span class="dim">· มูลค่าตามสัญญา ${fmt(PREP.value)} บาท</span></div>
+    <div class="section-block">
+      <h2 class="section-title"><span class="section-num">01</span> แนวสายและช่วงวิธีก่อสร้าง (Chainage 0+000 – 3+665)</h2>
+      <p class="section-caption">แถบแนวสายเรียงตามระยะทาง (chainage) จากต้นโครงการถึงปลายโครงการ — <strong>สีของช่วง</strong> บอกวิธี/ตำแหน่งก่อสร้าง (ในคูน้ำ / ข้ามคลอง / ไหล่ทาง) · <strong>แถบล่าง</strong> คือระยะที่วางท่อแล้ว (Progress) · จุดตัดช่วง (breakpoint) ยังอยู่ระหว่างรอยืนยันแบบความละเอียดสูง คลิกที่ช่วงเพื่อดูรายละเอียด</p>
+      <div class="alignment-wrap">
+        <svg id="alignmentSvg" class="alignment-svg" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+      <div class="legend">
+        <span class="legend-group">วิธี/ตำแหน่งก่อสร้าง (สีช่วง)</span>
+        <span class="legend-item"><i class="lg-band lg-canal"></i>วางท่อในคูน้ำ</span>
+        <span class="legend-item"><i class="lg-band lg-crossing"></i>ท่อลอด/ข้ามคลอง (Critical Path)</span>
+        <span class="legend-item"><i class="lg-band lg-shoulder"></i>ไหล่ทาง ถนนปานวิถี</span>
+        <span class="legend-item"><i class="lg-band lg-road"></i>ต้น/ปลายแนว</span>
+        <span class="legend-group">สถานะการวางท่อ (แถบล่าง)</span>
+        <span class="legend-item"><i class="dot dot-complete"></i>วางท่อแล้วเสร็จ</span>
+        <span class="legend-item"><i class="dot dot-progress"></i>อยู่ระหว่างวางท่อ</span>
+        <span class="legend-item"><i class="dot dot-none"></i>ยังไม่เริ่ม</span>
+      </div>
     </div>
-    <div class="payrows">
-      <div class="r"><span class="m">งวด 70% — ส่งมอบสำนักงานสนาม+ป้ายจราจรครบ</span><span class="v mono">${fmt(PREP.earned70)}</span></div>
-      <div class="r"><span class="m">งวด 30% — ตามผลงาน (AC+PVC+ST)/19,420,000</span><span class="v mono">${fmt(PREP.earned30)}</span></div>
-    </div>
-    <div class="claim"><span class="k">มูลค่างานที่ทำได้จริง</span><span class="v mono">${fmt(PREP.earned)}</span></div>
-  </div>`;
 
-const pay=["AC","PVC"].map(k=>{
-  const p=DATA.pipes[k], col=DATA.colors[k];
-  const bar=p.steps.map(s=>{
-    const f=Math.min(pct(s.len,p.target),100);
-    return `<div class="seg" style="width:${s.weight}%"><div class="fill" style="width:${f}%;background:${col}"></div></div>`;
-  }).join("");
-  const rows=p.steps.map(s=>{
-    const c = pct(s.len,p.target);
-    return `<div class="r"><span class="m">งวด ${s.weight}% · ${s.name}${s.unit?` (${s.unit})`:''}</span>
-     <span class="v mono">${c.toFixed(1)}% → ${(c*s.weight/100).toFixed(2)}%</span></div>`;
-  }).join("");
-  return `<div class="card">
-    <div class="card-head">
-      <div class="ptag"><span class="chip" style="background:${col}"></span>${p.full}
-        <span class="dim">· เป้าหมาย ${fmt(p.value)} บาท</span></div>
+    <div class="section-block kpi-block">
+      <h2 class="section-title"><span class="section-num">02</span> ตัวชี้วัดหลัก</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-card--plan">
+          <span class="kpi-label">ความก้าวหน้าสะสม (แผน)</span>
+          <span class="kpi-value mono" id="kpiPlan">—</span>
+          <span class="kpi-sub" id="kpiPlanSub">—</span>
+        </div>
+        <div class="kpi-card kpi-card--actual">
+          <span class="kpi-label">ความก้าวหน้าสะสม (จริง)</span>
+          <span class="kpi-value mono" id="kpiActual">—</span>
+          <span class="kpi-sub" id="kpiDelta">—</span>
+          <span class="kpi-sub" id="kpiActualAsOf">—</span>
+        </div>
+        <div class="kpi-card kpi-card--days">
+          <span class="kpi-label">วันตามสัญญาที่ล่วงไปแล้ว</span>
+          <span class="kpi-value mono" id="kpiDays">—</span>
+          <span class="kpi-sub" id="kpiDaysSub">—</span>
+        </div>
+        <div class="kpi-card kpi-card--wells">
+          <span class="kpi-label">ระยะท่อที่วางแล้ว / แนวสายทั้งหมด</span>
+          <span class="kpi-value mono" id="kpiMeters">—</span>
+          <span class="kpi-sub" id="kpiMetersSub">ประมวลผลจากรายงานหน้างาน</span>
+        </div>
+      </div>
     </div>
-    <div class="bar">${bar}</div>
-    <div class="payrows">${rows}</div>
-    <div class="claim"><span class="k">มูลค่างานที่ทำได้จริง · ${p.calc.effLen.toFixed(1)} ม. × ${p.calc.priceUsed.toFixed(2)} บ./ม.</span>
-      <span class="v mono">${fmt(p.calc.money)}</span></div>
-  </div>`;
-}).join("");
-document.getElementById("payment").innerHTML=pay;
-</script>
+
+    <div class="section-block">
+      <h2 class="section-title"><span class="section-num">03</span> เส้นความก้าวหน้าสะสม (S-Curve)</h2>
+      <p class="section-caption">เปรียบเทียบแผนงานหลัก (Master Schedule) กับผลงานจริงสะสม หน่วยเป็นร้อยละของมูลค่างานทั้งสัญญา · ช่วง ก.ค. 2569 – ก.พ. 2570</p>
+      <div class="scurve-wrap">
+        <svg id="scurveSvg" class="scurve-svg" viewBox="0 0 1200 460" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <h2 class="section-title"><span class="section-num">04</span> บัญชีท่อตามสัญญา (Pipe Schedule)</h2>
+      <p class="section-caption">ปริมาณท่อรายชนิดตาม BOQ (ยอดรวมทั้งสัญญา) — <em>รอยืนยันกับ BOQ ต้นฉบับ</em></p>
+      <div id="pipeSchedule" class="pipe-wrap"></div>
+    </div>
+
+    <div class="section-block">
+      <h2 class="section-title"><span class="section-num">05</span> เหตุการณ์ล่าสุด</h2>
+      <div id="recentList" class="recent-list"></div>
+    </div>
+
+  </section>
+
+  <!-- ============ DAILY ============ -->
+  <section id="tab-daily" class="tab-panel">
+    <div class="panel-head">
+      <h2 class="panel-title">รายงานผลการปฏิบัติงานรายวัน</h2>
+      <p class="panel-caption">เรียบเรียงจากใบแจ้งขอปฏิบัติงานและรายงานผลงานรายวัน สัญญา PID-903(R1)</p>
+    </div>
+    <div class="filter-bar">
+      <div class="filter-item">
+        <label for="filterMonth">เดือน</label>
+        <select id="filterMonth"></select>
+      </div>
+      <div class="filter-item">
+        <label for="filterSeg">ช่วงงาน</label>
+        <select id="filterSeg"></select>
+      </div>
+      <div class="filter-item filter-search">
+        <label for="filterSearch">ค้นหาข้อความ</label>
+        <input type="text" id="filterSearch" placeholder="เช่น วางท่อ AC, ข้ามคลอง, ทดสอบแรงดัน">
+      </div>
+      <button id="clearFilters" class="btn-ghost">ล้างตัวกรอง</button>
+    </div>
+    <div class="table-meta"><span id="dailyCount">—</span></div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th class="col-date">วันที่</th><th class="col-wells">ช่วงงาน</th><th>ผลงาน / กิจกรรมที่ดำเนินการ</th></tr>
+        </thead>
+        <tbody id="dailyTbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ SEGMENTS ============ -->
+  <section id="tab-segments" class="tab-panel">
+    <div class="panel-head">
+      <h2 class="panel-title">รายละเอียดขั้นตอนแยกรายช่วงงาน</h2>
+      <p class="panel-caption">เลือกช่วงงานเพื่อดูลำดับขั้นตอนการก่อสร้างและสถานะล่าสุด</p>
+    </div>
+    <div id="segChips" class="well-chips"></div>
+    <div id="segDetail" class="well-detail"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-slogan">การประปานครหลวง · ประปาเพื่อประชาชน</p>
+  <span>จัดทำเพื่อการนำเสนอต่อคณะกรรมการตรวจรับพัสดุ · ข้อมูลเรียบเรียงจากใบแจ้งขอปฏิบัติงานและรายงานผลงานรายวัน สัญญา PID-903(R1)</span>
+  <svg class="mwa-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,40 C240,90 480,0 720,35 C960,70 1200,15 1440,45 L1440,90 L0,90 Z" fill="#ABE1FA"/>
+    <path d="M0,55 C240,100 480,20 720,52 C960,84 1200,32 1440,60 L1440,90 L0,90 Z" fill="#00C2F3" opacity="0.85"/>
+    <path d="M0,70 C240,105 480,45 720,68 C960,92 1200,52 1440,74 L1440,90 L0,90 Z" fill="#065BAA"/>
+  </svg>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
