@@ -69,8 +69,10 @@ function initTabs(){
   });
 }
 window.goToSegTab = function(segId){
+  // เดิมเรียก selectSeg(segId) ต่อเพื่อไฮไลต์รายละเอียดช่วงงาน S1..S5
+  // แต่แท็บนี้ถูกแทนที่ด้วย "ผลงานแยกตามประเภทท่อ" (ราย AC/PVC/ST) ไม่มีรายละเอียดต่อช่วงงานแล้ว
+  // จึงแค่สลับไปแท็บนี้เฉยๆ ไม่เรียก selectSeg (element เดิม #segDetail ไม่มีแล้ว จะ error)
   document.querySelector('.tab-btn[data-tab="segments"]').click();
-  selectSeg(segId);
 };
 
 /* =========================================================
@@ -422,8 +424,9 @@ document.addEventListener("DOMContentLoaded",()=>{
   renderSCurve();
   renderPipeSchedule();
   renderRecent();
-  initDailyTab();
-  initSegTab();
+  // initDailyTab()/initSegTab() ปิดไว้: แท็บ "รายงานรายวัน" และ "ผลงานแยกตามประเภทท่อ"
+  // ถูกแทนที่ด้วยมาร์กอัป/สคริปต์ใหม่ทั้งหมดใน index.html (ดู #tab-daily / #tab-segments)
+  // element เดิม (filterMonth, dailyTbody, segChips, segDetail) ไม่มีอยู่แล้ว เรียกต่อจะ error
 });
 
 })();
