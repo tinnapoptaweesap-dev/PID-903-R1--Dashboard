@@ -9,24 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-  /* เพิ่มเฉพาะส่วนนี้ — nav ระดับเว็บไซต์ เชื่อมไปหน้ารายงานรายวัน / ผลงานแยกตามประเภทท่อ
-     ไม่แก้ไข/ลบ CSS หรือ markup เดิมส่วนอื่นใดทั้งสิ้น */
-  .pagenav{display:flex;gap:8px;padding:10px 24px 12px}
-  .pagenav-link{font-size:12.5px;padding:6px 13px;border-radius:20px;border:1px solid #D8E3EC;
-    color:#4A5E70;text-decoration:none;background:#fff;font-family:'IBM Plex Sans Thai',sans-serif}
-  .pagenav-link.active{background:#065BAA;color:#fff;border-color:#065BAA;font-weight:600}
+  /* เพิ่มเฉพาะส่วนนี้ — สีสถานะ active สำหรับปุ่มแท็บที่ตอนนี้เป็นลิงก์ไปหน้าอื่น */
+  .tab-btn[href]{text-decoration:none !important;display:inline-block}
 </style>
 </head>
 <body>
 
 <div class="grid-overlay" aria-hidden="true"></div>
-
-<!-- เพิ่มใหม่: nav ระดับเว็บไซต์ -->
-<nav class="pagenav">
-  <a href="index.html" class="pagenav-link active">ภาพรวม</a>
-  <a href="pid903_daily_reports.html" class="pagenav-link">รายงานรายวัน</a>
-  <a href="pid903_progress_v8.html" class="pagenav-link">ผลงานแยกตามประเภทท่อ</a>
-</nav>
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -40,8 +29,8 @@
     </div>
     <nav class="tabs" role="tablist">
       <button class="tab-btn active" data-tab="overview" role="tab" aria-selected="true">ภาพรวม</button>
-      <button class="tab-btn" data-tab="daily" role="tab" aria-selected="false">รายงานรายวัน</button>
-      <button class="tab-btn" data-tab="segments" role="tab" aria-selected="false">รายช่วงงาน</button>
+      <a class="tab-btn" data-tab="daily" href="pid903_daily_reports.html" role="tab" aria-selected="false">รายงานรายวัน</a>
+      <a class="tab-btn" data-tab="segments" href="pid903_progress_v8.html" role="tab" aria-selected="false">ผลงานแยกตามประเภทท่อ</a>
     </nav>
   </div>
 </header>
