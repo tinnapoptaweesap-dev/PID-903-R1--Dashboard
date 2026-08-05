@@ -351,7 +351,7 @@
         <h1>ความก้าวหน้างานวางท่อ — แยกตามชนิดท่อและขั้นตอน</h1>
         <div class="sub">งานวางท่อจ่ายน้ำ ถนนปานวิถี จ.สมุทรปราการ · แนวสาย กม.0+000–3+665</div>
       </div>
-      <div class="asof">ข้อมูลถึงวันที่<b>3 ส.ค. 2569</b></div>
+      <div class="asof">ข้อมูลถึงวันที่<b class="asof-date">3 ส.ค. 2569</b></div>
     </div>
 
     <div class="hero" id="hero"></div>
@@ -381,7 +381,7 @@
         <h1>รายงานผลการปฏิบัติงานรายวัน</h1>
         <div class="sub">เรียบเรียงจากใบแจ้งขอปฏิบัติงานและรายงานผลงานรายวันของผู้รับจ้าง</div>
       </div>
-      <div class="asof">ข้อมูลถึงวันที่<b>3 ส.ค. 2569</b></div>
+      <div class="asof">ข้อมูลถึงวันที่<b class="asof-date">3 ส.ค. 2569</b></div>
     </div>
 
     <div class="filter-bar">
@@ -418,7 +418,11 @@
   </div>
 </section>
 
+<script src="data.js"></script>
 <script>
+/* ---------- asof date (from data.js) ---------- */
+document.querySelectorAll(".asof-date").forEach(el=>{ el.textContent = PID903_ASOF; });
+
 /* ---------- tab switching ---------- */
 document.querySelectorAll(".tab-btn").forEach(btn=>{
   btn.addEventListener("click", ()=>{
@@ -432,32 +436,7 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
 /* ---------- TAB 1: daily reports ---------- */
 (function(){
   const TH_MON = {1:"ม.ค.",2:"ก.พ.",3:"มี.ค.",4:"เม.ย.",5:"พ.ค.",6:"มิ.ย.",7:"ก.ค.",8:"ส.ค.",9:"ก.ย.",10:"ต.ค.",11:"พ.ย.",12:"ธ.ค."};
-  const DAILY = [
-    { iso:"2569-07-28", date:"28 ก.ค. 2569", month:7,
-      text:"1. วางท่อ PVC ϕ300 มม. 18 ท่อน (~108 ม.) 2. กดเสาเข็มสี่เหลี่ยม 0.22×0.22×6.00 ม. 80 ต้น 3. หล่อหัว Support รับท่อ AC 30 หัว — บริเวณ STA.1+600–3+500 (โดยประมาณ)",
-      segs:["S2"], meters:108, unconfirmed:true,
-      reportUrl:"https://drive.google.com/file/d/1wGTxO67wDUcodj6zt8BF6Q7Bllf7wzdg/view" },
-    { iso:"2569-07-29", date:"29 ก.ค. 2569", month:7,
-      text:"1. วางท่อ PVC ϕ300 มม. 18 ท่อน (~108 ม.) 2. กดเสาเข็มสี่เหลี่ยม 0.22×0.22×6.00 ม. 80 ต้น 3. หล่อหัว Support รับท่อ AC 30 หัว, ติดตั้ง Support 30 หัว — บริเวณ STA.2+150–3+300 (โดยประมาณ)",
-      segs:["S2"], meters:108, unconfirmed:true,
-      reportUrl:"https://drive.google.com/file/d/1dfeysGIbr5DdXbq4mKNbd_QYGQj7K9nA/view" },
-    { iso:"2569-07-30", date:"30 ก.ค. 2569", month:7,
-      text:"1. วางท่อ PVC ϕ300 มม. 13 ท่อน (~78 ม.) 2. กดเสาเข็มสี่เหลี่ยม 0.22×0.22×6.00 ม. 80 ต้น 3. หล่อหัว Support รับท่อ AC 30 หัว, ติดตั้ง Support 30 หัว — บริเวณ STA.1+300–3+200 (โดยประมาณ) — หมายเหตุ: ยอดสะสมในรายงานฉบับนี้กระโดดผิดปกติเทียบวันก่อนหน้า ต้องตรวจสอบกับต้นฉบับ",
-      segs:["S2"], meters:78, unconfirmed:true,
-      reportUrl:"https://drive.google.com/file/d/1bqTb98_2-g6LOP7bwzabEWWjP90RF_ql/view" },
-    { iso:"2569-07-31", date:"31 ก.ค. 2569", month:7,
-      text:"1. วางท่อ PVC ϕ300 มม. 13 ท่อน (~78 ม.) 2. กดเสาเข็มสี่เหลี่ยม 0.22×0.22×6.00 ม. 36 ต้น 3. หล่อหัว Support รับท่อ AC 30 หัว, ติดตั้ง Support 30 หัว — บริเวณ STA.1+100–3+100 (โดยประมาณ)",
-      segs:["S2"], meters:78, unconfirmed:true,
-      reportUrl:"https://drive.google.com/file/d/1pvu4xpB-aybkZzV7UcaagAIpzxMTOWAq/view" },
-    { iso:"2569-08-01", date:"1 ส.ค. 2569", month:8,
-      text:"1. หล่อหัว Support รับท่อ AC 30 หัว 2. ติดตั้งหัว Support รับท่อ AC 30 หัว (STA.2+100) 3. งานเคลียร์ถางป่า — ไม่มีงานกดเสาเข็ม/วางท่อ PVC เพิ่มเติมวันนี้",
-      segs:["S2"], meters:0, unconfirmed:true,
-      reportUrl:"https://drive.google.com/file/d/1W8JFOlvSiG1w7yjU0Gfde5zdf8sLZiep/view" },
-    { iso:"2569-08-03", date:"3 ส.ค. 2569", month:8,
-      text:"1. กดเสาเข็มสี่เหลี่ยม 0.22×0.22×6.00 ม. 35 ต้น (STA.1+100–1+200) 2. หล่อหัว Support รับท่อ AC 30 หัว 3. ติดตั้งหัว Support รับท่อ AC 40 หัว (STA.2+200) — หมายเหตุ: 2 ส.ค. (วันอาทิตย์) ไม่มีรายงาน; ไม่มีงานวางท่อ PVC เพิ่มเติมตั้งแต่ 31 ก.ค.",
-      segs:["S2"], meters:0, unconfirmed:true,
-      reportUrl:"https://drive.google.com/file/d/1Wc3J_7L8HYovy-7Ib8hjuAkZL5JN_dvC/view" },
-  ];
+  const DAILY = PID903_DAILY;
 
   const months = [...new Set(DAILY.map(d=>d.month))].sort((a,b)=>a-b);
   const monthSel = document.getElementById("filterMonth");
@@ -511,15 +490,15 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
       PVC:{full:"ท่อ PVC ϕ300",target:925,avgPrice:2556.9903,value:2365216.05,
         actualPrice:2647.68,
         steps:[
-        {name:"วางท่อ PVC",len:480,weight:70},
+        {name:"วางท่อ PVC",len:PID903_PIPES.PVC.laidM,weight:70},
         {name:"ทดสอบท่อ",len:0,weight:10},
         {name:"ล้างท่อฆ่าเชื้อโรค",len:0,weight:10},
         {name:"ตัดบรรจบท่อ",len:0,weight:10}]},
       AC:{full:"ท่อ AC ϕ300 (ในคูน้ำ)",target:2233,avgPrice:2843.0311,value:6348488.36,
           actualPrice:2860.32,
           steps:[
-        {name:"กดเสาเข็ม",len:977.5,weight:20,unit:"391 ต้น × 2.5 ม."},
-        {name:"ติดตั้ง Support",len:475,weight:15,unit:"190 หัว × 2.5 ม."},
+        {name:"กดเสาเข็ม",len:PID903_PIPES.AC.pileCount*2.5,weight:20,unit:`${PID903_PIPES.AC.pileCount} ต้น × 2.5 ม.`},
+        {name:"ติดตั้ง Support",len:PID903_PIPES.AC.supportCount*2.5,weight:15,unit:`${PID903_PIPES.AC.supportCount} หัว × 2.5 ม.`},
         {name:"วางท่อประปา (AC)",len:0,weight:35},
         {name:"ทดสอบท่อ",len:0,weight:10},
         {name:"ล้างท่อฆ่าเชื้อโรค",len:0,weight:10},
