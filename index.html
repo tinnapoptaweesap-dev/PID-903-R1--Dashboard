@@ -448,6 +448,15 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
 
   const viewIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
 
+  /* แปลง d.date (เช่น "10 ส.ค. 2569") + d.month เป็นค่าตัวเลขเรียงลำดับได้ (ปี*372 + เดือน*31 + วัน)
+     ใช้ d.month ที่มีอยู่แล้วเป็นหลัก (แม่นยำกว่าการ parse ชื่อเดือนจากข้อความ) และดึงวันที่/ปีจากตัวเลขในสตริง */
+  function dateKey(d){
+    const nums = (d.date.match(/\d+/g) || []).map(Number);
+    const day = nums[0] || 1;
+    const year = nums[nums.length-1] || 2569;
+    return year*372 + (d.month||1)*31 + day;
+  }
+
   function render(){
     const m = monthSel.value, s = segSel.value, q = document.getElementById("filterSearch").value.trim().toLowerCase();
     const rows = DAILY.filter(d=>{
@@ -455,7 +464,7 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
       if(s && !d.segs.includes(s)) return false;
       if(q && !d.text.toLowerCase().includes(q)) return false;
       return true;
-    });
+    }).sort((a,b)=> dateKey(b)-dateKey(a));  // วันที่ล่าสุดไว้บนสุดเสมอ
     document.getElementById("tableMeta").textContent = `แสดง ${rows.length} จาก ${DAILY.length} รายการ`;
     document.getElementById("dailyTbody").innerHTML = rows.map(d=>`
       <tr>
