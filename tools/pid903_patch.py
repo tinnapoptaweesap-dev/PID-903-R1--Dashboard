@@ -12,7 +12,7 @@ Subcommands:
 """
 import json, re, sys, argparse, hashlib, datetime, urllib.request
 
-RAW_URL = "https://raw.githubusercontent.com/tinnapoptaweesam-dev/PID-903-R1--Dashboard/main/data.js"
+RAW_URL = "https://raw.githubusercontent.com/tinnapoptaweesap-dev/PID-903-R1--Dashboard/main/data.js"
 
 THAI_MONTHS = {"ม.ค.":1,"ก.พ.":2,"มี.ค.":3,"เม.ย.":4,"พ.ค.":5,"มิ.ย.":6,
                "ก.ค.":7,"ส.ค.":8,"ก.ย.":9,"ต.ค.":10,"พ.ย.":11,"ธ.ค.":12}
