@@ -4,12 +4,16 @@
 //   - Records 1-18 (28 ก.ค.-14 ส.ค.): คัดลอกจาก data.js ต้นฉบับที่ นายช่างฯ ยืนยัน ไม่มีการแก้ไข
 //   - Records 19-20 (15-16 ส.ค.): เพิ่มใหม่ ตรวจสอบตรงกับ Report 15-8-69.pdf, Report 16-8-69.pdf
 //   - Records 21-25 (17-21 ส.ค.): เพิ่มใหม่ มี 3 จุด unconfirmed รอ C7 ยืนยัน (ดู text แต่ละ record)
+// FIX 22 ส.ค. 2569 (รอบตรวจพบบั๊ก): PID903_PIPES.AC ขาด field "laidM" — งานวางท่อ AC ที่บันทึกใน
+//   PID903_DAILY ตั้งแต่ 17 ส.ค. (สะสมถึง 310 ม. ณ 21 ส.ค., chain-validate ผ่านทุกจุด) ไม่เคยถูกดึงขึ้น
+//   dashboard เลยเพราะไม่มีที่เก็บค่า เพิ่ม laidM: 310 เข้าไปแล้ว — ตัวเลขนี้ยังอยู่ในกลุ่ม record ที่ unconfirmed
+//   บางส่วน (17, 19 ส.ค.) จากปัญหาจำนวนเสาเข็ม/support ไม่ใช่จากความยาวท่อ AC เอง แต่ยังต้องรอ C7 ยืนยันทางการ
 
 const PID903_ASOF = "21 ส.ค. 2569";
 
 const PID903_PIPES = {
   PVC: { laidM: 558 },
-  AC:  { pileCount: 594, supportCount: 350 }
+  AC:  { pileCount: 594, supportCount: 350, laidM: 310 }
 };
 
 const PID903_DAILY = [
