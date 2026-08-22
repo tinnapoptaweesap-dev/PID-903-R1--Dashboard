@@ -492,6 +492,8 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
   PREP.pool30 = PREP.value * 0.30;
   PREP.basis70 = "ส่งมอบสำนักงานสนามและเครื่องใช้ และจัดทำป้ายสัญญาณจราจรครบถ้วนแล้ว";
 
+  // FIX 22 ส.ค. 2569: ขั้นตอน "วางท่อประปา (AC)" เดิม hardcode len:0 ไม่เคยอ่านค่าจาก data.js
+  // แก้เป็นอ่านจาก PID903_PIPES.AC.laidM (ต้องมี field นี้ใน data.js ทุกรอบอัพเดทถัดไป)
   const DATA = {
     colors:{PVC:"var(--pvc)",AC:"var(--ac)",ST:"var(--st)"},
     order:["AC","PVC","ST"],
@@ -508,7 +510,7 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
           steps:[
         {name:"กดเสาเข็ม",len:PID903_PIPES.AC.pileCount*2.5,weight:20,unit:`${PID903_PIPES.AC.pileCount} ต้น × 2.5 ม.`},
         {name:"ติดตั้ง Support",len:PID903_PIPES.AC.supportCount*2.5,weight:15,unit:`${PID903_PIPES.AC.supportCount} หัว × 2.5 ม.`},
-        {name:"วางท่อประปา (AC)",len:0,weight:35},
+        {name:"วางท่อประปา (AC)",len:PID903_PIPES.AC.laidM||0,weight:35},
         {name:"ทดสอบท่อ",len:0,weight:10},
         {name:"ล้างท่อฆ่าเชื้อโรค",len:0,weight:10},
         {name:"ตัดบรรจบท่อ",len:0,weight:10}]},
