@@ -1,13 +1,15 @@
-// PID903_DATA — Dashboard data layer
-// อัพเดทล่าสุด: 14 ส.ค. 2569 (จากใบรายงานผลงานประจำวันผู้รับจ้าง 28 ก.ค.–14 ส.ค. 2569, Google Drive inbox)
-// หมายเหตุ: สร้างใหม่ทั้งไฟล์ (reconstruct) เนื่องจากไม่มี data.js ฉบับก่อนหน้าอยู่ใน session นี้
-// ตัวเลขสะสม (cumulative) ไขว้ตรวจสอบข้ามวันแล้วทุกจุด (chain-consistency check) ยกเว้นที่ระบุ unconfirmed
+// PID903_DATA — Dashboard data layer (PID-903(R1) เท่านั้น)
+// อัพเดทล่าสุด: 21 ส.ค. 2569 (ใบรายงานผลงานประจำวันผู้รับจ้าง 28 ก.ค.–21 ส.ค. 2569, Google Drive inbox)
+// buildInfo: rebuilt 22 ส.ค. 2569
+//   - Records 1-18 (28 ก.ค.-14 ส.ค.): คัดลอกจาก data.js ต้นฉบับที่ นายช่างฯ ยืนยัน ไม่มีการแก้ไข
+//   - Records 19-20 (15-16 ส.ค.): เพิ่มใหม่ ตรวจสอบตรงกับ Report 15-8-69.pdf, Report 16-8-69.pdf
+//   - Records 21-25 (17-21 ส.ค.): เพิ่มใหม่ มี 3 จุด unconfirmed รอ C7 ยืนยัน (ดู text แต่ละ record)
 
-const PID903_ASOF = "14 ส.ค. 2569";
+const PID903_ASOF = "21 ส.ค. 2569";
 
 const PID903_PIPES = {
-  PVC: { laidM: 534 },
-  AC:  { pileCount: 519, supportCount: 275 }
+  PVC: { laidM: 558 },
+  AC:  { pileCount: 594, supportCount: 350 }
 };
 
 const PID903_DAILY = [
@@ -99,5 +101,40 @@ const PID903_DAILY = [
   { date: "14 ส.ค. 2569", month: 8,
     segs: ["0+555-0+600", "3+036-3+054"],
     text: "กดเสาเข็ม STA.0+555-0+600 (สะสม 519 ต้น) · วางท่อ PVC Ø300 มม. STA.3+036-3+054 (สะสม 534 ม.) · หล่อหัว Support +10 (สะสม 360) · ติดตั้ง Support +4 (สะสม 275)",
-    meters: 18, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1oYRsMlGHOxgY3guY4M6hzwE5NUEXyu_7/view?usp=drivesdk" }
+    meters: 18, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1oYRsMlGHOxgY3guY4M6hzwE5NUEXyu_7/view?usp=drivesdk" },
+
+  { date: "15 ส.ค. 2569", month: 8,
+    segs: ["STA.3+050-3+075 (สกัดพื้นเตรียมวาง PVC)"],
+    text: "สกัดพื้นปูนแนววางท่อ PVC STA.3+050-3+075 (งานเตรียม ยังไม่นับปริมาณสะสม) · ขนย้ายท่อ AC ลงหน้างาน · ปริมาณสะสมทุกรายการนิ่ง (PVC 534 ม., เสาเข็ม 519 ต้น, Support ผลิต 360/ติดตั้ง 275) — เริ่มช่วงหยุดชะงักงานเสาเข็ม/Support",
+    meters: 0, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1JGgUFqN4fU84qd6-V-w-Q6wVzXCAcEyi/view?usp=drivesdk" },
+
+  { date: "16 ส.ค. 2569", month: 8,
+    segs: ["STA.3+050-3+075 (ท่อ PVC)"],
+    text: "วางท่อ PVC Ø300 มม. STA.3+050-3+075 24 ม. (สะสม 558 ม.) · เสาเข็มและ Support ยังนิ่ง (เสาเข็ม 519 ต้น, Support ผลิต 360/ติดตั้ง 275) — วันที่ 3 ของช่วงหยุดชะงักงานเสาเข็ม/Support",
+    meters: 24, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1jc0rQR06SbjwXqxTKRyOwgP69OucYNdU/view?usp=drivesdk" },
+
+  { date: "17 ส.ค. 2569", month: 8,
+    segs: ["STA.0+400-0+440 (เสาเข็ม)", "STA.1+670 (ท่อ AC ข้ามถนน)", "STA.2+150-3+240 (สกัดผิวถนนเตรียมวาง AC)"],
+    text: "กดเสาเข็มสี่เหลี่ยม STA.0+400-0+440 (สะสมรายงาน 525 ต้น — พบผลต่างจากฐาน 519 ต้น ไม่สอดคล้องกับตัวเลข \"วันนี้\" ที่ระบุ ต้องยืนยัน C7) · เริ่มวางท่อ AC Ø300 ข้ามถนน STA.1+670 90 ม. (สะสมครั้งแรก 90 ม.) · ผลิตหัว Support 15 หัว (สะสม 375), ติดตั้ง 20 หัว (สะสม 295 — สอดคล้อง chain จากฐาน 275)",
+    meters: 90, unconfirmed: true, reportUrl: "https://drive.google.com/file/d/1G8gRhh3fokvQ9a1RjvntabUrEtykEZR9/view?usp=drivesdk" },
+
+  { date: "18 ส.ค. 2569", month: 8,
+    segs: ["STA.0+440-0+498 (เสาเข็ม)", "STA.1+450-1+537 (หัว Support รับท่อ AC)"],
+    text: "กดเสาเข็มสี่เหลี่ยม STA.0+440-0+498 (สะสม 548 ต้น, chain สอดคล้องกับ 525+23) · ท่อ AC เข้าหน่วยงาน · ติดตั้งหัว Support รับท่อ AC STA.1+450-1+537 (สะสมกระโดดเป็น 350 หัว จาก 295 — ผลต่าง +55 ไม่ตรงกับตัวเลข \"วันนี้\" ที่รายงาน 35 หัว ต้องยืนยัน C7)",
+    meters: 0, unconfirmed: true, reportUrl: "https://drive.google.com/file/d/1P08AwgNr7zhdRBZvxLJWkrJ9BpWB9dBP/view?usp=drivesdk" },
+
+  { date: "19 ส.ค. 2569", month: 8,
+    segs: ["STA.0+440 (ฐานรับโค้ง)", "STA.2+240-2+310 (ท่อ AC)"],
+    text: "กดเสาเข็มสี่เหลี่ยม STA.0+440 ฐานรับโค้ง 7 ต้น (สะสม 565 ต้น) · วางท่อ AC Ø300 STA.2+240-2+310 70 ม. (สะสม 160 ม.) · ผลิตหัว Support สะสมกระโดดเป็น 420 หัว (จาก 375 ผลต่าง +45 ไม่ตรงกับตัวเลข \"วันนี้\" ที่รายงาน 15 หัว ต้องยืนยัน C7) · ติดตั้ง Support นิ่งที่ 350 หัว",
+    meters: 70, unconfirmed: true, reportUrl: "https://drive.google.com/file/d/1nmtt1j9lxKgMl81QXvus_Is4gN3Gia9X/view?usp=drivesdk" },
+
+  { date: "20 ส.ค. 2569", month: 8,
+    segs: ["STA.0+200-0+390 (เคลียร์ถาง)", "STA.1+475-1+550 (ท่อ AC)", "STA.2+310-2+390 (ท่อ AC)"],
+    text: "เคลียร์ถางปากกาแนววาง AC STA.0+200-0+390 · วางท่อ AC Ø300 รวม 145 ม. (STA.1+475-1+550 65ม. + STA.2+310-2+390 80ม.) สะสม 305 ม. · งานเสาเข็มหยุด (0 ต้น) สะสมคงที่ 565 ต้น · ติดตั้ง Support นิ่งต่อเนื่องวันที่ 2 ที่ 350 หัว — เริ่มธงคอขวดขั้นตอนติดตั้งหน้างาน",
+    meters: 145, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1HVpu-bYP_JOsLPwN3MJiusLiBBi64fb6/view?usp=drivesdk" },
+
+  { date: "21 ส.ค. 2569", month: 8,
+    segs: ["STA.0+235-0+300 (เสาเข็ม/แท่นรับโค้ง 45°)", "STA.1+470-1+475 (ท่อ AC)", "STA.3+169-3+182 (ท่อ ST)", "กม.2+450 (ท่อ AC เข้าหน่วยงาน)"],
+    text: "กดเสาเข็มสี่เหลี่ยม STA.0+235-0+300 ทำแท่นรับโค้ง 45° (6 ต้น) รวม 29 ต้น (สะสม 594 ต้น) · วางท่อ AC STA.1+470-1+475 5 ม. (สะสม 310 ม.) · วางท่อ ST STA.3+169-3+182 12 ม. · ท่อ AC เข้าหน่วยงานเพิ่มเติม กม.2+450 30 ม. · ติดตั้ง Support นิ่งต่อเนื่องวันที่ 3 ที่ 350 หัว",
+    meters: 5, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1nmtt1j9lxKgMl81QXvus_Is4gN3Gia9X/view?usp=drivesdk" }
 ];
