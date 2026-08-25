@@ -1,19 +1,22 @@
 // PID903_DATA — Dashboard data layer (PID-903(R1) เท่านั้น)
-// อัพเดทล่าสุด: 21 ส.ค. 2569 (ใบรายงานผลงานประจำวันผู้รับจ้าง 28 ก.ค.–21 ส.ค. 2569, Google Drive inbox)
-// buildInfo: rebuilt 22 ส.ค. 2569
+// อัพเดทล่าสุด: 24 ส.ค. 2569 (ใบรายงานผลงานประจำวันผู้รับจ้าง 28 ก.ค.–24 ส.ค. 2569, Google Drive inbox)
+// buildInfo: rebuilt 25 ส.ค. 2569 (อัพเดท 903 cycle)
 //   - Records 1-18 (28 ก.ค.-14 ส.ค.): คัดลอกจาก data.js ต้นฉบับที่ นายช่างฯ ยืนยัน ไม่มีการแก้ไข
-//   - Records 19-20 (15-16 ส.ค.): เพิ่มใหม่ ตรวจสอบตรงกับ Report 15-8-69.pdf, Report 16-8-69.pdf
-//   - Records 21-25 (17-21 ส.ค.): เพิ่มใหม่ มี 3 จุด unconfirmed รอ C7 ยืนยัน (ดู text แต่ละ record)
+//   - Records 19-20 (15-16 ส.ค.): ตรวจสอบตรงกับ Report 15-8-69.pdf, Report 16-8-69.pdf
+//   - Records 21-25 (17-21 ส.ค.): มี 3 จุด unconfirmed รอ C7 ยืนยัน (ดู text แต่ละ record) — คงเดิม ไม่แก้ไข
+//   - Records 26-28 (22-24 ส.ค.): เพิ่มใหม่รอบนี้ จาก Report 22-8-69.pdf, 23-8-69.pdf, 24-8-69.pdf
+//     chain-validate ผ่านทุกจุด (เสาเข็ม 594→632, PVC คงที่ 558, AC 310→455, ST 12→30) ไม่มี unconfirmed ใหม่
 // FIX 22 ส.ค. 2569 (รอบตรวจพบบั๊ก): PID903_PIPES.AC ขาด field "laidM" — งานวางท่อ AC ที่บันทึกใน
-//   PID903_DAILY ตั้งแต่ 17 ส.ค. (สะสมถึง 310 ม. ณ 21 ส.ค., chain-validate ผ่านทุกจุด) ไม่เคยถูกดึงขึ้น
-//   dashboard เลยเพราะไม่มีที่เก็บค่า เพิ่ม laidM: 310 เข้าไปแล้ว — ตัวเลขนี้ยังอยู่ในกลุ่ม record ที่ unconfirmed
-//   บางส่วน (17, 19 ส.ค.) จากปัญหาจำนวนเสาเข็ม/support ไม่ใช่จากความยาวท่อ AC เอง แต่ยังต้องรอ C7 ยืนยันทางการ
+//   PID903_DAILY ตั้งแต่ 17 ส.ค. ไม่เคยถูกดึงขึ้น dashboard เลยเพราะไม่มีที่เก็บค่า เพิ่ม laidM เข้าไปแล้ว
+// ⚠ ประเด็นเฝ้าระวัง ณ 24 ส.ค. 2569: ติดตั้ง Support (AC.supportCount) นิ่งที่ 350 หัว ต่อเนื่อง 6 วัน
+//   (19,20,21,22,23,24 ส.ค.) ขณะที่ผลิตหัว Support เดินหน้าต่อ (สะสม 480) — ช่องว่างสะสม 130 หัวรอติดตั้ง
+//   ยังไม่มี recovery plan ยื่นเข้ามา ต้องหารือกับผู้จัดการสนาม (นายสมเกียรติ) ก่อนประชุมคณะกรรมการ
 
-const PID903_ASOF = "21 ส.ค. 2569";
+const PID903_ASOF = "24 ส.ค. 2569";
 
 const PID903_PIPES = {
   PVC: { laidM: 558 },
-  AC:  { pileCount: 594, supportCount: 350, laidM: 310 }
+  AC:  { pileCount: 632, supportCount: 350, laidM: 455 }
 };
 
 const PID903_DAILY = [
@@ -140,5 +143,20 @@ const PID903_DAILY = [
   { date: "21 ส.ค. 2569", month: 8,
     segs: ["STA.0+235-0+300 (เสาเข็ม/แท่นรับโค้ง 45°)", "STA.1+470-1+475 (ท่อ AC)", "STA.3+169-3+182 (ท่อ ST)", "กม.2+450 (ท่อ AC เข้าหน่วยงาน)"],
     text: "กดเสาเข็มสี่เหลี่ยม STA.0+235-0+300 ทำแท่นรับโค้ง 45° (6 ต้น) รวม 29 ต้น (สะสม 594 ต้น) · วางท่อ AC STA.1+470-1+475 5 ม. (สะสม 310 ม.) · วางท่อ ST STA.3+169-3+182 12 ม. · ท่อ AC เข้าหน่วยงานเพิ่มเติม กม.2+450 30 ม. · ติดตั้ง Support นิ่งต่อเนื่องวันที่ 3 ที่ 350 หัว",
-    meters: 5, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1nmtt1j9lxKgMl81QXvus_Is4gN3Gia9X/view?usp=drivesdk" }
+    meters: 5, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1nmtt1j9lxKgMl81QXvus_Is4gN3Gia9X/view?usp=drivesdk" },
+  { date: "22 ส.ค. 2569", month: 8,
+    segs: ["STA.0+200-0+300 (เสาเข็ม/แท่นรับโค้ง 45°)", "STA.1+455-1+470 (ท่อ AC)", "STA.2+390-2+530 (ท่อ AC)", "STA.1+694-1+700 (ท่อ ST)"],
+    text: "กดเสาเข็มสี่เหลี่ยม STA.0+200-0+300 ทำแท่นรับโค้ง 45° (4 ต้น) รวม 38 ต้น (สะสม 632 ต้น) · วางท่อ AC Ø300 STA.1+455-1+470 และ STA.2+390-2+530 รวม 145 ม. (สะสม 455 ม.) — วันที่ก้าวกระโดดสูงสุดของ AC laidM · วางท่อ ST Ø300 STA.1+694-1+700 6 ม. (สะสม 18 ม.) · ผลิตหัว Support +15 (สะสม 465) · ติดตั้ง Support นิ่งต่อเนื่องวันที่ 4 ที่ 350 หัว",
+    meters: 145, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1WstFLWJ0YPHIyPqTXv0pVtoeeYPLl2DO/view?usp=drivesdk" },
+
+  { date: "23 ส.ค. 2569", month: 8,
+    segs: ["STA.3+268-3+280 (ท่อ ST)"],
+    text: "วางท่อ ST Ø300 STA.3+268-3+280 12 ม. (สะสม 30 ม.) · เสาเข็ม/PVC/AC/Support นิ่งทุกรายการ (632 ต้น / 558 ม. / 455 ม. / ผลิต 465 / ติดตั้ง 350) · ติดตั้ง Support นิ่งต่อเนื่องวันที่ 5 ที่ 350 หัว",
+    meters: 0, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1bK6jRASmBg8257oFfNGPunz2FVU-KZT0/view?usp=drivesdk" },
+
+  { date: "24 ส.ค. 2569", month: 8,
+    segs: ["STA.2+800-2+900 (เตรียมวางท่อบายพาส HDPE)"],
+    text: "เชื่อมท่อ HDPE Ø300 เตรียมงานวางท่อบายพาส STA.2+800-2+900 (งานชั่วคราว ไม่นับปริมาณสะสมท่อถาวร) · ท่อ AC เข้าหน่วยงานเพิ่มเติม 18 ท่อน (ของเข้าไซต์ ไม่ใช่ท่อที่วางแล้ว) · ผลิตหัว Support +15 (สะสม 480) · ติดตั้ง Support นิ่งต่อเนื่องวันที่ 6 ที่ 350 หัว — เสาเข็ม/PVC/AC/ST นิ่งทุกรายการ (632/558/455/30)",
+    meters: 0, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1A0i8sHNi8KZeJ5fROAcXcJiTWYuqA0V_/view?usp=drivesdk" }
+
 ];
