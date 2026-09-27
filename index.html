@@ -106,6 +106,36 @@
     font-weight:600;margin:32px 0 14px;display:flex;align-items:center;gap:10px}
   .sec-title .n{background:var(--navy);color:#fff;width:20px;height:20px;border-radius:4px;
     display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+
+  /* ---------- STA chainage plan (v1 — เพิ่ม 27 ก.ย. 2569) ----------
+     ข้อมูลตำแหน่งสร้างจาก union ของ STA ใน PID903_DAILY[].segs/.text ทั้งหมด (ไม่ใช่ผลรวมความยาวรายวันตรงๆ
+     ซึ่งจะนับซ้ำเมื่อตำแหน่งเดิมถูกรายงานหลายวัน) เจตนาให้ตำแหน่งสอดคล้องกับยอดสะสมที่ยืนยันแล้วใน PID903_PIPES
+     (คลาดเคลื่อน ≤10 ม. ต่อชนิดท่อ จากความไม่สมบูรณ์ของรายงานบางวันที่ยังไม่ยืนยัน C7) โดยเจตนาไม่แสดงตัวเลขรวม
+     ซ้ำในส่วนนี้ ให้การ์ด KPI ด้านบน (hero/summaryStrip) เป็นตัวเลขทางการหนึ่งเดียว */
+  :root{ --support:#C24417; --support-bg:#FCE7DC; --hdpe:#0E7C7B; }
+  .staplan{margin-bottom:30px}
+  .staplan-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:10px;flex-wrap:wrap}
+  .staplan-head h3{font-size:14px;font-weight:700;color:var(--ink)}
+  .staplan-head .sub3{font-size:11.5px;color:var(--ink-faint);margin-top:2px}
+  .staplan-legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:11px;color:var(--ink-soft);
+    background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 14px;margin-bottom:12px}
+  .staplan-legend .li{display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .staplan-sw{width:16px;height:10px;border-radius:2px;display:inline-block;flex:none;border:1px solid rgba(0,0,0,.06)}
+  .staband{background:var(--card);border:1px solid var(--border);border-radius:10px;
+    padding:14px 16px 12px;margin-bottom:10px}
+  .staband-title{font-size:11px;font-weight:700;color:var(--navy);letter-spacing:.03em;margin-bottom:12px}
+  .starow{display:grid;grid-template-columns:78px 1fr;align-items:center;gap:10px;margin-bottom:22px}
+  .starow:last-child{margin-bottom:2px}
+  .starow-label{font-size:11px;color:var(--ink-soft);font-weight:600;text-align:right;line-height:1.3}
+  .statrack{position:relative;height:16px;background:var(--track);border-radius:4px}
+  .staseg{position:absolute;top:0;height:100%;border-radius:3px;min-width:2px}
+  .staseg-label{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);
+    font-size:9px;font-weight:600;white-space:nowrap;margin-bottom:2px;font-family:'IBM Plex Mono',monospace}
+  .stamarker{position:absolute;top:-3px;width:2px;height:22px;background:var(--ink-faint)}
+  .stamarker-label{position:absolute;top:100%;left:50%;transform:translateX(-50%);
+    margin-top:3px;font-size:8.5px;color:var(--ink-faint);white-space:nowrap}
+  .staaxis{display:flex;justify-content:space-between;font-size:9px;color:var(--ink-faint);
+    margin-top:5px;font-family:'IBM Plex Mono',monospace}
   .card{background:var(--card);border:1px solid var(--border);border-radius:10px;
     padding:18px 20px;margin-bottom:14px}
   .card-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:12px}
@@ -359,6 +389,17 @@
       <div class="asof">ข้อมูลถึงวันที่<b class="asof-date">3 ส.ค. 2569</b></div>
     </div>
 
+    <div class="staplan">
+      <div class="staplan-head">
+        <div>
+          <h3>แผนผังผลงานก่อสร้างตามแนวท่อ (Chainage Plan)</h3>
+          <div class="sub3">ตำแหน่งงานตามรายงานประจำวันผู้รับจ้าง · กม. 0+000–3+665</div>
+        </div>
+      </div>
+      <div class="staplan-legend" id="staLegend"></div>
+      <div id="staBands"></div>
+    </div>
+
     <div class="hero" id="hero"></div>
     <div class="summary-strip" id="summaryStrip"></div>
 
@@ -487,6 +528,104 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
     monthSel.value=""; segSel.value=""; document.getElementById("filterSearch").value=""; render();
   });
   render();
+})();
+
+/* ---------- TAB 2: STA chainage plan ---------- */
+(function(){
+  const S = PID903_STA_SEGMENTS;
+  const BANDS = [
+    {label:"0-100 – 1+200", start:-100, end:1200},
+    {label:"1+200 – 2+500", start:1200, end:2500},
+    {label:"2+500 – 3+665", start:2500, end:3665}
+  ];
+  function staStr(m){
+    const neg = m<0; m = Math.abs(m);
+    const km = Math.floor(m/1000), rem = m%1000;
+    return (neg?"-":"")+km+"+"+String(rem).padStart(3,"0");
+  }
+  function clip(seg, bs, be){
+    const a = Math.max(seg[0], bs), b = Math.min(seg[1], be);
+    return b>a ? [a,b] : null;
+  }
+  const HATCH = {
+    pvc:  `repeating-linear-gradient(45deg, var(--pvc), var(--pvc) 3px, #fff 3px, #fff 6px)`,
+    st:   `repeating-linear-gradient(45deg, var(--st), var(--st) 3px, #fff 3px, #fff 6px)`,
+    pile: `repeating-linear-gradient(45deg, var(--support), var(--support) 3px, #fff 3px, #fff 6px)`
+  };
+  const STYLE = {
+    laid:    {background:"var(--ac)"},
+    support: {background:"var(--support)"},
+    pile:    {background:HATCH.pile},
+    pvc:     {background:HATCH.pvc},
+    st:      {background:HATCH.st},
+    hdpe:    {background:"var(--hdpe)"}
+  };
+  const LABELS = {
+    laid:"วางท่อ AC แล้ว", support:"เข็ม + Support แล้ว", pile:"ถมเข็มแล้ว ยังไม่ติด Support",
+    pvc:"วางท่อ PVC แล้ว", st:"วางท่อ ST แล้ว", hdpe:"ท่อชั่วคราว HDPE"
+  };
+
+  document.getElementById("staLegend").innerHTML = ["laid","support","pile","pvc","st","hdpe"].map(k=>`
+    <div class="li"><span class="staplan-sw" style="background:${STYLE[k].background}"></span>${LABELS[k]}</div>
+  `).join("") + `<div class="li"><span class="staplan-sw" style="background:var(--ink-faint)"></span>เข็มฐานท่อ ST ข้ามคลอง</div>`;
+
+  function row(rowLabel, segsWithType, band){
+    const bw = band.end - band.start;
+    const bars = segsWithType.map(({seg,type})=>{
+      const c = clip(seg, band.start, band.end);
+      if(!c) return "";
+      const left = (c[0]-band.start)/bw*100, width = (c[1]-c[0])/bw*100;
+      const len = c[1]-c[0]; const showLabel = width > 2.2;
+      const style = STYLE[type];
+      const bg = style.background;
+      return `<div class="staseg" style="left:${left}%;width:${width}%;${bg.startsWith('var')?`background:${bg}`:`background:${bg}`}"
+        title="${LABELS[type]} · STA ${staStr(c[0])}–${staStr(c[1])} · ${len} ม.">
+        ${showLabel?`<span class="staseg-label" style="color:${type==='support'?'var(--support)':type==='laid'?'var(--ac)':'var(--ink-soft)'}">${len} ม.</span>`:""}
+      </div>`;
+    }).join("");
+    let markers = "";
+    if(rowLabel==="ST"){
+      S.ST_BASE_PILES.forEach(p=>{
+        const c = clip([p.start,p.end], band.start, band.end);
+        if(!c) return;
+        const left=(c[0]-band.start)/bw*100, width=(c[1]-c[0])/bw*100;
+        markers += `<div class="staseg" style="left:${left}%;width:${width}%;background:repeating-linear-gradient(90deg,var(--ink-faint) 0 2px, transparent 2px 7px);opacity:.55"
+          title="เข็มฐานท่อ ST ข้ามคลอง · ${p.count} ต้น"></div>`;
+      });
+    }
+    if(band.start<0 && band.end>0){
+      const left = (0-band.start)/bw*100;
+      markers += `<div class="stamarker" style="left:${left}%"></div>`;
+      if(rowLabel==="AC") markers += `<div class="stamarker-label" style="left:${left}%">จุดเริ่มสัญญา 0+000</div>`;
+    }
+    return `<div class="starow">
+      <div class="starow-label">${rowLabel==='AC'?'ท่อ AC ในคูน้ำ':rowLabel==='PVC'?'ท่อ PVC':'ท่อ ST · อื่นๆ'}</div>
+      <div class="statrack">${bars}${markers}</div>
+    </div>`;
+  }
+
+  const bandsHtml = BANDS.map(band=>{
+    const acSegs = [
+      ...S.AC_PILE_ONLY.map(seg=>({seg,type:'pile'})),
+      ...S.AC_SUPPORT.map(seg=>({seg,type:'support'})),
+      ...S.AC_LAID.map(seg=>({seg,type:'laid'}))
+    ];
+    const pvcSegs = S.PVC_LAID.map(seg=>({seg,type:'pvc'}));
+    const stSegs = [
+      ...S.ST_LAID.map(seg=>({seg,type:'st'})),
+      ...S.HDPE.map(seg=>({seg,type:'hdpe'}))
+    ];
+    const ticks = [];
+    for(let s=Math.ceil(band.start/100)*100; s<=band.end; s+=100) ticks.push(s);
+    return `<div class="staband">
+      <div class="staband-title">${band.label}</div>
+      ${row('AC', acSegs, band)}
+      ${row('PVC', pvcSegs, band)}
+      ${row('ST', stSegs, band)}
+      <div class="staaxis">${ticks.map(t=>`<span>${staStr(t)}</span>`).join("")}</div>
+    </div>`;
+  }).join("");
+  document.getElementById("staBands").innerHTML = bandsHtml;
 })();
 
 /* ---------- TAB 2: pipe-type progress ---------- */
