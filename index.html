@@ -117,6 +117,9 @@
   .staplan-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:10px;flex-wrap:wrap}
   .staplan-head h3{font-size:14px;font-weight:700;color:var(--ink)}
   .staplan-head .sub3{font-size:11.5px;color:var(--ink-faint);margin-top:2px}
+  .staplan-asof{font-size:12px;color:var(--ink-faint);background:var(--track);border-radius:20px;
+    padding:6px 14px;white-space:nowrap}
+  .staplan-asof b{color:var(--navy);font-weight:700}
   .staplan-legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:11px;color:var(--ink-soft);
     background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 14px;margin-bottom:12px}
   .staplan-legend .li{display:flex;align-items:center;gap:6px;white-space:nowrap}
@@ -395,6 +398,7 @@
           <h3>แผนผังผลงานก่อสร้างตามแนวท่อ (Chainage Plan)</h3>
           <div class="sub3">ตำแหน่งงานตามรายงานประจำวันผู้รับจ้าง · กม. 0+000–3+665</div>
         </div>
+        <div class="staplan-asof">อัพเดตงานวางท่อถึงวันที่ <b id="staAsofDate"></b></div>
       </div>
       <div class="staplan-legend" id="staLegend"></div>
       <div id="staBands"></div>
@@ -565,6 +569,7 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
     pvc:"วางท่อ PVC แล้ว", st:"วางท่อ ST แล้ว", hdpe:"ท่อชั่วคราว HDPE"
   };
 
+  document.getElementById("staAsofDate").textContent = PID903_STA_ASOF;
   document.getElementById("staLegend").innerHTML = ["laid","support","pile","pvc","st","hdpe"].map(k=>`
     <div class="li"><span class="staplan-sw" style="background:${STYLE[k].background}"></span>${LABELS[k]}</div>
   `).join("") + `<div class="li"><span class="staplan-sw" style="background:var(--ink-faint)"></span>เข็มฐานท่อ ST ข้ามคลอง</div>`;
