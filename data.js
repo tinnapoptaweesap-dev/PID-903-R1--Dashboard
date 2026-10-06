@@ -27,11 +27,15 @@
 //   PID903_DAILY ตั้งแต่ 17 ส.ค. ไม่เคยถูกดึงขึ้น dashboard เลยเพราะไม่มีที่เก็บค่า เพิ่ม laidM เข้าไปแล้ว
 //   บันทึกเดิม (26-28 ส.ค.) ยังคง unconfirmed รอยืนยัน C7 ตามเดิม — เพิ่ม record 3 ก.ย. (HDPE) และ 7 ก.ย. (Support) เป็น unconfirmed ใหม่
 
-const PID903_ASOF = "24 ก.ย. 2569";
+// buildInfo: อัพเดต 903 วันที่ 6 ต.ค. 2569 — เพิ่ม records 25 ก.ย.–5 ต.ค. (11 records) จาก Report 25-9-69 ถึง 5-10-69
+//   chain: AC 1,115→1,150→1,185→1,193→1,283 ✓ | Support ติดตั้ง 647→652 (+5 วันที่ 5 ต.ค.) ✓ | เสาเข็ม 789/12 นิ่ง | ST 115 นิ่ง
+//   ⚠ PVC สะสมตามรายงาน 25 ก.ย. = 741 ม. (ต่ำกว่าฐาน 24 ก.ย. 753+6=759 อยู่ 18 ม.) ยึดตามรายงาน unconfirmed รอ C7
+//   ⚠ ผลิต Support 25 ก.ย. สะสม 710 (ฐาน 670+20=690 ส่วนต่าง +20) unconfirmed รอ C7 — 29 ก.ย. +20 → 730
+const PID903_ASOF = "5 ต.ค. 2569";
 
 const PID903_PIPES = {
-  PVC: { laidM: 753 },
-  AC:  { pileCount: 789, supportCount: 647, laidM: 1115 }
+  PVC: { laidM: 741 },
+  AC:  { pileCount: 789, supportCount: 652, laidM: 1283 }
 };
 
 // PID903_STA_SEGMENTS — เพิ่ม 27 ก.ย. 2569 สำหรับแผนผังผลงานตามแนวท่อ (Chainage Plan) แท็บ "ภาพรวมความก้าวหน้า"
@@ -351,7 +355,61 @@ const PID903_DAILY = [
   { date: "24 ก.ย. 2569", month: 9,
     segs: ["STA.3+592-3+610 (วางท่อ PVC)", "STA.0+235-0+265 (ติดตั้งหัว Support)", "STA.0+750-0+775 / STA.0+800-0+810 / STA.0+820-0+830 / STA.1+220-1+230 (วางท่อ AC)"],
     text: "วางท่อ PVC Ø300 มม. STA.3+592–3+610 18 ม. 3 ท่อน (สะสม 753 ม. — ต่อเนื่องจากฐาน 735 ม. ของ 23 ก.ย. ที่ยังไม่ยืนยัน 735+18=753 สอดคล้องกับฐานนั้น ยอดสะสม PVC จริงอาจสูงกว่านี้ถึง 30 ม. หากยืนยันส่วนต่างค้างจาก 21 และ 23 ก.ย.) · ติดตั้งหัว Support รับท่อ AC STA.0+235–0+265 13 หัว (สะสม 647 หัว — ฐาน 634+13=647 สอดคล้อง chain) · วางท่อ AC Ø300 มม. 4 ช่วง STA.0+750–0+775 (25ม.) STA.0+800–0+810 (10ม.) STA.0+820–0+830 (10ม.) STA.1+220–1+230 (10ม.) รวม 55 ม. 12 ท่อน (สะสม 1,115 ม. — ฐาน 1,060+55=1,115 สอดคล้อง chain) · ผลิตหัว Support 20 หัว (สะสม 670 — ฐาน 650+20=670 สอดคล้อง chain) — เสาเข็ม 600/700 นิ่ง (789/12 ต้น)",
-    meters: 73, unconfirmed: true, reportUrl: "https://drive.google.com/file/d/14bGS9W8QQ1xFt241SSpBdQWV8dUyzcR_/view?usp=drivesdk" }
+    meters: 73, unconfirmed: true, reportUrl: "https://drive.google.com/file/d/14bGS9W8QQ1xFt241SSpBdQWV8dUyzcR_/view?usp=drivesdk" },
 
+  { date: "25 ก.ย. 2569", month: 9,
+    segs: ["STA.3+610-3+616 (วางท่อ PVC)", "STA.0+775-0+810 (วางท่อ AC)"],
+    text: "วางท่อ PVC Ø300 มม. STA.3+610–3+616 6 ม. 1 ท่อน — รายงานระบุยอดสะสม PVC 741 ม. แต่คำนวณจากยอดสะสมของ 24 ก.ย. (753) ควรได้ 759 ม. ต่ำกว่าคาด 18 ม. (เท่ากับยอดงาน 24 ก.ย. พอดี เข้าข่ายไม่ได้ทบยอดวันก่อนหน้า — 741 = 735+6) ยึดยอดสะสม 741 ม. ตามรายงานเป็นหลัก ไม่ปรับแก้เอง รอยืนยัน C7 กับต้นฉบับ · วางท่อ AC Ø300 มม. STA.0+775–0+810 35 ม. 7 ท่อน (สะสม 1,150 ม. — ฐาน 1,115+35=1,150 สอดคล้อง chain) · ผลิตหัว Support 20 หัว แต่ยอดสะสมระบุ 710 (ฐาน 670+20=690 ไม่ตรง ส่วนต่าง +20) ยึดยอดสะสม 710 ตามรายงาน รอยืนยัน C7 — เสาเข็ม/ST/HDPE/ติดตั้ง Support นิ่ง (789/12 ต้น / 115 ม. / 49 ม. / 647)",
+    meters: 41, unconfirmed: true, reportUrl: "https://drive.google.com/file/d/1wHFo4uA2VrpLOZfQ6Eg3Te1nTsywK_xf/view?usp=drivesdk" },
+
+  { date: "26 ก.ย. 2569", month: 9,
+    segs: ["ไม่มีการดำเนินงาน (ฝนตกหนัก น้ำท่วม)"],
+    text: "ไม่มีการดำเนินงานก่อสร้าง — ฝนตกหนัก (น้ำท่วม) · ยอดสะสมในรายงานนิ่งทุกรายการ (เสาเข็ม 789/12 ต้น / PVC 741 ม. / AC 1,150 ม. / ST 115 ม. / HDPE 49 ม. / ผลิต Support 710 / ติดตั้ง 647)",
+    meters: 0, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/12TammNOP80yjPYrFOJFXt65JGYxOwcbl/view?usp=drivesdk" },
+
+  { date: "27 ก.ย. 2569", month: 9,
+    segs: ["ไม่มีการดำเนินงาน (ฝนตกหนัก น้ำท่วม)"],
+    text: "ไม่มีการดำเนินงานก่อสร้าง — ฝนตกหนัก (น้ำท่วม) · ยอดสะสมในรายงานนิ่งทุกรายการ (789/12 ต้น / PVC 741 ม. / AC 1,150 ม. / ST 115 ม. / HDPE 49 ม. / ผลิต Support 710 / ติดตั้ง 647)",
+    meters: 0, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/16uwzMyqLPvlR-d4X1R2VG6pJaMl9mt9X/view?usp=drivesdk" },
+
+  { date: "28 ก.ย. 2569", month: 9,
+    segs: ["ไม่มีการดำเนินงาน (ฝนตกหนัก น้ำท่วม)"],
+    text: "ไม่มีการดำเนินงานก่อสร้าง — ฝนตกหนัก (น้ำท่วม) · ยอดสะสมในรายงานนิ่งทุกรายการ (789/12 ต้น / PVC 741 ม. / AC 1,150 ม. / ST 115 ม. / HDPE 49 ม. / ผลิต Support 710 / ติดตั้ง 647)",
+    meters: 0, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1slZWkMGj0ErdkurxJVo2DR25jZqgRJzW/view?usp=drivesdk" },
+
+  { date: "29 ก.ย. 2569", month: 9,
+    segs: ["ไม่มีการดำเนินงานก่อสร้าง (ฝนตกหนัก น้ำท่วมยังไม่ลด)"],
+    text: "ไม่มีการดำเนินงานก่อสร้าง — ฝนตกหนัก น้ำท่วมยังไม่ลด · ผลิตหัว Support 20 หัว (สะสม 730 — ฐาน 710+20=730 สอดคล้อง chain ต่อจากฐาน 710 ที่ยังไม่ยืนยันของ 25 ก.ย.) — เสาเข็ม/PVC/AC/ST/HDPE/ติดตั้ง Support นิ่ง (789/12 ต้น / 741 ม. / 1,150 ม. / 115 ม. / 49 ม. / 647)",
+    meters: 0, unconfirmed: true, reportUrl: "https://drive.google.com/file/d/1UxYoa9_lo3iIOvFYZorgeFXaol8Bb4FC/view?usp=drivesdk" },
+
+  { date: "30 ก.ย. 2569", month: 9,
+    segs: ["STA.3+665 (เตรียมหลุมตัดบรรจบ)", "STA.0+615-0+650 (วางท่อ AC)"],
+    text: "เตรียมหลุมตัดบรรจบ STA.3+665 (งานเตรียมพื้นที่ ไม่นับปริมาณ) · วางท่อ AC Ø300 มม. STA.0+615–0+650 35 ม. 7 ท่อน (สะสม 1,185 ม. — ฐาน 1,150+35=1,185 สอดคล้อง chain) — เสาเข็ม/PVC/ST/ผลิต-ติดตั้ง Support นิ่ง (789/12 ต้น / 741 ม. / 115 ม. / 730 / 647) · หมายเหตุตำแหน่ง: ช่วง STA.0+615–0+650 ซ้อนทับกับรายงาน 3 ต.ค. (STA.0+600–0+690) ปริมาณตาม chain ถูกต้อง แต่ป้ายตำแหน่ง STA รอยืนยันกับต้นฉบับ/แบบก่อสร้าง",
+    meters: 35, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1WE52ocrnXrqk_S23P4BP65FNIDEB4L4i/view?usp=drivesdk" },
+
+  { date: "1 ต.ค. 2569", month: 10,
+    segs: ["STA.1+980 (ต่อบรรจบท่อ AC กับโค้ง ST 45°)"],
+    text: "ติดตั้งอุปกรณ์บรรจบท่อ AC Ø300 มม. ต่อเข้ากับโค้ง ST 45° Ø300 มม. และวางท่อ AC Ø300 มม. STA.1+980 8 ม. (ท่อเต็ม 1 ท่อน + ท่อตัด 3 ม. — สะสม 1,193 ม. — ฐาน 1,185+8=1,193 สอดคล้อง chain) · อุปกรณ์: ท่อสั้นหน้าจานปลายเรียบ AC 300 มม. 1 ตัว / ปะเก็นยาง 300 มม. 1 แผ่น / สลักเกลียว 20×90 มม. 12 ตัว (งานอุปกรณ์ ไม่นับปริมาณ) — เสาเข็ม/PVC/ST/ผลิต-ติดตั้ง Support นิ่ง",
+    meters: 8, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1by9hxlLXhU0zUV3aAnbGymRPgh83ktsj/view?usp=drivesdk" },
+
+  { date: "2 ต.ค. 2569", month: 10,
+    segs: ["STA.1+986 (ติดตั้งอุปกรณ์บรรจบท่อ AC กับโค้ง ST 45°)"],
+    text: "ติดตั้งอุปกรณ์บรรจบท่อ AC Ø300 มม. ต่อเข้ากับโค้ง ST 45° Ø300 มม. STA.1+986 (งานอุปกรณ์ ไม่นับปริมาณ) · ไม่มีการวางท่อเพิ่ม — ยอดสะสมนิ่งทุกรายการ (789/12 ต้น / PVC 741 ม. / AC 1,193 ม. / ST 115 ม. / ผลิต 730 / ติดตั้ง 647)",
+    meters: 0, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1ZcloTjDrYN7_k680-sMkxFTT2fjgcvIi/view?usp=drivesdk" },
+
+  { date: "3 ต.ค. 2569", month: 10,
+    segs: ["STA.0+600-0+690 (วางท่อ AC)"],
+    text: "วางท่อ AC Ø300 มม. STA.0+600–0+690 90 ม. 18 ท่อน (สะสม 1,283 ม. — ฐาน 1,193+90=1,283 สอดคล้อง chain) — เสาเข็ม/PVC/ST/ผลิต-ติดตั้ง Support นิ่ง (789/12 ต้น / 741 ม. / 115 ม. / 730 / 647) · หมายเหตุตำแหน่ง: ช่วง STA.0+615–0+650 ซ้อนทับกับรายงาน 30 ก.ย. (35 ม.) ปริมาณตาม chain ถูกต้อง แต่ป้ายตำแหน่ง STA รอยืนยันกับต้นฉบับ/แบบก่อสร้าง",
+    meters: 90, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1RHljvHA4zKKZkNIbv51a1aIXsOCNT8wT/view?usp=drivesdk" },
+
+  { date: "4 ต.ค. 2569", month: 10,
+    segs: ["ไม่มีการดำเนินการก่อสร้าง"],
+    text: "ไม่มีการดำเนินการก่อสร้าง — ยอดสะสมนิ่งทุกรายการ (789/12 ต้น / PVC 741 ม. / AC 1,283 ม. / ST 115 ม. / HDPE 49 ม. / ผลิต 730 / ติดตั้ง 647)",
+    meters: 0, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1yIRzgWQx5bjojjfJd4ZAqwit-IgQabJt/view?usp=drivesdk" },
+
+  { date: "5 ต.ค. 2569", month: 10,
+    segs: ["STA.2+960 (ติดตั้งหัว Support)"],
+    text: "ติดตั้งหัว Support รับท่อ AC STA.2+960 5 หัว (สะสม 652 หัว — ฐาน 647+5=652 สอดคล้อง chain) — เสาเข็ม/PVC/AC/ST/ผลิต Support นิ่ง (789/12 ต้น / 741 ม. / 1,283 ม. / 115 ม. / 730)",
+    meters: 0, unconfirmed: false, reportUrl: "https://drive.google.com/file/d/1ZKHSQs3ufDv0TyezOLWHd4tJWdidRufC/view?usp=drivesdk" }
 
 ];
