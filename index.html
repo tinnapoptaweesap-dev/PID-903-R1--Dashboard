@@ -113,32 +113,42 @@
      (คลาดเคลื่อน ≤10 ม. ต่อชนิดท่อ จากความไม่สมบูรณ์ของรายงานบางวันที่ยังไม่ยืนยัน C7) โดยเจตนาไม่แสดงตัวเลขรวม
      ซ้ำในส่วนนี้ ให้การ์ด KPI ด้านบน (hero/summaryStrip) เป็นตัวเลขทางการหนึ่งเดียว */
   :root{ --support:#C24417; --support-bg:#FCE7DC; --hdpe:#0E7C7B; }
+  /* v2.0 (29 ต.ค. 2569) — จัดรูปแบบให้เหมือน "แผนผังการส่งงานก่อสร้าง": หัวเรื่อง + การ์ด KPI + ภาพรวมทั้งแนว + แถวแผนผัง (เส้นแนวท่อ/ป้ายความยาว/สเกล กม.)
+     ข้อมูลตำแหน่งยังมาจาก PID903_STA_SEGMENTS เหมือนเดิม (ไม่แก้ data.js) · ตัวเลขในการ์ด KPI อ่านจาก PID903_PIPES ซึ่งเป็นแหล่งเดียวกับการ์ดสรุปด้านล่าง */
   .staplan{margin-bottom:30px}
-  .staplan-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:10px;flex-wrap:wrap}
-  .staplan-head h3{font-size:14px;font-weight:700;color:var(--ink)}
-  .staplan-head .sub3{font-size:11.5px;color:var(--ink-faint);margin-top:2px}
-  .staplan-asof{font-size:12px;color:var(--ink-faint);background:var(--track);border-radius:20px;
-    padding:6px 14px;white-space:nowrap}
-  .staplan-asof b{color:var(--navy);font-weight:700}
-  .staplan-legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:11px;color:var(--ink-soft);
-    background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 14px;margin-bottom:12px}
+  .staplan-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+  .staplan-head .ey2{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--navy)}
+  .staplan-head h3{font-size:22px;font-weight:700;color:var(--ink);line-height:1.25;margin-top:2px}
+  .staplan-head .sub3{font-size:12px;color:var(--ink-faint);margin-top:3px}
+  .staplan-meta{text-align:right;white-space:nowrap}
+  .staplan-meta .k{font-size:10.5px;color:var(--ink-faint)}
+  .staplan-meta .v{font-size:15px;font-weight:700;color:var(--ink)}
+  .stakpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+  @media(max-width:820px){.stakpis{grid-template-columns:repeat(2,1fr)}}
+  .stakpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:11px 14px 10px}
+  .stakpi .kl{font-size:11px;font-weight:600;color:var(--ink-soft);display:flex;align-items:center;gap:7px}
+  .stakpi .kl i{width:20px;height:9px;border-radius:3px;display:inline-block;flex:none}
+  .stakpi .kv{font-size:27px;font-weight:700;line-height:1.15;margin-top:3px;font-variant-numeric:tabular-nums}
+  .stakpi .kv small{font-size:13px;font-weight:500;margin-left:3px;opacity:.75}
+  .stakpi .ks{font-size:10.5px;color:var(--ink-faint);margin-top:2px}
+  .stakpi.navy{background:var(--navy-deep);border-color:var(--navy-deep);color:#fff}
+  .stakpi.navy .kl{color:#CFE6F7}
+  .stakpi.navy .ks{color:#ABE1FA}
+  .staplan-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11px;color:var(--ink-soft);
+    background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 14px;margin-bottom:10px}
   .staplan-legend .li{display:flex;align-items:center;gap:6px;white-space:nowrap}
-  .staplan-sw{width:16px;height:10px;border-radius:2px;display:inline-block;flex:none;border:1px solid rgba(0,0,0,.06)}
-  .staband{background:var(--card);border:1px solid var(--border);border-radius:10px;
-    padding:14px 16px 12px;margin-bottom:10px}
-  .staband-title{font-size:11px;font-weight:700;color:var(--navy);letter-spacing:.03em;margin-bottom:12px}
-  .starow{display:grid;grid-template-columns:78px 1fr;align-items:center;gap:10px;margin-bottom:22px}
-  .starow:last-child{margin-bottom:2px}
-  .starow-label{font-size:11px;color:var(--ink-soft);font-weight:600;text-align:right;line-height:1.3}
-  .statrack{position:relative;height:16px;background:var(--track);border-radius:4px}
-  .staseg{position:absolute;top:0;height:100%;border-radius:3px;min-width:2px}
-  .staseg-label{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);
-    font-size:9px;font-weight:600;white-space:nowrap;margin-bottom:2px;font-family:'IBM Plex Mono',monospace}
-  .stamarker{position:absolute;top:-3px;width:2px;height:22px;background:var(--ink-faint)}
-  .stamarker-label{position:absolute;top:100%;left:50%;transform:translateX(-50%);
-    margin-top:3px;font-size:8.5px;color:var(--ink-faint);white-space:nowrap}
-  .staaxis{display:flex;justify-content:space-between;font-size:9px;color:var(--ink-faint);
-    margin-top:5px;font-family:'IBM Plex Mono',monospace}
+  .staplan-sw{width:18px;height:9px;border-radius:3px;display:inline-block;flex:none}
+  .staband{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px 6px;margin-bottom:10px}
+  .staband-title{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:2px}
+  .staband-title b{font-size:12px;font-weight:700;color:var(--ink);letter-spacing:.01em}
+  .staband-title span{font-size:11px;color:var(--ink-faint)}
+  .stawrap{overflow-x:auto}
+  .stasvg{display:block;width:100%;min-width:760px;height:auto;overflow:visible}
+  .stasvg text{font-family:'IBM Plex Sans Thai',sans-serif}
+  .stasvg .mono{font-family:'IBM Plex Mono',monospace}
+  .stasvg .stp-seg{animation:stfade .5s ease both}
+  @keyframes stfade{from{opacity:0}to{opacity:1}}
+  .stanote{font-size:10.5px;color:var(--ink-faint);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:6px}
   .card{background:var(--card);border:1px solid var(--border);border-radius:10px;
     padding:18px 20px;margin-bottom:14px}
   .card-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:12px}
@@ -453,13 +463,17 @@
     <div class="staplan">
       <div class="staplan-head">
         <div>
+          <div class="ey2">สัญญา PID-903(R1) · การประปานครหลวง</div>
           <h3>แผนผังผลงานก่อสร้างตามแนวท่อ (Chainage Plan)</h3>
-          <div class="sub3">ตำแหน่งงานตามรายงานประจำวันผู้รับจ้าง · กม. 0+000–3+665</div>
+          <div class="sub3">งานวางท่อ AC Ø300 ในคูน้ำ · PVC Ø300 · ST Ø300 · ตำแหน่งงานตามรายงานประจำวันผู้รับจ้าง · ถนนปานวิถี</div>
         </div>
-        <div class="staplan-asof">อัพเดตงานวางท่อถึงวันที่ <b id="staAsofDate"></b></div>
+        <div class="staplan-meta"><div class="k">ช่วงแนวสาย</div><div class="v">กม. 0+000 – 3+665</div></div>
       </div>
+      <div class="stakpis" id="staKpis"></div>
+      <div id="staOverview"></div>
       <div class="staplan-legend" id="staLegend"></div>
       <div id="staBands"></div>
+      <div class="stanote" id="staNote"></div>
     </div>
 
     <div class="hero" id="hero"></div>
@@ -592,103 +606,200 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
   render();
 })();
 
-/* ---------- TAB 2: STA chainage plan ---------- */
+/* ---------- TAB 2: STA chainage plan (v2.0 — รูปแบบเดียวกับแผนผังการส่งงานก่อสร้าง) ---------- */
 (function(){
-  const S = PID903_STA_SEGMENTS;
+  const S = PID903_STA_SEGMENTS, P = PID903_PIPES;
+  const AC_TARGET = 2233, PVC_TARGET = 925;            // ปริมาณตามสัญญา (BOQ) — ค่าเดียวกับที่ใช้ในส่วนความก้าวหน้าเชิงกายภาพ
+  const ROUTE = {start:-100, end:3665};
   const BANDS = [
-    {label:"0-100 – 1+200", start:-100, end:1200},
-    {label:"1+200 – 2+500", start:1200, end:2500},
-    {label:"2+500 – 3+665", start:2500, end:3665}
+    {key:"A", start:-100, end:1200},
+    {key:"B", start:1200, end:2500},
+    {key:"C", start:2500, end:3665}
   ];
-  function staStr(m){
-    const neg = m<0; m = Math.abs(m);
-    const km = Math.floor(m/1000), rem = m%1000;
-    return (neg?"-":"")+km+"+"+String(rem).padStart(3,"0");
-  }
-  function clip(seg, bs, be){
-    const a = Math.max(seg[0], bs), b = Math.min(seg[1], be);
-    return b>a ? [a,b] : null;
-  }
-  const HATCH = {
-    pvc:  `repeating-linear-gradient(45deg, var(--pvc), var(--pvc) 3px, #fff 3px, #fff 6px)`,
-    st:   `repeating-linear-gradient(45deg, var(--st), var(--st) 3px, #fff 3px, #fff 6px)`,
-    pile: `repeating-linear-gradient(45deg, var(--support), var(--support) 3px, #fff 3px, #fff 6px)`
-  };
-  const STYLE = {
-    laid:    {background:"var(--ac)"},
-    support: {background:"var(--support)"},
-    pile:    {background:HATCH.pile},
-    pvc:     {background:HATCH.pvc},
-    st:      {background:HATCH.st},
-    hdpe:    {background:"var(--hdpe)"}
-  };
-  const LABELS = {
+  const COL = {laid:"#1D3F8F", support:"#D9A406", pile:"url(#stp-pile)", pvc:"#C2187A", st:"#2E9E5B", hdpe:"#8D9BA9"};
+  const DOT = {laid:"#1D3F8F", support:"#D9A406", pile:"#D9A406", pvc:"#C2187A", st:"#2E9E5B", hdpe:"#8D9BA9"};
+  const NAME = {
     laid:"วางท่อ AC แล้ว", support:"เข็ม + Support แล้ว", pile:"ถมเข็มแล้ว ยังไม่ติด Support",
     pvc:"วางท่อ PVC แล้ว", st:"วางท่อ ST แล้ว", hdpe:"ท่อชั่วคราว HDPE"
   };
+  const INK = "#0C2338", SOFT = "#4A5E70", FAINT = "#8195A6";
 
+  function staStr(m){
+    const neg = m<0; m = Math.abs(m);
+    return (neg?"-":"")+Math.floor(m/1000)+"+"+String(m%1000).padStart(3,"0");
+  }
+  const fmtLen = n => (Math.round(n*10)/10).toLocaleString("en-US");
+  function clip(a, b, bs, be){ const s=Math.max(a,bs), e=Math.min(b,be); return e>s ? [s,e] : null; }
+
+  /* AC มี 3 สถานะซ้อนกัน — แต่ละช่วงแสดงสถานะล่าสุดเพียงสถานะเดียว (วางท่อ > Support > เสาเข็ม) แล้วรวมช่วงที่ต่อกัน */
+  function resolveAC(){
+    const layers = [["laid",S.AC_LAID],["support",S.AC_SUPPORT],["pile",S.AC_PILE_ONLY]];
+    const xs = [...new Set(layers.flatMap(([,a])=>a.flatMap(s=>[s[0],s[1]])))].sort((a,b)=>a-b);
+    const out = [];
+    for(let i=0;i<xs.length-1;i++){
+      const a=xs[i], b=xs[i+1], m=(a+b)/2;
+      const hit = layers.find(([,arr])=>arr.some(s=>s[0]<=m && m<s[1]));
+      if(!hit) continue;
+      const last = out[out.length-1];
+      if(last && last.type===hit[0] && last.end===a) last.end=b; else out.push({type:hit[0], start:a, end:b});
+    }
+    return out;
+  }
+  const AC_SEGS  = resolveAC();
+  const PVC_SEGS = S.PVC_LAID.map(s=>({type:"pvc", start:s[0], end:s[1]}));
+  const ST_SEGS  = S.ST_LAID.map(s=>({type:"st",  start:s[0], end:s[1]}));
+  const HDPE_SEGS= S.HDPE.map(s=>({type:"hdpe", start:s[0], end:s[1]}));
+
+  /* ---------- หัวเรื่อง / การ์ด KPI ---------- */
+  const acPct  = P.AC.laidM/AC_TARGET*100, pvcPct = P.PVC.laidM/PVC_TARGET*100;
+  document.getElementById("staKpis").innerHTML = `
+    <div class="stakpi"><div class="kl"><i style="background:${COL.laid}"></i>วางท่อ AC (ในคูน้ำ)</div>
+      <div class="kv" style="color:${COL.laid}">${fmtLen(P.AC.laidM)}<small>ม.</small></div>
+      <div class="ks">${acPct.toFixed(1)}% ของความยาวตามสัญญา ${AC_TARGET.toLocaleString("en-US")} ม.</div></div>
+    <div class="stakpi"><div class="kl"><i style="background:${COL.support}"></i>เข็ม + Support</div>
+      <div class="kv" style="color:${COL.support}">${P.AC.supportCount.toLocaleString("en-US")}<small>หัว</small></div>
+      <div class="ks">ติดตั้ง Support แล้ว · กดเสาเข็มแล้ว ${P.AC.pileCount.toLocaleString("en-US")} ต้น</div></div>
+    <div class="stakpi"><div class="kl"><i style="background:${COL.pvc}"></i>วางท่อ PVC Ø300</div>
+      <div class="kv" style="color:${COL.pvc}">${fmtLen(P.PVC.laidM)}<small>ม.</small></div>
+      <div class="ks">${pvcPct.toFixed(1)}% ของความยาวตามสัญญา ${PVC_TARGET} ม.</div></div>
+    <div class="stakpi navy"><div class="kl">ข้อมูลตำแหน่งงานถึงวันที่</div>
+      <div class="kv" style="font-size:23px" id="staAsofDate"></div>
+      <div class="ks">ตามรายงานประจำวันผู้รับจ้าง · กม. 0+000–3+665</div></div>`;
   document.getElementById("staAsofDate").textContent = PID903_STA_ASOF;
-  document.getElementById("staLegend").innerHTML = ["laid","support","pile","pvc","st","hdpe"].map(k=>`
-    <div class="li"><span class="staplan-sw" style="background:${STYLE[k].background}"></span>${LABELS[k]}</div>
-  `).join("") + `<div class="li"><span class="staplan-sw" style="background:var(--ink-faint)"></span>เข็มฐานท่อ ST ข้ามคลอง</div>`;
 
-  function row(rowLabel, segsWithType, band){
-    const bw = band.end - band.start;
-    const bars = segsWithType.map(({seg,type})=>{
-      const c = clip(seg, band.start, band.end);
-      if(!c) return "";
-      const left = (c[0]-band.start)/bw*100, width = (c[1]-c[0])/bw*100;
-      const len = c[1]-c[0]; const showLabel = width > 2.2;
-      const style = STYLE[type];
-      const bg = style.background;
-      return `<div class="staseg" style="left:${left}%;width:${width}%;${bg.startsWith('var')?`background:${bg}`:`background:${bg}`}"
-        title="${LABELS[type]} · STA ${staStr(c[0])}–${staStr(c[1])} · ${len} ม.">
-        ${showLabel?`<span class="staseg-label" style="color:${type==='support'?'var(--support)':type==='laid'?'var(--ac)':'var(--ink-soft)'}">${len} ม.</span>`:""}
-      </div>`;
-    }).join("");
-    let markers = "";
-    if(rowLabel==="ST"){
-      S.ST_BASE_PILES.forEach(p=>{
-        const c = clip([p.start,p.end], band.start, band.end);
-        if(!c) return;
-        const left=(c[0]-band.start)/bw*100, width=(c[1]-c[0])/bw*100;
-        markers += `<div class="staseg" style="left:${left}%;width:${width}%;background:repeating-linear-gradient(90deg,var(--ink-faint) 0 2px, transparent 2px 7px);opacity:.55"
-          title="เข็มฐานท่อ ST ข้ามคลอง · ${p.count} ต้น"></div>`;
+  /* ---------- ตำนานสี ---------- */
+  const sw = k => `<span class="staplan-sw" style="background:${k==="pile"?"repeating-linear-gradient(45deg,#D9A406 0 3px,#fff 3px 6px)":COL[k]};${k==="pile"?"border:1px solid #D9A406":""}"></span>`;
+  document.getElementById("staLegend").innerHTML =
+    ["laid","support","pile","pvc","st","hdpe"].map(k=>`<div class="li">${sw(k)}${NAME[k]}</div>`).join("") +
+    `<div class="li"><span class="staplan-sw" style="background:repeating-linear-gradient(90deg,${FAINT} 0 2px,transparent 2px 5px);border:1px solid ${FAINT}"></span>เข็มฐานท่อ ST ข้ามคลอง</div>`;
+
+  /* ---------- ตัวช่วยวาด SVG ---------- */
+  const W = 1000;
+  function labelItems(segs, x, bs, be, extra){
+    return segs.map(sg=>{
+      const c = clip(sg.start, sg.end, bs, be); if(!c) return null;
+      return {mid:(x(c[0])+x(c[1]))/2, text:fmtLen(c[1]-c[0])+" ม.", color:DOT[sg.type], prefer:sg.type==="hdpe"?"down":null};
+    }).filter(Boolean);
+  }
+  /* วางป้ายความยาวสลับบน/ล่างของเส้นท่อ หลบกันไม่ให้ทับ (ป้ายที่ไม่มีที่ว่างจะไม่แสดง — ยังดูค่าได้จาก tooltip) */
+  function placeLabels(items, X0, X1){
+    items.sort((a,b)=>a.mid-b.mid);
+    const edge = {up:-1e9, down:-1e9}, out = [];
+    let flip = 0;
+    items.forEach(it=>{
+      const w = 19 + it.text.length*6.1;
+      let left = Math.min(Math.max(it.mid - w/2, X0-8), X1+8-w);
+      const order = it.prefer=="down" ? ["down","up"] : (flip%2===0 ? ["up","down"] : ["down","up"]);
+      const side = order.find(s=> left > edge[s] + 3);
+      if(!side) return;
+      edge[side] = left + w; flip++;
+      out.push({...it, side, left, w});
+    });
+    return out;
+  }
+  function laneSvg(lane, y0, x, bs, be, X0, X1){
+    const ty = y0+44, th = 14;                       // เส้นท่อ
+    let s = `<text x="${X0}" y="${y0+13}" font-size="11.5" font-weight="700" fill="${SOFT}" stroke="#fff" stroke-width="4" paint-order="stroke">${lane.title}</text>`;
+    s += `<rect x="${X0}" y="${ty+5}" width="${X1-X0}" height="4" rx="2" fill="#E6E2D8"/>`;
+    if(lane.base){                                   // เข็มฐานท่อ ST ข้ามคลอง (แถบลายเส้นอยู่ใต้เส้นท่อ)
+      lane.base.forEach(p=>{
+        const c = clip(p.start,p.end,bs,be); if(!c) return;
+        s += `<rect x="${x(c[0])}" y="${ty-3}" width="${x(c[1])-x(c[0])}" height="${th+6}" fill="url(#stp-base)" stroke="${FAINT}" stroke-width=".8" rx="2"><title>เข็มฐานท่อ ST ข้ามคลอง · ${p.count} ต้น · STA ${staStr(p.start)}–${staStr(p.end)}</title></rect>`;
       });
     }
-    if(band.start<0 && band.end>0){
-      const left = (0-band.start)/bw*100;
-      markers += `<div class="stamarker" style="left:${left}%"></div>`;
-      if(rowLabel==="AC") markers += `<div class="stamarker-label" style="left:${left}%">จุดเริ่มสัญญา 0+000</div>`;
-    }
-    return `<div class="starow">
-      <div class="starow-label">${rowLabel==='AC'?'ท่อ AC ในคูน้ำ':rowLabel==='PVC'?'ท่อ PVC':'ท่อ ST · อื่นๆ'}</div>
-      <div class="statrack">${bars}${markers}</div>
-    </div>`;
+    const all = lane.segs.concat(lane.extra||[]);
+    all.forEach(sg=>{
+      const c = clip(sg.start, sg.end, bs, be); if(!c) return;
+      const xa = x(c[0]), wpx = Math.max(x(c[1])-xa, 3);
+      const hd = sg.type==="hdpe";
+      s += `<rect class="stp-seg" x="${xa}" y="${hd?ty+th+1:ty}" width="${wpx}" height="${hd?5:th}" rx="${hd?2:3}" fill="${COL[sg.type]}"${sg.type==="pile"?` stroke="#D9A406" stroke-width=".8"`:""}>
+        <title>${NAME[sg.type]} · STA ${staStr(c[0])}–${staStr(c[1])} · ${fmtLen(c[1]-c[0])} ม.</title></rect>`;
+    });
+    const labels = placeLabels(labelItems(all, x, bs, be), X0, X1);
+    const hasH = (lane.extra||[]).some(sg=>clip(sg.start,sg.end,bs,be));
+    labels.forEach(l=>{
+      const cx = l.left + l.w/2;
+      const up = l.side==="up";
+      const ly = up ? y0+30 : y0+(hasH?84:80);
+      s += `<line x1="${cx}" x2="${cx}" y1="${up?ly+4:ty+th+(hasH?7:1)}" y2="${up?ty:ly-10}" stroke="#B8C4CF" stroke-width=".8"/>`;
+      s += `<circle cx="${l.left+6}" cy="${ly-3.5}" r="4.2" fill="${l.color}"/>`;
+      s += `<text x="${l.left+14}" y="${ly}" font-size="11" font-weight="600" fill="${INK}">${l.text}</text>`;
+    });
+    return s;
   }
 
-  const bandsHtml = BANDS.map(band=>{
-    const acSegs = [
-      ...S.AC_PILE_ONLY.map(seg=>({seg,type:'pile'})),
-      ...S.AC_SUPPORT.map(seg=>({seg,type:'support'})),
-      ...S.AC_LAID.map(seg=>({seg,type:'laid'}))
+  /* ---------- ภาพรวมทั้งแนว ---------- */
+  (function overview(){
+    const X0 = 64, X1 = 976, H = 112;
+    const x = m => X0 + (m-ROUTE.start)/(ROUTE.end-ROUTE.start)*(X1-X0);
+    const lanes = [["AC",AC_SEGS],["PVC",PVC_SEGS],["ST",ST_SEGS.concat(HDPE_SEGS)]];
+    let s = `<svg class="stasvg" viewBox="0 0 ${W} ${H}" role="img" aria-label="ภาพรวมผลงานทั้งแนวท่อ">`;
+    BANDS.forEach(b=>{                                // กรอบเส้นประแสดงช่วงแถว A/B/C
+      s += `<rect x="${x(b.start)}" y="22" width="${x(b.end)-x(b.start)}" height="58" fill="none" stroke="${FAINT}" stroke-dasharray="3 3" stroke-width=".9" rx="4"/>`;
+      s += `<text x="${(x(b.start)+x(b.end))/2}" y="16" font-size="10.5" font-weight="700" fill="${SOFT}" text-anchor="middle">แถว ${b.key}</text>`;
+    });
+    lanes.forEach(([nm,segs],i)=>{
+      const y = 28 + i*17;
+      s += `<text x="${X0-8}" y="${y+9}" font-size="10" font-weight="700" fill="${SOFT}" text-anchor="end">${nm}</text>`;
+      s += `<rect x="${X0}" y="${y+4}" width="${X1-X0}" height="3" rx="1.5" fill="#E6E2D8"/>`;
+      segs.forEach(sg=>{
+        const hd = sg.type==="hdpe";
+        const c = clip(sg.start, sg.end, ROUTE.start, ROUTE.end); if(!c) return;
+        s += `<rect x="${x(c[0])}" y="${hd?y+11:y}" width="${Math.max(x(c[1])-x(c[0]),1.2)}" height="${hd?3.5:11}" fill="${COL[sg.type]}"${sg.type==="pile"?` stroke="#D9A406" stroke-width=".6"`:""}><title>${NAME[sg.type]} · STA ${staStr(c[0])}–${staStr(c[1])} · ${fmtLen(c[1]-c[0])} ม.</title></rect>`;
+      });
+    });
+    const ticks = [0,500,1000,1500,2000,2500,3000,3500,3665];
+    s += `<line x1="${X0}" x2="${X1}" y1="88" y2="88" stroke="#C9D3DC"/>`;
+    ticks.forEach(t=>{
+      s += `<line x1="${x(t)}" x2="${x(t)}" y1="88" y2="92" stroke="${FAINT}"/>`;
+      if(t===3500) return;                            // 3+500 ชิดกับ 3+665 เกินไป ข้ามป้าย
+      s += `<text class="mono" x="${x(t)}" y="104" font-size="10" fill="${FAINT}" text-anchor="middle">${staStr(t)}</text>`;
+    });
+    s += `</svg>`;
+    document.getElementById("staOverview").innerHTML = `<div class="staband" style="padding-bottom:8px">
+      <div class="staband-title"><b>ภาพรวมทั้งแนว · กม. 0+000 – 3+665</b><span>กรอบเส้นประ = ช่วงที่ขยายในแถว A–C ด้านล่าง</span></div><div class="stawrap">${s}</div></div>`;
+  })();
+
+  /* ---------- แถว A–C ---------- */
+  document.getElementById("staBands").innerHTML = BANDS.map(b=>{
+    const X0 = 24, X1 = 976, LH = 92;
+    const x = m => X0 + (m-b.start)/(b.end-b.start)*(X1-X0);
+    const hasBase = S.ST_BASE_PILES.some(p=>clip(p.start,p.end,b.start,b.end));
+    const lanes = [
+      {title:"ท่อ AC Ø300 ในคูน้ำ", segs:AC_SEGS},
+      {title:"ท่อ PVC Ø300", segs:PVC_SEGS},
+      {title:"ท่อ ST Ø300 · ท่อชั่วคราว HDPE", segs:ST_SEGS, extra:HDPE_SEGS, base:hasBase?S.ST_BASE_PILES:null}
     ];
-    const pvcSegs = S.PVC_LAID.map(seg=>({seg,type:'pvc'}));
-    const stSegs = [
-      ...S.ST_LAID.map(seg=>({seg,type:'st'})),
-      ...S.HDPE.map(seg=>({seg,type:'hdpe'}))
-    ];
-    const ticks = [];
-    for(let s=Math.ceil(band.start/100)*100; s<=band.end; s+=100) ticks.push(s);
-    return `<div class="staband">
-      <div class="staband-title">${band.label}</div>
-      ${row('AC', acSegs, band)}
-      ${row('PVC', pvcSegs, band)}
-      ${row('ST', stSegs, band)}
-      <div class="staaxis">${ticks.map(t=>`<span>${staStr(t)}</span>`).join("")}</div>
-    </div>`;
+    const gy = 8, ay = gy + lanes.length*LH + 2, H = ay + 44;
+    let s = `<svg class="stasvg" viewBox="0 0 ${W} ${H}" role="img" aria-label="แถว ${b.key} กม. ${staStr(b.start)} ถึง ${staStr(b.end)}">`;
+    for(let t=Math.ceil(b.start/100)*100; t<=b.end; t+=100)      // เส้นกริดทุก 100 ม.
+      s += `<line x1="${x(t)}" x2="${x(t)}" y1="${gy}" y2="${ay}" stroke="#EEF1F4"/>`;
+    lanes.forEach((ln,i)=>{ s += laneSvg(ln, gy+i*LH, x, b.start, b.end, X0, X1); });
+    s += `<line x1="${X0}" x2="${X1}" y1="${ay}" y2="${ay}" stroke="#C9D3DC"/>`;
+    for(let t=Math.ceil(b.start/100)*100; t<=b.end; t+=100){
+      s += `<line x1="${x(t)}" x2="${x(t)}" y1="${ay}" y2="${ay+5}" stroke="${FAINT}"/>`;
+      s += `<text class="mono" x="${x(t)}" y="${ay+18}" font-size="10" fill="${FAINT}" text-anchor="middle">${staStr(t)}</text>`;
+    }
+    if(b.start<0 && b.end>0){                         // จุดเริ่มสัญญา
+      s += `<line x1="${x(0)}" x2="${x(0)}" y1="${gy+2}" y2="${ay+5}" stroke="${INK}" stroke-width="1.4"/>`;
+      s += `<text x="${x(0)}" y="${ay+36}" font-size="11" font-weight="700" fill="${INK}" text-anchor="middle">จุดเริ่มสัญญา</text>`;
+    }
+    if(b.end>=ROUTE.end){                             // จุดสิ้นสุดสัญญา
+      s += `<line x1="${x(ROUTE.end)}" x2="${x(ROUTE.end)}" y1="${gy+2}" y2="${ay+5}" stroke="${INK}" stroke-width="1.4"/>`;
+      s += `<text x="${x(ROUTE.end)}" y="${ay+36}" font-size="11" font-weight="700" fill="${INK}" text-anchor="end">จุดสิ้นสุดสัญญา ${staStr(ROUTE.end)}</text>`;
+    }
+    s += `</svg>`;
+    return `<div class="staband"><div class="staband-title"><b>แถว ${b.key} · กม. ${staStr(b.start)} – ${staStr(b.end)}</b><span>ป้ายแสดงความยาวช่วงที่ทำแล้ว (ม.) · ช่วงที่คาบเกี่ยวแถวแสดงแยกตามแถว</span></div><div class="stawrap">${s}</div></div>`;
   }).join("");
-  document.getElementById("staBands").innerHTML = bandsHtml;
+
+  /* defs ของลายแรเงา (ใช้ร่วมทุก SVG) */
+  document.getElementById("staBands").insertAdjacentHTML("afterbegin", `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <pattern id="stp-pile" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#fff"/><rect width="3" height="6" fill="#D9A406"/></pattern>
+    <pattern id="stp-base" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#fff"/><rect width="2" height="6" fill="${FAINT}" opacity=".55"/></pattern>
+  </defs></svg>`);
+
+  document.getElementById("staNote").innerHTML =
+    `<span>ที่มา: รายงานประจำวันผู้รับจ้าง (ช่วง STA รวมแบบ union ไม่นับซ้ำ) · ตัวเลขในการ์ดอ้างอิงยอดสะสมตามข้อมูลหลักของ Dashboard · ตำแหน่งในผังเป็นการประมาณจากรายงาน ไม่ใช่ตามมาตราส่วนแบบ</span><span>v2.0 · 29 ต.ค. 2569</span>`;
 })();
 
 /* ---------- TAB 2: pipe-type progress ---------- */
