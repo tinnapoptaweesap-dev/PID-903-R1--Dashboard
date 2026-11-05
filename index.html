@@ -472,7 +472,6 @@
       <div class="stakpis" id="staKpis"></div>
       <div id="staOverview"></div>
       <div class="staplan-legend" id="staLegend"></div>
-      <div id="staBands"></div>
       <div class="stanote" id="staNote"></div>
     </div>
 
@@ -734,10 +733,6 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
     const x = m => X0 + (m-ROUTE.start)/(ROUTE.end-ROUTE.start)*(X1-X0);
     const lanes = [["AC",AC_SEGS],["PVC",PVC_SEGS],["ST",ST_SEGS.concat(HDPE_SEGS)]];
     let s = `<svg class="stasvg" viewBox="0 0 ${W} ${H}" role="img" aria-label="ภาพรวมผลงานทั้งแนวท่อ">`;
-    BANDS.forEach(b=>{                                // กรอบเส้นประแสดงช่วงแถว A/B/C
-      s += `<rect x="${x(b.start)}" y="22" width="${x(b.end)-x(b.start)}" height="58" fill="none" stroke="${FAINT}" stroke-dasharray="3 3" stroke-width=".9" rx="4"/>`;
-      s += `<text x="${(x(b.start)+x(b.end))/2}" y="16" font-size="10.5" font-weight="700" fill="${SOFT}" text-anchor="middle">แถว ${b.key}</text>`;
-    });
     lanes.forEach(([nm,segs],i)=>{
       const y = 28 + i*17;
       s += `<text x="${X0-8}" y="${y+9}" font-size="10" font-weight="700" fill="${SOFT}" text-anchor="end">${nm}</text>`;
@@ -757,49 +752,17 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
     });
     s += `</svg>`;
     document.getElementById("staOverview").innerHTML = `<div class="staband" style="padding-bottom:8px">
-      <div class="staband-title"><b>ภาพรวมทั้งแนว · กม. 0+000 – 3+665</b><span>กรอบเส้นประ = ช่วงที่ขยายในแถว A–C ด้านล่าง</span></div><div class="stawrap">${s}</div></div>`;
+      <div class="staband-title"><b>ภาพรวมทั้งแนว · กม. 0+000 – 3+665</b></div><div class="stawrap">${s}</div></div>`;
   })();
 
-  /* ---------- แถว A–C ---------- */
-  document.getElementById("staBands").innerHTML = BANDS.map(b=>{
-    const X0 = 24, X1 = 976, LH = 92;
-    const x = m => X0 + (m-b.start)/(b.end-b.start)*(X1-X0);
-    const hasBase = S.ST_BASE_PILES.some(p=>clip(p.start,p.end,b.start,b.end));
-    const lanes = [
-      {title:"ท่อ AC Ø300 ในคูน้ำ", segs:AC_SEGS},
-      {title:"ท่อ PVC Ø300", segs:PVC_SEGS},
-      {title:"ท่อ ST Ø300 · ท่อชั่วคราว HDPE", segs:ST_SEGS, extra:HDPE_SEGS, base:hasBase?S.ST_BASE_PILES:null}
-    ];
-    const gy = 8, ay = gy + lanes.length*LH + 2, H = ay + 44;
-    let s = `<svg class="stasvg" viewBox="0 0 ${W} ${H}" role="img" aria-label="แถว ${b.key} กม. ${staStr(b.start)} ถึง ${staStr(b.end)}">`;
-    for(let t=Math.ceil(b.start/100)*100; t<=b.end; t+=100)      // เส้นกริดทุก 100 ม.
-      s += `<line x1="${x(t)}" x2="${x(t)}" y1="${gy}" y2="${ay}" stroke="#EEF1F4"/>`;
-    lanes.forEach((ln,i)=>{ s += laneSvg(ln, gy+i*LH, x, b.start, b.end, X0, X1); });
-    s += `<line x1="${X0}" x2="${X1}" y1="${ay}" y2="${ay}" stroke="#C9D3DC"/>`;
-    for(let t=Math.ceil(b.start/100)*100; t<=b.end; t+=100){
-      s += `<line x1="${x(t)}" x2="${x(t)}" y1="${ay}" y2="${ay+5}" stroke="${FAINT}"/>`;
-      s += `<text class="mono" x="${x(t)}" y="${ay+18}" font-size="10" fill="${FAINT}" text-anchor="middle">${staStr(t)}</text>`;
-    }
-    if(b.start<0 && b.end>0){                         // จุดเริ่มสัญญา
-      s += `<line x1="${x(0)}" x2="${x(0)}" y1="${gy+2}" y2="${ay+5}" stroke="${INK}" stroke-width="1.4"/>`;
-      s += `<text x="${x(0)}" y="${ay+36}" font-size="11" font-weight="700" fill="${INK}" text-anchor="middle">จุดเริ่มสัญญา</text>`;
-    }
-    if(b.end>=ROUTE.end){                             // จุดสิ้นสุดสัญญา
-      s += `<line x1="${x(ROUTE.end)}" x2="${x(ROUTE.end)}" y1="${gy+2}" y2="${ay+5}" stroke="${INK}" stroke-width="1.4"/>`;
-      s += `<text x="${x(ROUTE.end)}" y="${ay+36}" font-size="11" font-weight="700" fill="${INK}" text-anchor="end">จุดสิ้นสุดสัญญา ${staStr(ROUTE.end)}</text>`;
-    }
-    s += `</svg>`;
-    return `<div class="staband"><div class="staband-title"><b>แถว ${b.key} · กม. ${staStr(b.start)} – ${staStr(b.end)}</b><span>ป้ายแสดงความยาวช่วงที่ทำแล้ว (ม.) · ช่วงที่คาบเกี่ยวแถวแสดงแยกตามแถว</span></div><div class="stawrap">${s}</div></div>`;
-  }).join("");
-
   /* defs ของลายแรเงา (ใช้ร่วมทุก SVG) */
-  document.getElementById("staBands").insertAdjacentHTML("afterbegin", `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  document.getElementById("staOverview").insertAdjacentHTML("afterbegin", `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
     <pattern id="stp-pile" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#fff"/><rect width="3" height="6" fill="#D9A406"/></pattern>
     <pattern id="stp-base" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#fff"/><rect width="2" height="6" fill="${FAINT}" opacity=".55"/></pattern>
   </defs></svg>`);
 
   document.getElementById("staNote").innerHTML =
-    `<span>ที่มา: รายงานประจำวันผู้รับจ้าง (ช่วง STA รวมแบบ union ไม่นับซ้ำ) · ตัวเลขในการ์ดอ้างอิงยอดสะสมตามข้อมูลหลักของ Dashboard · ตำแหน่งในผังเป็นการประมาณจากรายงาน ไม่ใช่ตามมาตราส่วนแบบ</span><span>v2.0 · 29 ต.ค. 2569</span>`;
+    `<span>ที่มา: รายงานประจำวันผู้รับจ้าง (ช่วง STA รวมแบบ union ไม่นับซ้ำ) · ตัวเลขในการ์ดอ้างอิงยอดสะสมตามข้อมูลหลักของ Dashboard · ตำแหน่งในผังเป็นการประมาณจากรายงาน ไม่ใช่ตามมาตราส่วนแบบ</span><span>v2.1 · 5 พ.ย. 2569</span>`;
 })();
 
 /* ---------- TAB 2: pipe-type progress ---------- */
